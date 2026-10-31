@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gieo Quẻ Kinh Dịch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-0:#0b0e17;
+    --bg-1:#12172a;
+    --ink:#e9e2d0;
+    --ink-dim:#a99f8a;
+    --gold:#c9a15a;
+    --gold-bright:#e8c078;
+    --red:#8f2a2a;
+    --red-bright:#b5423c;
+    --parchment:#efe6d2;
+    --parchment-dim:#ddd2b7;
+    --line-yang:#e8c078;
+    --line-yin:#8a95b8;
+    --font-body: 'Noto Serif', 'Times New Roman', serif;
+    --font-deco: 'Ma Shan Zheng', 'Noto Serif', serif;
+    box-sizing:border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  html{ scroll-padding-top: env(safe-area-inset-top, 0px); }
+  *{ box-sizing: border-box; }
+  html, body{ height:100%; }
+  body{
+    margin:0;
+    background: var(--bg-0);
+    color: var(--ink);
+    font-family: var(--font-body);
+    min-height:100%;
+    overflow-x:hidden;
+    position:relative;
+  }
+
+  /* ---------- background: night sky + faint bagua ---------- */
+  .sky{
+    position:fixed; inset:0; z-index:0;
+    background:
+      radial-gradient(ellipse 120% 80% at 50% -10%, rgba(140,60,60,0.16), transparent 55%),
+      radial-gradient(ellipse 100% 60% at 50% 110%, rgba(60,80,140,0.14), transparent 60%),
+      linear-gradient(180deg, var(--bg-0), var(--bg-1) 60%, var(--bg-0));
+  }
+  .stars{ position:fixed; inset:0; z-index:0; opacity:.55; }
+  .bagua-bg{
+    position:fixed; z-index:0;
+    top:50%; left:50%;
+    width:min(140vw,1400px); height:min(140vw,1400px);
+    transform:translate(-50%,-50%);
+    opacity:.06;
+    animation: spin-slow 240s linear infinite;
+  }
+  @media (prefers-reduced-motion: reduce){ .bagua-bg{ animation:none; } }
+  @keyframes spin-slow{ to{ transform:translate(-50%,-50%) rotate(360deg); } }
+
+  /* ---------- layout ---------- */
+  .wrap{
+    position:relative; z-index:1;
+    max-width:640px; margin:0 auto;
+    padding:36px 20px 64px;
+    min-height:100%;
+    display:flex; flex-direction:column; align-items:center;
+  }
+  header{ text-align:center; margin-bottom:8px; }
+  .eyebrow{
+    font-size:13px; letter-spacing:.14em; color:var(--gold);
+    font-style:italic;
+  }
+  h1{
+    font-family:var(-webkit-body);
+    font-weight:400;
+    font-size:clamp(40px,10vw,58px);
+    margin:2px 0 4px;
+    color:var(--gold-bright);
+    text-shadow:0 0 22px rgba(232,192,120,.25);
+    line-height:1;
+  }
+  .sub{
+    color:var(--ink-dim);
+    font-size:14.5px;
+    max-width:420px;
+    margin:0 auto 6px;
+    line-height:1.6;
+  }
+  .divider{
+    width:120px; height:14px; margin:18px auto 22px;
+    opacity:.8;
+  }
+
+  /* ---------- taiji button ---------- */
+  .altar{
+    display:flex; flex-direction:column; align-items:center;
+    gap:22px; width:100%;
+  }
+  .taiji-btn{
+    -webkit-tap-highlight-color:transparent;
+    background:none; border:none; cursor:pointer;
+    width:172px; height:172px; padding:0;
+    position:relative;
+    filter:drop-shadow(0 0 26px rgba(201,161,90,.35));
+    transition:transform .25s ease, filter .25s ease;
+  }
+  .taiji-btn:hover{ transform:scale(1.04); filter:drop-shadow(0 0 34px rgba(201,161,90,.55)); }
+  .taiji-btn:active{ transform:scale(.97); }
+  .taiji-btn svg{ width:100%; height:100%; animation: breathe 5s ease-in-out infinite; }
+  @keyframes breathe{ 0%,100%{ transform:scale(1);} 50%{ transform:scale(1.035);} }
+  @media (prefers-reduced-motion: reduce){ .taiji-btn svg{ animation:none; } }
+  .taiji-btn.spinning svg{ animation: spin-taiji 1.1s cubic-bezier(.6,0,.35,1) infinite; }
+  @keyframes spin-taiji{ to{ transform:rotate(360deg); } }
+  .taiji-btn:focus-visible{ outline:2px solid var(--gold-bright); outline-offset:6px; border-radius:50%; }
+
+  .cta-label{
+    font-size:16px; letter-spacing:.06em; color:var(--parchment);
+    font-weight:600;
+  }
+  .cta-hint{ font-size:12.5px; color:var(--ink-dim); margin-top:-14px; }
+
+  /* ---------- coin toss area ---------- */
+  .toss-area{
+    display:none;
+    flex-direction:column; align-items:center; gap:10px;
+    min-height:170px; justify-content:center;
+  }
+  .toss-area.active{ display:flex; }
+  .coins{ display:flex; gap:18px; }
+  .coin{
+    width:56px; height:56px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-deco); font-size:26px; color:var(--bg-0);
+    background:radial-gradient(circle at 35% 30%, var(--gold-bright), var(--gold) 55%, #8a6a2e 100%);
+    border:2px solid #6f5323;
+    box-shadow:0 4px 10px rgba(0,0,0,.4), inset 0 1px 3px rgba(255,255,255,.4);
+    animation: flip 1.1s cubic-bezier(.6,0,.35,1);
+    transform-style:preserve-3d;
+  }
+  @keyframes flip{
+    0%{ transform:rotateY(0) translateY(0); }
+    40%{ transform:rotateY(720deg) translateY(-30px); }
+    70%{ transform:rotateY(1080deg) translateY(0); }
+    100%{ transform:rotateY(1080deg) translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce){ .coin{ animation:none; } }
+  .toss-line-label{ color:var(--ink-dim); font-size:13px; letter-spacing:.05em; }
+
+  /* ---------- hexagram build area ---------- */
+  .hexagram-stage{
+    display:none;
+    width:100%;
+    flex-direction:column; align-items:center; gap:16px;
+  }
+  .hexagram-stage.active{ display:flex; }
+  .lines-col{
+    display:flex; flex-direction:column-reverse; gap:11px;
+    width:100%; max-width:280px;
+  }
+  .line-row{
+    display:flex; align-items:center; gap:10px;
+    opacity:0; transform:translateY(8px);
+    animation: line-in .5s ease forwards;
+  }
+  @keyframes line-in{ to{ opacity:1; transform:translateY(0); } }
+  .line-num{ width:14px; font-size:12px; color:var(--ink-dim); text-align:right; }
+  .line-figure{ flex:1; height:14px; display:flex; gap:8px; position:relative; }
+  .bar{
+    height:100%; border-radius:3px;
+    background:linear-gradient(180deg, var(--line-yang), #b5883f);
+    box-shadow:0 1px 4px rgba(0,0,0,.35);
+  }
+  .line-figure.yin .bar{ flex:1; background:linear-gradient(180deg, var(--line-yin), #5c669a); }
+  .line-figure.yang .bar{ flex:1; }
+  .line-figure.moving .bar{ box-shadow:0 0 10px rgba(232,192,120,.7), 0 1px 4px rgba(0,0,0,.35); }
+  .line-figure.moving.yin .bar{ box-shadow:0 0 10px rgba(138,149,184,.8), 0 1px 4px rgba(0,0,0,.35); }
+  .move-mark{ position:absolute; right:-20px; top:50%; transform:translateY(-50%); font-size:13px; color:var(--gold-bright); }
+
+  /* ---------- result card ---------- */
+  .result{
+    display:none;
+    width:100%;
+    background: linear-gradient(180deg, var(--parchment), var(--parchment-dim));
+    color:#2a2113;
+    border-radius:6px;
+    padding:26px 24px 22px;
+    position:relative;
+    box-shadow:0 18px 50px rgba(0,0,0,.5), 0 0 0 1px rgba(201,161,90,.4);
+    opacity:0;
+  }
+  .result.show{ display:block; animation: rise-in .6s ease forwards; }
+  @keyframes rise-in{ from{ opacity:0; transform:translateY(14px);} to{ opacity:1; transform:translateY(0);} }
+  .result::before{
+    content:"";
+    position:absolute; inset:8px;
+    border:1px solid rgba(143,42,42,.35);
+    border-radius:3px;
+    pointer-events:none;
+  }
+  .result-head{ display:flex; align-items:center; gap:16px; margin-bottom:14px; }
+  .result-glyph{ font-size:44px; line-height:1; color:var(--red); font-family:var(--font-deco); }
+  .result-titles{ flex:1; }
+  .result-no{ font-size:12px; letter-spacing:.1em; color:#8f2a2a; font-weight:600; }
+  .result-name{ font-size:22px; font-weight:700; margin:2px 0 0; }
+  .result-trigrams{ font-size:13px; color:#6b5c3c; margin-top:2px; }
+  .result-section{ margin-top:16px; }
+  .result-section h3{
+    font-size:12.5px; letter-spacing:.1em; text-transform:none;
+    color:#8f2a2a; margin:0 0 6px; font-weight:700;
+  }
+  .result-section p{ margin:0; font-size:15px; line-height:1.65; }
+  .seal{
+    position:absolute; top:18px; right:18px;
+    width:46px; height:46px; border:2px solid var(--red);
+    border-radius:4px; color:var(--red);
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-deco); font-size:20px;
+    transform:rotate(4deg);
+    opacity:.85;
+  }
+  .bian-card{
+    margin-top:18px; padding-top:16px;
+    border-top:1px dashed rgba(143,42,42,.4);
+  }
+  .bian-head{ display:flex; align-items:center; gap:10px; margin-bottom:6px; }
+  .bian-glyph{ font-size:26px; color:#6b5c3c; font-family:var(--font-deco); }
+  .bian-name{ font-size:16px; font-weight:700; }
+  .moving-note{ font-size:12.5px; color:#6b5c3c; margin-top:4px; }
+
+  .again-btn{
+    margin-top:26px;
+    background:transparent;
+    border:1px solid var(--gold);
+    color:var(--gold-bright);
+    font-family:var(--font-body);
+    font-size:14px; letter-spacing:.04em;
+    padding:11px 26px; border-radius:2px;
+    cursor:pointer;
+    transition:background .2s ease, color .2s ease;
+  }
+  .again-btn:hover{ background:var(--gold); color:var(--bg-0); }
+  .again-btn:focus-visible{ outline:2px solid var(--gold-bright); outline-offset:3px; }
+
+  footer{
+    margin-top:auto; padding-top:34px;
+    font-size:11.5px; color:var(--ink-dim);
+    text-align:center; max-width:420px; line-height:1.6;
+  }
+
+  ::selection{ background:var(--gold); color:#26200f; }
+</style>
+</head>
+<body>
+
+<div class="sky"></div>
+<svg class="stars" id="stars"></svg>
+<svg class="bagua-bg" viewBox="0 0 400 400" aria-hidden="true">
+  <circle cx="200" cy="200" r="190" fill="none" stroke="#c9a15a" stroke-width="1"/>
+  <circle cx="200" cy="200" r="150" fill="none" stroke="#c9a15a" stroke-width="0.6"/>
+  <g fill="#c9a15a" font-family="serif" font-size="34" text-anchor="middle">
+    <text x="200" y="34">☰</text>
+    <text x="330" y="90">☱</text>
+    <text x="372" y="210">☲</text>
+    <text x="330" y="330">☳</text>
+    <text x="200" y="380">☷</text>
+    <text x="70" y="330">☴</text>
+    <text x="28" y="210">☵</text>
+    <text x="70" y="90">☶</text>
+  </g>
+</svg>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Chu Dịch · 周易</div>
+    <h1>Gieo Quẻ Kinh Dịch</h1>
+    <p class="sub">Thành tâm, tĩnh trí, nghĩ đến điều muốn hỏi rồi chạm vào Thái Cực để gieo quẻ.</p>
+    <svg class="divider" viewBox="0 0 120 14"><line x1="0" y1="7" x2="120" y2="7" stroke="#c9a15a" stroke-width="1" opacity="0.6"/><circle cx="60" cy="7" r="3" fill="#c9a15a"/></svg>
+  </header>
+
+  <div class="altar">
+    <button class="taiji-btn" id="taijiBtn" aria-label="Gieo quẻ">
+      <svg viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="48" fill="#efe6d2" stroke="#c9a15a" stroke-width="1.5"/>
+        <path d="M50,2 A48,48 0 0,1 50,98 A24,24 0 0,1 50,50 A24,24 0 0,0 50,2 Z" fill="#efe6d2"/>
+        <path d="M50,2 A48,48 0 0,0 50,98 A24,24 0 0,0 50,50 A24,24 0 0,1 50,2 Z" fill="#1b2033"/>
+        <circle cx="50" cy="26" r="7" fill="#1b2033"/>
+        <circle cx="50" cy="74" r="7" fill="#efe6d2"/>
+      </svg>
+    </button>
+    <div class="cta-label" id="ctaLabel">Chạm để Gieo Quẻ</div>
+    <div class="cta-hint" id="ctaHint">Phương pháp Tam Tiền (gieo ba đồng tiền, sáu lượt)</div>
+
+    <div class="toss-area" id="tossArea">
+      <div class="toss-line-label" id="tossLabel">Đang gieo hào 1 / 6…</div>
+      <div class="coins" id="coins"></div>
+    </div>
+
+    <div class="hexagram-stage" id="hexStage">
+      <div class="lines-col" id="linesCol"></div>
+    </div>
+
+    <div class="result" id="result">
+      <div class="seal" id="seal">寅</div>
+      <div class="result-head">
+        <div class="result-glyph" id="resGlyph">䷀</div>
+        <div class="result-titles">
+          <div class="result-no" id="resNo">QUẺ SỐ 1</div>
+          <div class="result-name" id="resName">Thuần Càn</div>
+          <div class="result-trigrams" id="resTrigrams">Thượng Càn (Trời) — Hạ Càn (Trời)</div>
+        </div>
+      </div>
+
+      <div class="result-section">
+        <h3>Ý NGHĨA QUẺ</h3>
+        <p id="resMeaning"></p>
+      </div>
+      <div class="result-section">
+        <h3>LUẬN GIẢI</h3>
+        <p id="resDetail"></p>
+      </div>
+      <div class="result-section">
+        <h3>LỜI KHUYÊN</h3>
+        <p id="resAdvice"></p>
+      </div>
+
+      <div id="bianCard" class="bian-card" style="display:none;">
+        <div class="moving-note" id="movingNote"></div>
+        <div class="bian-head">
+          <div class="bian-glyph" id="bianGlyph">䷀</div>
+          <div class="bian-name" id="bianName"></div>
+        </div>
+        <p id="bianMeaning" style="margin:0;font-size:14px;line-height:1.6;"></p>
+      </div>
+    </div>
+
+    <button class="again-btn" id="againBtn" style="display:none;">Gieo Quẻ Khác</button>
+  </div>
+
+  <footer>
+    Ứng dụng không lưu lại lịch sử gieo quẻ — mỗi lần tải lại trang là một lượt gieo mới, hoàn toàn riêng tư.<br>
+    Kinh Dịch mang tính chiêm nghiệm và tham khảo, không thay thế quyết định của chính bạn.
+  </footer>
+</div>
+
+<script>
+/* ================= DATA: 8 trigrams ================= */
+const TRIGRAMS = {
+  "111": {name:"Càn",  symbol:"☰", nature:"Trời"},
+  "000": {name:"Khôn", symbol:"☷", nature:"Đất"},
+  "100": {name:"Chấn", symbol:"☳", nature:"Sấm"},
+  "010": {name:"Khảm", symbol:"☵", nature:"Nước"},
+  "001": {name:"Cấn",  symbol:"☶", nature:"Núi"},
+  "011": {name:"Tốn",  symbol:"☴", nature:"Gió"},
+  "101": {name:"Ly",   symbol:"☲", nature:"Lửa"},
+  "110": {name:"Đoài", symbol:"☱", nature:"Đầm"}
+};
+
+/* ================= DATA: 64 hexagrams, King Wen order =================
+   binary: 6 chars, index0 = bottom line (hào 1) ... index5 = top line (hào 6)
+   1 = hào dương (liền), 0 = hào âm (đứt) */
+const HEXAGRAMS = [
+{n:1,bin:"111111",name:"Thuần Càn",
+ meaning:"Thuần dương, cương kiện. Trời chồng lên Trời — sức sáng tạo và vận động không ngừng nghỉ.",
+ detail:"Càn tượng trưng cho khí dương tột bậc, cho sự khởi đầu, cho người quân tử tự cường bất tức. Đây là quẻ đại cát, thời vận thuận lợi để hành động và gây dựng, nhưng dương cực ắt sinh biến — hào trên cùng \"kháng long hữu hối\" nhắc rằng lên quá cao, quá cứng sẽ gặp hối tiếc.",
+ advice:"Hãy chủ động tiến tới, phát huy hết năng lực, nhưng luôn giữ sự khiêm tốn và biết dừng đúng lúc khi đã đạt đỉnh."},
+{n:2,bin:"000000",name:"Thuần Khôn",
+ meaning:"Thuần âm, nhu thuận. Đất chồng lên Đất — đức chứa đựng, sinh dưỡng vạn vật.",
+ detail:"Khôn là đức của sự mềm mỏng, bao dung, đi theo lẽ phải mà không tranh trước. Người có đức Khôn thành công nhờ nhẫn nại, tích lũy công lao âm thầm như đất nuôi cây, không phô trương mà bền vững.",
+ advice:"Nên nhún nhường, theo sau người dẫn dắt đúng đắn, chăm chỉ tích lũy thay vì nóng vội tranh đoạt."},
+{n:3,bin:"100010",name:"Thủy Lôi Truân",
+ meaning:"Gian nan buổi đầu, như mầm non vừa nhú gặp đất cứng, cần thời gian và trợ lực để vươn lên.",
+ detail:"Truân là khó khăn ban đầu của mọi khởi sự lớn — ý tưởng còn non, nguồn lực còn thiếu, xung quanh còn nhiều trở ngại. Đây không phải điềm xấu tuyệt đối mà là giai đoạn tất yếu trước khi thành hình.",
+ advice:"Đừng nóng vội hành động một mình; hãy tìm người có kinh nghiệm giúp đỡ, củng cố nền móng trước khi tiến."},
+{n:4,bin:"010001",name:"Sơn Thủy Mông",
+ meaning:"Mông muội, như trẻ thơ chưa hiểu việc đời, cần được khai sáng và chỉ dạy.",
+ detail:"Mông nói về giai đoạn tri thức còn non nớt, sự việc còn mù mờ chưa rõ ràng. Thành hay bại tùy vào thái độ cầu học: chân thành hỏi thì được đáp, kiêu ngạo hoặc hỏi lại nhiều lần vì không tin thì đạo lý mất linh nghiệm.",
+ advice:"Khiêm tốn tìm thầy, tìm người hiểu biết mà hỏi han một cách chân thành, đừng tự cho là mình đã rõ."},
+{n:5,bin:"111010",name:"Thủy Thiên Nhu",
+ meaning:"Chờ đợi trong tin tưởng, như chờ mưa xuống, cần nuôi dưỡng sức lực và giữ lòng kiên nhẫn.",
+ detail:"Nhu không phải chờ đợi thụ động mà là chờ đúng thời cơ với sự chuẩn bị đầy đủ. Phía trước có hiểm (Khảm ở trên), nên không thể xông pha liều lĩnh; cần bồi dưỡng thực lực, giữ lòng thành tín để đợi thời vận chín muồi.",
+ advice:"Kiên nhẫn dưỡng sức, ăn uống nghỉ ngơi điều độ, không manh động khi thời cơ chưa tới."},
+{n:6,bin:"010111",name:"Thiên Thủy Tụng",
+ meaning:"Tranh tụng, kiện cáo — trên dưới bất hòa, ý chí xung khắc nhau.",
+ detail:"Tụng cảnh báo về xung đột, tranh chấp phát sinh từ bất đồng lợi ích hoặc quan điểm. Kinh Dịch cho rằng kiện tụng dù có lý cũng không nên theo đến cùng, vì thắng cũng tổn hại, huống là thua.",
+ advice:"Nên tìm cách hòa giải sớm, tránh để mâu thuẫn kéo dài; giữ đạo lý và sự thành thật hơn là cố tranh thắng thua."},
+{n:7,bin:"010000",name:"Địa Thủy Sư",
+ meaning:"Quân đội, việc binh — cần tổ chức kỷ luật để đối phó với hiểm nguy lớn.",
+ detail:"Sư tượng trưng cho việc huy động lực lượng đông đảo (dùng binh, dùng người) để giải quyết việc lớn. Chỉ có người đức độ, chính danh, kỷ luật nghiêm minh mới chỉ huy được đám đông mà không gây loạn.",
+ advice:"Nếu phải hành động quy mô, hãy đặt kỷ cương lên hàng đầu và chọn người cầm đầu có đức, có tài."},
+{n:8,bin:"000010",name:"Thủy Địa Tỷ",
+ meaning:"Gần gũi, thân thiết — mọi người nương tựa, đoàn kết lẫn nhau.",
+ detail:"Tỷ là sự liên kết, gắn bó cần thiết để cùng tồn tại và phát triển, giống như nước thấm khắp mặt đất. Điều quan trọng là chọn đúng người, đúng nhóm để nương tựa, và phải đến sớm, chân thành, không chần chừ.",
+ advice:"Chủ động kết giao với người tốt, xây dựng lòng tin; đừng đợi đến khi cần mới tìm cách thân thiết."},
+{n:9,bin:"111011",name:"Phong Thiên Tiểu Súc",
+ meaning:"Tích lũy nhỏ — sức còn mỏng, gió nhẹ chưa đủ làm mây thành mưa.",
+ detail:"Tiểu Súc chỉ giai đoạn tích góp dần dần, thành quả còn khiêm tốn, chưa thể làm việc lớn ngay. Đây là lúc cần sự kiên trì bền bỉ hơn là mong cầu kết quả nhanh chóng.",
+ advice:"Tích lũy từng chút một, trau dồi nội lực và các mối quan hệ, chưa nên vội vàng thực hiện kế hoạch lớn."},
+{n:10,bin:"110111",name:"Thiên Trạch Lý",
+ meaning:"Dẫm lên — như dẫm phải đuôi cọp, cần hết sức cẩn trọng và giữ đúng lễ độ.",
+ detail:"Lý nói về cách hành xử giữa mình với người trên, người quyền thế: phải khéo léo, đúng mực, không phạm thượng nhưng cũng không khúm núm mất phẩm giá.",
+ advice:"Cẩn trọng lời nói và cử chỉ, giữ lễ nghĩa khi tiếp xúc với người có quyền uy hoặc trong tình huống nhạy cảm."},
+{n:11,bin:"111000",name:"Địa Thiên Thái",
+ meaning:"Thông thái, thịnh vượng — khí Trời khí Đất giao hòa, vạn vật hanh thông.",
+ detail:"Thái là một trong những quẻ tốt đẹp nhất: trên dưới thông cảm, âm dương điều hòa, mọi việc thuận lợi phát triển. Tuy vậy cổ nhân vẫn nhắc thịnh rồi sẽ chuyển sang suy, nên lúc thái cũng cần giữ đạo.",
+ advice:"Đây là thời cơ tốt để triển khai kế hoạch, hợp tác và mở rộng; nhưng đừng quên đề phòng khi đang ở đỉnh cao."},
+{n:12,bin:"000111",name:"Thiên Địa Bĩ",
+ meaning:"Bế tắc — trên dưới không giao hòa, khí không thông, việc trì trệ.",
+ detail:"Bĩ ngược với Thái: Trời ở trên cứ lên, Đất ở dưới cứ xuống, hai bên không gặp nhau, sinh ra bế tắc, cách trở. Đây là thời của tiểu nhân đắc thế, người quân tử nên ẩn nhẫn giữ tiết tháo.",
+ advice:"Không nên cưỡng cầu lúc bế tắc; hãy giữ vững đạo đức, thu mình chờ thời cơ chuyển biến thuận lợi hơn."},
+{n:13,bin:"101111",name:"Thiên Hỏa Đồng Nhân",
+ meaning:"Hòa đồng cùng người — chí công vô tư, đoàn kết rộng rãi thì việc lớn mới thành.",
+ detail:"Đồng Nhân là đạo lý hợp quần: muốn làm việc lớn phải quy tụ được nhiều người, nhưng sự đoàn kết ấy phải dựa trên chính nghĩa và công tâm, không phải bè phái vì lợi riêng.",
+ advice:"Mở lòng hợp tác, đối xử công bằng, tránh thiên vị bè nhóm nhỏ để giữ được sự ủng hộ lâu dài."},
+{n:14,bin:"111101",name:"Hỏa Thiên Đại Hữu",
+ meaning:"Sở hữu lớn — của cải, danh vọng dồi dào như mặt trời giữa trời cao.",
+ detail:"Đại Hữu là quẻ của sự thịnh vượng và thành công lớn, nhưng của cải và quyền lực càng nhiều càng cần khiêm tốn và biết chia sẻ, nếu không dễ sinh kiêu căng mà chuốc họa.",
+ advice:"Giữ khiêm nhường giữa lúc thành công, dùng phúc lộc để giúp người thay vì phô trương hưởng thụ một mình."},
+{n:15,bin:"001000",name:"Địa Sơn Khiêm",
+ meaning:"Khiêm tốn — núi cao mà ẩn mình dưới đất thấp, đức khiêm nhường mang lại điều tốt lành khắp nơi.",
+ detail:"Khiêm là quẻ hiếm hoi mà mọi hào đều tốt lành trong Kinh Dịch, bởi khiêm nhường chân thật không bao giờ gây hại, luôn được người khác quý mến và giúp đỡ.",
+ advice:"Dù có tài năng hay công lao, hãy giữ thái độ khiêm cung, không khoe khoang, ắt việc gì cũng thuận."},
+{n:16,bin:"000100",name:"Lôi Địa Dự",
+ meaning:"Vui vẻ, hưởng ứng — thời cơ thuận lợi khiến lòng người phấn khởi.",
+ detail:"Dự là niềm vui chính đáng khi thuận theo thời và lẽ phải, thường gắn với việc chuẩn bị, dự phòng cho tương lai. Tuy vậy vui quá mà buông lỏng cảnh giác thì dễ sinh biếng nhác, sa sút.",
+ advice:"Có thể vui mừng trước tin tốt, nhưng vẫn cần chuẩn bị chu đáo, không chủ quan lơ là việc lớn."},
+{n:17,bin:"100110",name:"Trạch Lôi Tùy",
+ meaning:"Tùy thời — biết thuận theo hoàn cảnh và người khác một cách chính đáng, linh hoạt thích nghi.",
+ detail:"Tùy dạy đạo lý biết uyển chuyển: khi cương thì cương, khi cần nhún nhường thì nhún nhường, tùy theo hoàn cảnh mà hành xử miễn giữ được chính đạo, không đánh mất lập trường.",
+ advice:"Linh hoạt thích nghi với thay đổi, sẵn sàng lắng nghe và điều chỉnh, nhưng đừng đánh mất nguyên tắc của mình."},
+{n:18,bin:"011001",name:"Sơn Phong Cổ",
+ meaning:"Việc hư hỏng, trì trệ lâu ngày — cần chỉnh đốn, sửa chữa lại từ gốc.",
+ detail:"Cổ chỉ tình trạng sự việc đã mục nát do bỏ bê lâu ngày (như đồ vật để lâu sinh sâu mọt). Đây là lúc cần dũng khí nhìn thẳng vào vấn đề và bắt tay chấn chỉnh, dù mất công sức ban đầu.",
+ advice:"Đừng né tránh những việc đã tồn đọng, hãy chủ động sửa sang, cải tổ từ nền tảng để tránh hậu quả lớn hơn."},
+{n:19,bin:"110000",name:"Địa Trạch Lâm",
+ meaning:"Đến gần, giám sát, dẫn dắt — thời vận đang lên nhưng cần đề phòng lúc suy đến.",
+ detail:"Lâm nói về việc người trên gần gũi, chăm lo cho người dưới, thời cơ đang thuận lợi để mở rộng ảnh hưởng. Cổ nhân nhắc rằng đến tháng thứ tám (khi dương suy) tình thế sẽ đổi khác, nên cần chuẩn bị trước.",
+ advice:"Tận dụng thời cơ thuận lợi hiện tại để hành động, đồng thời phòng xa cho giai đoạn khó khăn có thể đến sau."},
+{n:20,bin:"000011",name:"Phong Địa Quán",
+ meaning:"Quan sát, chiêm nghiệm — cần nhìn xa, xét kỹ để hiểu đạo lý và làm gương cho người khác.",
+ detail:"Quán là sự quan sát sâu sắc, từ việc tự xét mình đến việc nhìn nhận thời cuộc. Người ở vị trí cao cần làm gương mẫu mực để người dưới noi theo, như gió thổi khắp nơi mà lay động vạn vật.",
+ advice:"Hãy quan sát kỹ trước khi hành động, tự xét lại bản thân, và giữ gìn hình ảnh làm gương cho người xung quanh."},
+{n:21,bin:"100101",name:"Hỏa Lôi Phệ Hạp",
+ meaning:"Cắn nghiến — cần cương quyết loại bỏ trở ngại, trừng trị điều gian dối để thông suốt trở lại.",
+ detail:"Phệ Hạp ví như răng cắn vật cản giữa môi và hàm, phải nghiến cho vỡ thì miệng mới khép lại được. Ý nói việc có kẻ xen vào gây trở ngại (gian dối, bất công) thì cần biện pháp cương quyết, đúng phép để giải quyết.",
+ advice:"Đừng nương tay với điều sai trái đang cản trở công việc; xử lý rõ ràng, dứt khoát nhưng đúng luật lệ."},
+{n:22,bin:"101001",name:"Sơn Hỏa Bí",
+ meaning:"Trang sức, văn vẻ — vẻ đẹp bề ngoài cần đi đôi với thực chất bên trong.",
+ detail:"Bí nói về sự tô điểm, trang hoàng làm đẹp thêm cho sự việc, nhưng Kinh Dịch nhắc khéo rằng trang sức chỉ là phần phụ trợ nhỏ, gốc rễ vẫn phải là nội dung, đức hạnh thực chất.",
+ advice:"Chăm chút hình thức là cần thiết, nhưng đừng để hình thức lấn át bản chất; hãy đầu tư vào giá trị cốt lõi trước."},
+{n:23,bin:"000001",name:"Sơn Địa Bác",
+ meaning:"Bác lạc, suy tàn — thế lực xấu đang lấn dần thế lực tốt, tình thế bất lợi.",
+ detail:"Bác là quẻ của sự suy sụp, giống như căn nhà bị mối mọt ăn dần từ móng. Dương khí (điều tốt đẹp, chính đạo) đang bị âm khí lấn át từng bước, không nên cố chống lại bằng sức mạnh trực diện lúc này.",
+ advice:"Trong thời vận xấu, nên giữ mình, tránh manh động đối đầu; nhẫn nại chờ thời cơ tự nhiên xoay chuyển."},
+{n:24,bin:"100000",name:"Địa Lôi Phục",
+ meaning:"Hồi phục — một vạch dương trở lại dưới năm vạch âm, khởi đầu mới sau chu kỳ suy thoái.",
+ detail:"Phục tượng trưng cho sự hồi sinh, như ngày đông chí khi khí dương bắt đầu quay trở lại. Đây là dấu hiệu tốt lành của sự khởi đầu lại sau khó khăn, nhưng còn rất nhỏ bé, cần được nuôi dưỡng cẩn thận.",
+ advice:"Tận dụng cơ hội mới vừa nhen nhóm, hành động từng bước nhỏ, thuận theo tự nhiên, không nóng vội đốt cháy giai đoạn."},
+{n:25,bin:"100111",name:"Thiên Lôi Vô Vọng",
+ meaning:"Không vọng động — hành xử chân thật theo lẽ tự nhiên, không mưu cầu giả dối.",
+ detail:"Vô Vọng dạy đạo lý sống thuận theo lẽ trời, không toan tính vụ lợi hay hành động trái với đạo đức. Làm đúng, làm thật thì tự nhiên có kết quả tốt; còn mưu tính sai trái dù khéo léo đến đâu cũng khó bền.",
+ advice:"Giữ lòng ngay thẳng, hành động vì mục đích chính đáng, đừng toan tính những điều trái với lương tâm."},
+{n:26,bin:"111001",name:"Sơn Thiên Đại Súc",
+ meaning:"Tích lũy lớn — nuôi dưỡng nội lực, đức độ và tài năng lớn để chuẩn bị cho việc trọng đại.",
+ detail:"Đại Súc là giai đoạn bồi đắp sâu rộng hơn Tiểu Súc, ví như núi chứa được cả bầu trời bên trong. Cần thời gian trau dồi học vấn, đạo đức và các mối quan hệ trước khi thi triển tài năng ra bên ngoài.",
+ advice:"Đầu tư nghiêm túc cho việc học hỏi, rèn luyện bản thân; thành quả lớn cần một quá trình tích lũy xứng đáng."},
+{n:27,bin:"100001",name:"Sơn Lôi Di",
+ meaning:"Nuôi dưỡng — như cái miệng nuôi thân, cần cẩn trọng cả lời nói lẫn việc ăn uống, sinh dưỡng.",
+ detail:"Di bàn về đạo nuôi dưỡng: nuôi thân thể bằng ăn uống điều độ, nuôi tâm trí và đức hạnh bằng lời nói cẩn trọng và học vấn đúng đắn. Nuôi ai, nuôi thế nào cho đúng đạo lý cũng là điều cần xét.",
+ advice:"Chú ý giữ gìn sức khỏe và lời ăn tiếng nói; chăm lo nuôi dưỡng người khác một cách đúng đắn, không thiên lệch."},
+{n:28,bin:"011110",name:"Trạch Phong Đại Quá",
+ meaning:"Quá độ lớn — tình thế căng thẳng như xà nhà oằn xuống vì gánh quá nặng.",
+ detail:"Đại Quá diễn tả trạng thái vượt mức bình thường, gốc và ngọn đều yếu trong khi phần giữa quá nặng — dễ đổ vỡ nếu không xử lý khéo. Đây là lúc cần hành động phi thường nhưng phải hết sức thận trọng.",
+ advice:"Nếu buộc phải hành động trong tình thế khó khăn quá tải, hãy cân nhắc kỹ, tìm sự trợ giúp, tránh liều lĩnh một mình."},
+{n:29,bin:"010010",name:"Thuần Khảm",
+ meaning:"Hiểm nạn chồng chất — nước sâu nối tiếp nước sâu, khó khăn nối tiếp khó khăn.",
+ detail:"Khảm là quẻ của sự hiểm nguy lặp lại, nhưng cũng tượng trưng cho dòng nước luôn chảy không ngừng, biết lối thoát dù gian nan. Giữ được lòng thành tín kiên định chính là chìa khóa vượt qua hiểm cảnh.",
+ advice:"Đối diện khó khăn với sự bình tĩnh và lòng tin chắc chắn vào lẽ phải; đi từng bước cẩn trọng thay vì hoảng loạn."},
+{n:30,bin:"101101",name:"Thuần Ly",
+ meaning:"Nương tựa, sáng rực — ánh lửa cần có vật để bám vào mới cháy sáng lâu dài.",
+ detail:"Ly tượng trưng cho ánh sáng, trí tuệ và sự lệ thuộc chính đáng: lửa phải bám vào củi, con người phải nương vào chính đạo và cộng đồng mới phát huy được năng lực của mình.",
+ advice:"Tìm chỗ dựa hoặc nguyên tắc sống đúng đắn để nương theo, dùng trí sáng suốt soi rọi vấn đề trước khi hành động."},
+{n:31,bin:"001110",name:"Trạch Sơn Hàm",
+ meaning:"Cảm ứng — sự rung động, giao cảm chân thành giữa hai bên, tiêu biểu cho tình cảm nam nữ, đôi bên.",
+ detail:"Hàm là quẻ đầu tiên của phần hạ kinh, nói về sự cảm ứng tự nhiên khi âm dương giao hòa với lòng chân thành, không vụ lợi. Cảm ứng đúng đắn mở đầu cho mọi mối quan hệ bền vững.",
+ advice:"Trong tình cảm hay hợp tác, hãy chân thành mở lòng trước, để sự rung cảm tự nhiên dẫn dắt mối quan hệ phát triển."},
+{n:32,bin:"011100",name:"Lôi Phong Hằng",
+ meaning:"Bền lâu — đạo vợ chồng, đạo làm việc cần sự kiên trì, giữ vững lâu dài.",
+ detail:"Hằng tiếp theo Hàm, nói về việc duy trì mối quan hệ hay sự nghiệp đã được thiết lập một cách bền vững, không đổi thay theo thời tiết lòng người. Bền không có nghĩa là cứng nhắc, mà là kiên định trong nguyên tắc.",
+ advice:"Giữ vững cam kết và nguyên tắc đã đặt ra, kiên trì theo đuổi mục tiêu lâu dài thay vì thay đổi thất thường."},
+{n:33,bin:"001111",name:"Thiên Sơn Độn",
+ meaning:"Lui ẩn — khi thế lực xấu đang lên, người quân tử nên rút lui đúng lúc để giữ khí tiết.",
+ detail:"Độn không phải là trốn tránh hèn nhát mà là sự khôn ngoan biết thời: khi hoàn cảnh không thuận, rút lui có chiến lược để bảo toàn giá trị và chờ thời cơ khác tốt hơn là cố chấp ở lại chịu tổn hại.",
+ advice:"Nếu nhận thấy hoàn cảnh không còn thuận lợi, hãy chủ động lui về đúng lúc, đừng cố bám víu đến mức thiệt thân."},
+{n:34,bin:"111100",name:"Lôi Thiên Đại Tráng",
+ meaning:"Hùng tráng lớn mạnh — sức mạnh dương khí đang thịnh, nhưng cần giữ đúng lễ, tránh lạm dụng sức mạnh.",
+ detail:"Đại Tráng là lúc sức lực, thế lực đang ở đỉnh cao, dễ sinh tâm lý cậy mạnh làm liều. Kinh Dịch nhắc rằng sức mạnh chân chính phải đi cùng với lễ nghĩa và sự chừng mực, nếu không sẽ như dê húc giậu, mắc kẹt.",
+ advice:"Có thực lực là điều tốt, nhưng hãy dùng đúng lúc đúng chỗ và giữ lễ độ, tránh phô trương sức mạnh một cách thiếu kiềm chế."},
+{n:35,bin:"000101",name:"Hỏa Địa Tấn",
+ meaning:"Tiến lên — ánh sáng mặt trời vươn lên trên mặt đất, thời cơ thuận lợi để phát triển sự nghiệp.",
+ detail:"Tấn tượng trưng cho sự thăng tiến rõ ràng, được người trên tin dùng và nâng đỡ. Đây là giai đoạn thuận lợi để thể hiện năng lực, mở rộng và tiến bước một cách quang minh chính đại.",
+ advice:"Nắm bắt thời cơ để tiến bước, thể hiện năng lực một cách minh bạch, xây dựng uy tín với người có thể nâng đỡ mình."},
+{n:36,bin:"101000",name:"Địa Hỏa Minh Di",
+ meaning:"Ánh sáng bị tổn thương — mặt trời lặn xuống dưới đất, thời kỳ tăm tối, tài năng bị vùi dập.",
+ detail:"Minh Di ngược với Tấn: ánh sáng (trí tuệ, chính nghĩa) bị che khuất bởi bóng tối (gian tà, nghịch cảnh). Đây là lúc người hiền tài dễ bị hiểu lầm hay chèn ép, cần biết giấu bớt tài năng để tự bảo vệ.",
+ advice:"Trong nghịch cảnh, nên giữ kín tài năng và chí hướng, âm thầm giữ vững đạo đức, chờ thời cơ sáng sủa hơn."},
+{n:37,bin:"101011",name:"Phong Hỏa Gia Nhân",
+ meaning:"Đạo gia đình — mỗi người trong nhà giữ đúng vị trí, bổn phận của mình thì gia đạo yên ấm.",
+ detail:"Gia Nhân bàn về trật tự và sự hòa thuận trong gia đình: cha ra cha, con ra con, chồng ra chồng, vợ ra vợ, mỗi người làm tròn vai trò của mình một cách chân thành thì cả nhà mới yên vui, bền vững.",
+ advice:"Xây dựng gia đình hay tập thể vững mạnh bằng cách mỗi người tự giác làm tốt vai trò, bổn phận của bản thân trước tiên."},
+{n:38,bin:"110101",name:"Hỏa Trạch Khuê",
+ meaning:"Trái ngược, chia lìa — hai bên tuy khác biệt về hình thức nhưng vẫn có thể tìm điểm chung.",
+ detail:"Khuê nói về sự bất đồng, xa cách trong quan điểm hay tình cảm, nhưng không hẳn là xấu tuyệt đối — nếu biết tìm những điểm tương đồng nhỏ để kết nối dần, sự khác biệt vẫn có thể được hóa giải theo thời gian.",
+ advice:"Khi có bất đồng, đừng vội cắt đứt hoàn toàn; hãy kiên nhẫn tìm điểm chung nhỏ để dần dần hàn gắn mối quan hệ."},
+{n:39,bin:"001010",name:"Thủy Sơn Kiển",
+ meaning:"Khó khăn, trắc trở — phía trước là nước sâu, sau lưng là núi cao, bước đi đầy hiểm trở.",
+ detail:"Kiển diễn tả hoàn cảnh bị vây khốn tứ bề, tiến thoái đều khó. Lời khuyên của Kinh Dịch trong quẻ này là nên dừng lại, tự xét mình, và tìm đến người hiền đức, có kinh nghiệm để được trợ giúp thay vì cố xông pha một mình.",
+ advice:"Gặp trở ngại lớn, hãy tạm dừng để suy xét kỹ, chủ động tìm người có năng lực giúp đỡ thay vì đơn độc xoay xở."},
+{n:40,bin:"010100",name:"Lôi Thủy Giải",
+ meaning:"Giải trừ khó khăn — sấm động và mưa xuống, những vướng mắc trước đó bắt đầu được tháo gỡ.",
+ detail:"Giải tiếp sau Kiển, báo hiệu thời điểm khó khăn dần qua đi, những nút thắt được cởi bỏ. Đây là lúc nên khoan dung, tha thứ lỗi lầm cũ, nhanh chóng ổn định lại và tiến về phía trước.",
+ advice:"Khi tình hình đã dễ chịu hơn, hãy nhanh chóng giải quyết dứt điểm việc còn tồn đọng và rộng lòng bỏ qua hiềm khích cũ."},
+{n:41,bin:"110001",name:"Sơn Trạch Tổn",
+ meaning:"Giảm bớt — bớt ở dưới để bồi đắp cho trên, cần tiết chế lòng tham và giữ sự thành tín.",
+ detail:"Tổn nói về sự hy sinh, cắt giảm một phần vì lợi ích lớn hơn hoặc vì đạo nghĩa. Giảm bớt không phải lúc nào cũng xấu, nếu xuất phát từ tấm lòng chân thành thì vẫn mang lại kết quả tốt đẹp.",
+ advice:"Sẵn sàng bớt đi những ham muốn hoặc lợi ích trước mắt nếu điều đó phục vụ mục tiêu lớn hơn và giữ được lòng tin của người khác."},
+{n:42,bin:"100011",name:"Phong Lôi Ích",
+ meaning:"Tăng ích — bớt ở trên để làm lợi cho dưới, thời cơ thuận lợi để hành động và giúp đỡ người khác.",
+ detail:"Ích ngược với Tổn: khi người trên biết san sẻ lợi ích cho người dưới, lòng dân quy phục, mọi việc hanh thông. Đây là quẻ khuyến khích hành động tích cực, làm việc có ích cho cộng đồng.",
+ advice:"Đây là thời điểm tốt để đầu tư, hành động và chia sẻ lợi ích với người xung quanh; hào phóng đúng lúc sẽ mang lại kết quả lớn hơn."},
+{n:43,bin:"111110",name:"Trạch Thiên Quải",
+ meaning:"Quyết đoán trừ bỏ — cần cương quyết loại trừ điều xấu, nhưng vẫn phải giữ lễ độ và cẩn trọng.",
+ detail:"Quải là quẻ của sự quyết đoán khi cái xấu (một hào âm) chỉ còn sót lại rất ít trước năm hào dương. Tuy có ưu thế áp đảo, vẫn cần hành động đúng cách, công khai minh bạch, tránh nóng vội gây phản tác dụng.",
+ advice:"Khi cần loại bỏ điều tiêu cực còn sót lại, hãy hành động dứt khoát nhưng vẫn giữ đúng nguyên tắc và sự công bằng."},
+{n:44,bin:"011111",name:"Thiên Phong Cấu",
+ meaning:"Gặp gỡ — một hào âm bắt đầu xuất hiện dưới năm hào dương, cần đề phòng ảnh hưởng xấu len lỏi.",
+ detail:"Cấu là sự gặp gỡ bất ngờ, thường ám chỉ những yếu tố bất lợi hoặc kẻ tiểu nhân mới xuất hiện, còn nhỏ nhưng có thể phát triển nếu không được để ý sớm. Cần cảnh giác ngay từ đầu để tránh hậu họa về sau.",
+ advice:"Chú ý đến những dấu hiệu bất ổn nhỏ ngay khi mới xuất hiện; đừng chủ quan cho rằng chúng không đáng kể."},
+{n:45,bin:"000110",name:"Trạch Địa Tụy",
+ meaning:"Tụ họp — mọi người quy tụ lại với nhau, cần có người lãnh đạo đức độ để giữ sự đoàn kết.",
+ detail:"Tụy nói về việc quy tụ đông người, của cải hay ý chí lại một mối. Sự tụ họp lớn dễ nảy sinh phức tạp, nên cần có người đứng đầu chính trực, biết dùng lễ nghĩa để giữ trật tự và lòng tin của mọi người.",
+ advice:"Khi tập hợp lực lượng hay xây dựng tập thể, hãy chú trọng sự công bằng, minh bạch và uy tín để giữ mọi người gắn bó lâu dài."},
+{n:46,bin:"011000",name:"Địa Phong Thăng",
+ meaning:"Thăng tiến dần dần — như cây non mọc lên từ đất, cần kiên trì từng bước để đi lên vững chắc.",
+ detail:"Thăng khác với sự thăng tiến đột ngột, đây là quá trình đi lên chậm rãi nhưng chắc chắn, dựa trên nền tảng đã được vun đắp. Kiên trì và đúng hướng là yếu tố quyết định thành công lâu dài.",
+ advice:"Đặt mục tiêu dài hạn và kiên trì theo đuổi từng bước nhỏ, không nóng vội đốt cháy giai đoạn để mong thành công tức thời."},
+{n:47,bin:"010110",name:"Trạch Thủy Khốn",
+ meaning:"Khốn cùng — nước rút cạn dưới đầm, hoàn cảnh bế tắc, khó khăn bủa vây tứ phía.",
+ detail:"Khốn là lúc gặp nghịch cảnh nghiêm trọng, nguồn lực cạn kiệt, lời nói khó được tin tưởng. Kinh Dịch dạy rằng trong lúc khốn cùng, người quân tử vẫn giữ được chí khí và lòng thành thì cuối cùng sẽ vượt qua.",
+ advice:"Giữ vững niềm tin và phẩm giá ngay cả khi hoàn cảnh khó khăn nhất; đừng vì túng quẫn mà đánh mất nguyên tắc sống."},
+{n:48,bin:"011010",name:"Thủy Phong Tỉnh",
+ meaning:"Giếng nước — nguồn nuôi dưỡng chung, cần được khơi thông và tu sửa để duy trì lợi ích lâu dài.",
+ detail:"Tỉnh ví việc phục vụ cộng đồng như cái giếng: giếng có thể đổi chủ, đổi làng, nhưng bản chất nuôi dưỡng của nó không đổi. Nếu giếng bị bỏ bê, ô nhiễm hoặc chưa đào đến mạch nước thì công dụng chưa trọn vẹn.",
+ advice:"Duy trì và tu sửa những nền tảng phục vụ lâu dài (kiến thức, uy tín, hệ thống); đừng bỏ dở giữa chừng khi gần đạt kết quả."},
+{n:49,bin:"101110",name:"Trạch Hỏa Cách",
+ meaning:"Cải cách — thay đổi cần thiết khi thời thế đã chín muồi, như lột xác để đổi mới.",
+ detail:"Cách là quẻ của sự đổi mới, cách mạng, nói về việc dứt bỏ cái cũ không còn phù hợp để xây dựng cái mới tốt đẹp hơn. Cải cách chỉ thành công khi đúng thời điểm, đúng lý do chính đáng và được lòng người ủng hộ.",
+ advice:"Nếu thấy sự thay đổi là cần thiết, hãy chuẩn bị kỹ lưỡng và chọn đúng thời điểm để thực hiện, tránh cải cách nửa vời hoặc quá vội vàng."},
+{n:50,bin:"011101",name:"Hỏa Phong Đỉnh",
+ meaning:"Cái đỉnh (vạc) — công cụ nấu chín thức ăn, tượng trưng cho việc đổi cũ ra mới, dùng người hiền tài.",
+ detail:"Đỉnh tiếp sau Cách, nói về giai đoạn xây dựng và ổn định sau cải cách, giống như dùng vạc nấu chín thức ăn nuôi người hiền. Thành công của giai đoạn này phụ thuộc vào việc trọng dụng đúng người tài đức.",
+ advice:"Sau khi đổi mới, hãy chú trọng xây dựng bộ máy vững chắc và tin dùng người có năng lực, đạo đức để duy trì thành quả."},
+{n:51,bin:"100100",name:"Thuần Chấn",
+ meaning:"Kinh động — sấm sét vang động liên tiếp, một biến cố bất ngờ khiến lòng người chấn động.",
+ detail:"Chấn nói về những cú sốc, biến động bất ngờ trong cuộc sống. Người quân tử khi gặp kinh động không hoảng loạn mà nhân đó tự xét lại mình, giữ được sự điềm tĩnh giữa cơn biến động thì tai họa sẽ hóa nhỏ.",
+ advice:"Khi gặp biến cố bất ngờ, hãy giữ bình tĩnh, tự nhìn lại bản thân và hoàn cảnh trước khi phản ứng vội vàng."},
+{n:52,bin:"001001",name:"Thuần Cấn",
+ meaning:"Dừng lại — núi đứng yên, biết dừng đúng lúc đúng chỗ, giữ tâm tĩnh lặng.",
+ detail:"Cấn dạy đạo lý biết dừng: dừng đúng nơi, đúng lúc, đúng việc thì mới an ổn, cũng như núi đứng vững một chỗ không lay chuyển. Sự tĩnh lặng nội tâm là gốc rễ để nhìn nhận sự việc sáng suốt.",
+ advice:"Biết lúc nào nên dừng lại, không tham lam tiến tới quá mức cần thiết; giữ tâm tĩnh để suy xét trước khi hành động tiếp."},
+{n:53,bin:"001011",name:"Phong Sơn Tiệm",
+ meaning:"Tiến dần theo trình tự — như chim nhạn bay từng chặng, mọi việc cần tuần tự mới bền vững.",
+ detail:"Tiệm là sự phát triển từ từ, có trật tự, không đốt cháy giai đoạn — đặc biệt phù hợp để nói về hôn nhân, sự nghiệp cần xây dựng lâu dài. Đi đúng trình tự thì kết quả mới chắc chắn và lâu bền.",
+ advice:"Lập kế hoạch theo từng giai đoạn rõ ràng, kiên nhẫn thực hiện tuần tự thay vì mong muốn đạt kết quả ngay lập tức."},
+{n:54,bin:"110100",name:"Lôi Trạch Quy Muội",
+ meaning:"Gả em gái về nhà chồng — việc diễn ra không theo đúng trình tự chính danh, cần đặc biệt thận trọng.",
+ detail:"Quy Muội nói về những mối quan hệ hay tình huống không ở vị trí chính đáng, hợp lẽ thường (như phận thứ thiếp), dễ gặp trắc trở nếu không biết giữ đúng lễ nghĩa và chừng mực trong ứng xử.",
+ advice:"Trong hoàn cảnh không hoàn toàn chính danh hoặc thuận lợi, càng cần giữ đúng lễ nghĩa và sự chừng mực để tránh rắc rối về sau."},
+{n:55,bin:"101100",name:"Lôi Hỏa Phong",
+ meaning:"Thịnh đại, phong phú — sấm và chớp cùng lúc, tượng trưng cho đỉnh cao thịnh vượng.",
+ detail:"Phong là lúc mọi thứ đạt đến độ sung mãn, rực rỡ nhất, nhưng đúng quy luật thịnh cực tất suy, cổ nhân khuyên nên tỉnh táo giữ gìn đức độ ngay giữa lúc đang thịnh để tránh sa sút về sau.",
+ advice:"Khi đang ở đỉnh cao thành công, hãy tỉnh táo nhìn xa và chuẩn bị cho những biến chuyển có thể đến, đừng chủ quan mãi mãi."},
+{n:56,bin:"001101",name:"Hỏa Sơn Lữ",
+ meaning:"Lữ hành — đi xa, ở đất khách quê người, cần khiêm nhường và cẩn trọng vì không có chỗ dựa quen thuộc.",
+ detail:"Lữ nói về hoàn cảnh phải sống hoặc làm việc xa nơi quen thuộc, không có nền tảng vững chắc như ở nhà. Người lữ hành khôn ngoan phải biết cư xử đúng mực, tránh gây thù chuốc oán nơi đất khách.",
+ advice:"Trong môi trường mới hoặc xa lạ, hãy giữ thái độ khiêm tốn, thận trọng trong lời nói và hành động để tránh rủi ro không đáng có."},
+{n:57,bin:"011011",name:"Thuần Tốn",
+ meaning:"Thuận theo — gió len lỏi khắp nơi, đức nhu thuận và kiên trì đạt được mục đích một cách âm thầm.",
+ detail:"Tốn là gió, biểu tượng cho sự thuận theo mềm mỏng nhưng bền bỉ, có thể len lỏi vào mọi ngóc ngách để đạt hiệu quả lâu dài, khác với sự cứng rắn đối đầu trực diện.",
+ advice:"Dùng sự mềm mỏng, kiên trì và khéo léo để thuyết phục hoặc đạt mục tiêu, thay vì ép buộc hay đối đầu trực tiếp."},
+{n:58,bin:"110110",name:"Thuần Đoài",
+ meaning:"Vui vẻ, hòa duyệt — niềm vui chân chính từ sự chan hòa, cần giữ chính đạo giữa lúc vui vẻ.",
+ detail:"Đoài tượng trưng cho niềm vui, sự giao tiếp cởi mở, nhưng Kinh Dịch nhắc rằng niềm vui phải xuất phát từ điều chính đáng, tránh a dua, nịnh hót hay vui chơi thái quá làm mất đi sự sáng suốt.",
+ advice:"Tận hưởng niềm vui trong giao tiếp và các mối quan hệ, nhưng giữ sự tỉnh táo, tránh lời nói xu nịnh hoặc vui chơi quá đà."},
+{n:59,bin:"010011",name:"Phong Thủy Hoán",
+ meaning:"Ly tán, phân tán — lòng người rời rạc, cần biện pháp quy tụ lại bằng đức tin và lễ nghĩa.",
+ detail:"Hoán nói về tình trạng phân tán, rời rạc của lòng người hoặc tổ chức. Để hàn gắn, người lãnh đạo cần dùng sự chân thành, lễ nghĩa và các nghi thức mang tính biểu tượng để quy tụ lại niềm tin chung.",
+ advice:"Khi thấy tập thể hoặc mối quan hệ có dấu hiệu rời rạc, hãy chủ động dùng sự chân thành và các hoạt động gắn kết để hàn gắn lại."},
+{n:60,bin:"110010",name:"Thủy Trạch Tiết",
+ meaning:"Tiết chế — biết giới hạn, có chừng mực trong mọi việc thì mới bền vững lâu dài.",
+ detail:"Tiết ví như đầm nước cần có bờ để giữ nước lại, cuộc sống cũng cần những giới hạn hợp lý (chi tiêu, cảm xúc, hành vi) để không đi đến chỗ tràn lan, hao tổn. Tiết chế quá mức cũng không tốt, cần vừa phải.",
+ advice:"Đặt ra giới hạn hợp lý cho bản thân trong chi tiêu, cảm xúc hoặc công việc; điều độ vừa phải sẽ giúp duy trì lâu bền hơn là buông thả hay khắc nghiệt quá mức."},
+{n:61,bin:"110011",name:"Phong Trạch Trung Phu",
+ meaning:"Lòng thành tín ở giữa — sự chân thành xuất phát từ tâm có thể cảm hóa được cả những điều khó lay chuyển.",
+ detail:"Trung Phu nói về đức tin chân thành, xuất phát từ nội tâm chứ không phải hình thức bên ngoài. Lòng thành thật sự có thể cảm hóa được cả loài vật, huống chi là con người, và mang lại sự tin cậy bền vững.",
+ advice:"Hãy hành xử bằng sự chân thành thực sự từ trong lòng; sự tin cậy chân thật luôn có sức thuyết phục hơn mọi lời hoa mỹ."},
+{n:62,bin:"001100",name:"Lôi Sơn Tiểu Quá",
+ meaning:"Việc nhỏ có thể vượt mức đôi chút — nên cẩn trọng làm việc nhỏ, không nên ôm đồm việc lớn lúc này.",
+ detail:"Tiểu Quá nói về việc hơi vượt quá mức thông thường nhưng chỉ ở phạm vi nhỏ, có thể chấp nhận được nếu giữ thái độ khiêm cung, cẩn trọng, giống như chim bay thấp thì an toàn hơn bay cao.",
+ advice:"Ưu tiên xử lý những việc nhỏ, cụ thể trước; tạm hoãn những kế hoạch quá lớn hoặc quá tham vọng vào lúc này."},
+{n:63,bin:"101010",name:"Thủy Hỏa Ký Tế",
+ meaning:"Đã hoàn thành — mọi việc đã xong xuôi, ổn định, nhưng cần đề phòng loạn sinh ra từ sự yên ổn.",
+ detail:"Ký Tế là quẻ duy nhất có đủ sáu hào đều đúng vị trí âm dương, tượng trưng cho sự hoàn thành viên mãn. Tuy vậy cổ nhân cảnh báo rằng thịnh cực tất suy, thành công trọn vẹn cũng tiềm ẩn nguy cơ chủ quan sinh loạn.",
+ advice:"Khi công việc đã hoàn thành tốt đẹp, đừng buông lỏng cảnh giác; tiếp tục giữ gìn cẩn thận để tránh những sai sót phát sinh sau đó."},
+{n:64,bin:"010101",name:"Hỏa Thủy Vị Tế",
+ meaning:"Chưa hoàn thành — gần đến đích nhưng chưa tới nơi, cần thận trọng đến phút cuối mới thành công.",
+ detail:"Vị Tế là quẻ cuối cùng của Kinh Dịch, các hào đều chưa đúng vị trí, biểu thị công việc còn dang dở. Đây không phải là điềm xấu tuyệt đối mà nhắc rằng vạn vật luôn vận động, chưa xong nghĩa là còn cơ hội hoàn thiện nếu kiên trì đến cùng.",
+ advice:"Đừng nản lòng khi việc chưa xong; hãy kiên trì thận trọng đến những bước cuối cùng, vì thành bại thường quyết định ở giai đoạn gần đích nhất."}
+];
+
+const HEX_BY_BIN = {};
+HEXAGRAMS.forEach(h => HEX_BY_BIN[h.bin] = h);
+
+function hexGlyph(n){ return String.fromCodePoint(0x4DC0 + (n - 1)); }
+function trigramOf(bin3){ return TRIGRAMS[bin3]; }
+
+/* ================= STARFIELD ================= */
+(function drawStars(){
+  const svg = document.getElementById('stars');
+  const W = window.innerWidth, H = window.innerHeight;
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  let html = '';
+  for(let i=0;i<90;i++){
+    const x = Math.random()*W, y = Math.random()*H*0.7;
+    const r = Math.random()*1.4 + 0.3;
+    const o = Math.random()*0.6 + 0.15;
+    html += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r.toFixed(2)}" fill="#e8c078" opacity="${o.toFixed(2)}"/>`;
+  }
+  svg.innerHTML = html;
+})();
+
+/* ================= CASTING LOGIC (phương pháp Tam Tiền) ================= */
+// Mỗi hào: gieo 3 đồng tiền. Mặt "ngửa/hình" = 2 điểm (âm), mặt "sấp/trơn" = 3 điểm (dương).
+// Tổng 6 = Lão Âm (động, đổi thành dương) | 7 = Thiếu Dương (tĩnh) | 8 = Thiếu Âm (tĩnh) | 9 = Lão Dương (động, đổi thành âm)
+function tossOneLine(){
+  let sum = 0;
+  const faces = [];
+  for(let i=0;i<3;i++){
+    const isYang = Math.random() < 0.5; // sấp = dương = 3 điểm
+    sum += isYang ? 3 : 2;
+    faces.push(isYang);
+  }
+  let value, moving;
+  if(sum === 6){ value = 0; moving = true; }       // lão âm
+  else if(sum === 7){ value = 1; moving = false; } // thiếu dương
+  else if(sum === 8){ value = 0; moving = false; } // thiếu âm
+  else { value = 1; moving = true; }               // lão dương (9)
+  return { value, moving, faces };
+}
+
+let state = 'idle'; // idle | tossing | result
+let currentLines = []; // {value, moving}
+
+const taijiBtn = document.getElementById('taijiBtn');
+const ctaLabel = document.getElementById('ctaLabel');
+const ctaHint = document.getElementById('ctaHint');
+const tossArea = document.getElementById('tossArea');
+const tossLabel = document.getElementById('tossLabel');
+const coinsEl = document.getElementById('coins');
+const hexStage = document.getElementById('hexStage');
+const linesCol = document.getElementById('linesCol');
+const resultEl = document.getElementById('result');
+const againBtn = document.getElementById('againBtn');
+
+taijiBtn.addEventListener('click', startCasting);
+againBtn.addEventListener('click', resetAll);
+
+function resetAll(){
+  state = 'idle';
+  currentLines = [];
+  linesCol.innerHTML = '';
+  resultEl.classList.remove('show');
+  hexStage.classList.remove('active');
+  tossArea.classList.remove('active');
+  againBtn.style.display = 'none';
+  taijiBtn.style.display = '';
+  ctaLabel.textContent = 'Chạm để Gieo Quẻ';
+  ctaHint.style.display = '';
+  taijiBtn.classList.remove('spinning');
+}
+
+async function startCasting(){
+  if(state !== 'idle') return;
+  state = 'tossing';
+  currentLines = [];
+  taijiBtn.classList.add('spinning');
+  ctaLabel.textContent = 'Đang thành tâm gieo quẻ…';
+  ctaHint.style.display = 'none';
+  tossArea.classList.add('active');
+  hexStage.classList.add('active');
+  linesCol.innerHTML = '';
+
+  for(let i=0;i<6;i++){
+    tossLabel.textContent = `Đang gieo hào ${i+1} / 6…`;
+    renderCoins();
+    await sleep(1150);
+    const line = tossOneLine();
+    currentLines.push(line);
+    appendLine(i, line);
+    await sleep(260);
+  }
+
+  tossArea.classList.remove('active');
+  taijiBtn.classList.remove('spinning');
+  taijiBtn.style.display = 'none';
+  ctaLabel.textContent = 'Quẻ đã hiện';
+  await sleep(350);
+  showResult();
+  state = 'result';
+  againBtn.style.display = '';
+}
+
+function sleep(ms){ return new Promise(r => setTimeout(r, ms)); }
+
+function renderCoins(){
+  coinsEl.innerHTML = '';
+  for(let i=0;i<3;i++){
+    const c = document.createElement('div');
+    c.className = 'coin';
+    c.style.animationDelay = (i*0.05)+'s';
+    c.textContent = '易';
+    coinsEl.appendChild(c);
+    // force reflow to restart animation each toss
+    void c.offsetWidth;
+  }
+}
+
+function appendLine(index, line){
+  const row = document.createElement('div');
+  row.className = 'line-row';
+  row.style.animationDelay = '0s';
+  const num = document.createElement('div');
+  num.className = 'line-num';
+  num.textContent = index+1;
+  const fig = document.createElement('div');
+  fig.className = 'line-figure ' + (line.value === 1 ? 'yang' : 'yin') + (line.moving ? ' moving' : '');
+  if(line.value === 1){
+    const bar = document.createElement('div');
+    bar.className = 'bar';
+    fig.appendChild(bar);
+  } else {
+    const bar1 = document.createElement('div'); bar1.className='bar';
+    const bar2 = document.createElement('div'); bar2.className='bar';
+    fig.appendChild(bar1); fig.appendChild(bar2);
+  }
+  if(line.moving){
+    const mark = document.createElement('div');
+    mark.className = 'move-mark';
+    mark.textContent = line.value === 1 ? '⊗' : '○';
+    fig.appendChild(mark);
+  }
+  row.appendChild(num);
+  row.appendChild(fig);
+  linesCol.appendChild(row);
+}
+
+function showResult(){
+  const bin = currentLines.map(l => l.value).join('');
+  const lower3 = bin.slice(0,3);
+  const upper3 = bin.slice(3,6);
+  const hex = HEX_BY_BIN[bin];
+  const lowerT = trigramOf(lower3);
+  const upperT = trigramOf(upper3);
+
+  document.getElementById('resGlyph').textContent = hexGlyph(hex.n);
+  document.getElementById('resNo').textContent = 'QUẺ SỐ ' + hex.n;
+  document.getElementById('resName').textContent = hex.name;
+  document.getElementById('resTrigrams').textContent =
+    `Thượng ${upperT.name} (${upperT.nature}) — Hạ ${lowerT.name} (${lowerT.nature})`;
+  document.getElementById('resMeaning').textContent = hex.meaning;
+  document.getElementById('resDetail').textContent = hex.detail;
+  document.getElementById('resAdvice').textContent = hex.advice;
+  document.getElementById('seal').textContent = hexGlyph(hex.n);
+
+  const movingIdx = currentLines.map((l,i)=> l.moving ? (i+1) : null).filter(x=>x);
+  const bianCard = document.getElementById('bianCard');
+  if(movingIdx.length > 0){
+    const bianBin = currentLines.map(l => l.moving ? (1 - l.value) : l.value).join('');
+    const bianHex = HEX_BY_BIN[bianBin];
+    document.getElementById('movingNote').textContent =
+      'Hào động: ' + movingIdx.join(', ') + ' — quẻ biến thành:';
+    document.getElementById('bianGlyph').textContent = hexGlyph(bianHex.n);
+    document.getElementById('bianName').textContent = `${bianHex.n}. ${bianHex.name}`;
+    document.getElementById('bianMeaning').textContent = bianHex.meaning;
+    bianCard.style.display = '';
+  } else {
+    bianCard.style.display = 'none';
+  }
+
+  resultEl.classList.add('show');
+}
+</script>
+</body>
+</html>

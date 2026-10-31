@@ -1,0 +1,9 @@
+# Nâng lên 18/09/2026 để dứt 11 lỗ hổng pip-audit báo (task 6.2): python-multipart 0.0.20 dính
+# 6 lỗi phân tích multipart (DoS preamble/epilogue, header, Content-Length âm) — ứng dụng có 3
+# endpoint nhận file nên đây là đường tấn công thật; starlette 0.49.3 dính 5 lỗi, đáng kể nhất
+# là không kiểm Host header và không áp giới hạn form cho x-www-form-urlencoded.
+fastapi==0.141.1
+uvicorn[standard]==0.53.0
+psycopg[binary]==3.3.5
+python-multipart==0.0.32
+openpyxl==3.1.5

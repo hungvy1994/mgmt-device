@@ -1,0 +1,13 @@
+{
+  "project": "mgmt-device",
+  "displayName": "Device Management",
+  "team": "sa",
+  "owner": "vydh",
+  "ownerEmail": "vydh@matbao.com",
+  "phase": "1-discovery",
+  "nextPhase": "2-imvp",
+  "updatedAt": "2026-09-09T16:14:31+07:00",
+  "docs": { "PRD": "docs/PRD.md", "ARCH": "docs/ARCH.md", "PLAN": "docs/PLAN.md", "README": "README.md", "CLAUDE": "CLAUDE.md" },
+  "imvpScope": "Mo hinh vi tri Site -> Phong may -> Rack -> Thiet bi",
+  "gates": { "gate1": "pending", "gate2": "pending" }
+}

@@ -1,0 +1,730 @@
+﻿asset_id,event_sequence,event_type,event_date,location,usage_object,declared_transition_count,source_column,source_row,review_flags
+SSD-2TB-001,0,handover_received,2023-10-04,,,2,K,3,handover_location_unknown
+SSD-2TB-001,1,usage_stage_1,2023-10-04,ODS,MBO,2,S/T/U,3,
+SSD-2TB-001,2,usage_stage_2,2024-06-13,,Cluster9,2,V/W/X/Y,3,history_tuple_incomplete;missing_event_location
+SSD-2TB-002,0,handover_received,2023-10-04,,,2,K,4,handover_location_unknown
+SSD-2TB-002,1,usage_stage_1,2023-10-04,ODS,MBO,2,S/T/U,4,
+SSD-2TB-002,2,usage_stage_2,2024-06-13,,Cluster9,2,V/W/X/Y,4,history_tuple_incomplete;missing_event_location
+SSD-2TB-003,0,handover_received,2023-10-04,,,2,K,5,handover_location_unknown
+SSD-2TB-003,1,usage_stage_1,2023-10-04,ODS,MBO,2,S/T/U,5,
+SSD-2TB-003,2,usage_stage_2,2024-06-13,,Cluster9,2,V/W/X/Y,5,history_tuple_incomplete;missing_event_location
+SSD-2TB-004,0,handover_received,2023-10-04,,,2,K,6,handover_location_unknown
+SSD-2TB-004,1,usage_stage_1,2023-10-04,ODS,MBO,2,S/T/U,6,
+SSD-2TB-004,2,usage_stage_2,2024-06-13,,Cluster9,2,V/W/X/Y,6,history_tuple_incomplete;missing_event_location
+SSD-2TB-005,0,handover_received,2023-10-04,,,2,K,7,handover_location_unknown
+SSD-2TB-005,1,usage_stage_1,2023-10-04,ODS,MBO,2,S/T/U,7,
+SSD-2TB-005,2,usage_stage_2,2024-06-13,,Cluster9,2,V/W/X/Y,7,history_tuple_incomplete;missing_event_location
+SSD-2TB-006,0,handover_received,2023-10-04,,,2,K,8,handover_location_unknown
+SSD-2TB-006,1,usage_stage_1,2023-10-04,ODS,MBO,2,S/T/U,8,
+SSD-2TB-006,2,usage_stage_2,2024-06-13,,Cluster9,2,V/W/X/Y,8,history_tuple_incomplete;missing_event_location
+SSD-2TB-007,0,handover_received,2023-10-04,,,1,K,9,handover_location_unknown
+SSD-2TB-007,1,usage_stage_1,2023-10-04,ODS,MBO,1,S/T/U,9,
+SSD-2TB-007,2,usage_stage_2,2024-04-01,,ClusterX1,1,V/W/X/Y,9,history_tuple_incomplete;missing_event_location
+SSD-2TB-008,0,handover_received,2023-10-04,,,1,K,10,handover_location_unknown
+SSD-2TB-008,1,usage_stage_1,2023-10-04,ODS,MBO,1,S/T/U,10,
+SSD-2TB-008,2,usage_stage_2,2024-04-01,,ClusterX1,1,V/W/X/Y,10,history_tuple_incomplete;missing_event_location
+SSD-2TB-009,0,handover_received,2023-10-04,,,1,K,11,handover_location_unknown
+SSD-2TB-009,1,usage_stage_1,2023-10-04,ODS,MBO,1,S/T/U,11,
+SSD-2TB-009,2,usage_stage_2,2024-04-01,,ClusterX1,1,V/W/X/Y,11,history_tuple_incomplete;missing_event_location
+SSD-2TB-010,0,handover_received,2023-10-04,,,1,K,12,handover_location_unknown
+SSD-2TB-010,1,usage_stage_1,2023-10-04,ODS,MBO,1,S/T/U,12,
+SSD-2TB-010,2,usage_stage_2,2024-04-01,,ClusterX1,1,V/W/X/Y,12,history_tuple_incomplete;missing_event_location
+SSD-2TB-011,0,handover_received,2023-10-04,,,1,K,13,handover_location_unknown
+SSD-2TB-011,1,usage_stage_1,2023-10-04,ODS,MBO,1,S/T/U,13,
+SSD-2TB-011,2,usage_stage_2,2024-04-01,,ClusterX1,1,V/W/X/Y,13,history_tuple_incomplete;missing_event_location
+SSD-2TB-012,0,handover_received,2023-10-04,,,1,K,14,handover_location_unknown
+SSD-2TB-012,1,usage_stage_1,2023-10-04,ODS,MBO,1,S/T/U,14,
+SSD-2TB-012,2,usage_stage_2,2024-04-01,,ClusterX1,1,V/W/X/Y,14,history_tuple_incomplete;missing_event_location
+SW-J6-12,0,handover_received,2023-10-04,,,1,K,15,handover_location_unknown
+SW-J6-12,1,usage_stage_1,2023-10-04,ODS,MBO,1,S/T/U,15,
+SW-J6-12,2,usage_stage_2,2025-12-17,Kho,,1,V/W/X/Y,15,history_tuple_incomplete;missing_usage_object
+SW-J6-13,0,handover_received,2023-10-04,,,1,K,16,handover_location_unknown
+SW-J6-13,1,usage_stage_1,2023-10-04,ODS,MBO,1,S/T/U,16,
+SW-J6-13,2,usage_stage_2,2025-12-17,Kho,,1,V/W/X/Y,16,history_tuple_incomplete;missing_usage_object
+SVR-P7-3839,0,handover_received,2023-05-04,,,,K,17,handover_location_unknown
+SVR-P7-3839,1,usage_stage_1,2024-05-04,CMC Tân Thuận,Email,,S/T/U,17,
+SVR-P7-3637,0,handover_received,2023-05-04,,,,K,18,handover_location_unknown
+SVR-P7-3637,1,usage_stage_1,2024-05-04,CMC Tân Thuận,Email,,S/T/U,18,
+SVR-P7-3334,0,handover_received,2023-05-04,,,,K,19,handover_location_unknown
+SVR-P7-3334,1,usage_stage_1,2024-05-04,CMC Tân Thuận,Email,,S/T/U,19,
+SVR-P7-3132,0,handover_received,2023-05-04,,,,K,20,handover_location_unknown
+SVR-P7-3132,1,usage_stage_1,2024-05-04,CMC Tân Thuận,Email,,S/T/U,20,
+SVR-P7-2829,0,handover_received,2023-05-04,,,,K,21,handover_location_unknown
+SVR-P7-2829,1,usage_stage_1,2024-05-04,CMC Tân Thuận,Email,,S/T/U,21,
+SVR-P7-2627,0,handover_received,2023-05-04,,,,K,22,handover_location_unknown
+SVR-P7-2627,1,usage_stage_1,2024-05-04,CMC Tân Thuận,Email,,S/T/U,22,
+SVR-P7-2324,0,handover_received,2023-05-04,,,,K,23,handover_location_unknown
+SVR-P7-2324,1,usage_stage_1,2024-05-04,CMC Tân Thuận,Email,,S/T/U,23,
+SSD-8TB-001,0,handover_received,2023-05-04,,,,K,24,handover_location_unknown
+SSD-8TB-001,1,usage_stage_1,2024-05-04,CMC Tân Thuận,Email,,S/T/U,24,
+SSD-8TB-002,0,handover_received,2023-05-04,,,,K,25,handover_location_unknown
+SSD-8TB-002,1,usage_stage_1,2024-05-04,CMC Tân Thuận,Email,,S/T/U,25,
+SSD-8TB-003,0,handover_received,2023-05-04,,,,K,26,handover_location_unknown
+SSD-8TB-003,1,usage_stage_1,2024-05-04,CMC Tân Thuận,Email,,S/T/U,26,
+SSD-8TB-004,0,handover_received,2023-05-04,,,,K,27,handover_location_unknown
+SSD-8TB-004,1,usage_stage_1,2024-05-04,CMC Tân Thuận,Email,,S/T/U,27,
+SSD-8TB-005,0,handover_received,2023-05-04,,,,K,28,handover_location_unknown
+SSD-8TB-005,1,usage_stage_1,2024-05-04,CMC Tân Thuận,Email,,S/T/U,28,
+SSD-8TB-006,0,handover_received,2023-05-04,,,,K,29,handover_location_unknown
+SSD-8TB-006,1,usage_stage_1,2024-05-04,CMC Tân Thuận,Email,,S/T/U,29,
+SSD-8TB-007,0,handover_received,2023-05-04,,,,K,30,handover_location_unknown
+SSD-8TB-007,1,usage_stage_1,2024-05-04,CMC Tân Thuận,Email,,S/T/U,30,
+SSD-8TB-008,0,handover_received,2023-05-04,,,,K,31,handover_location_unknown
+SSD-8TB-008,1,usage_stage_1,2024-05-04,CMC Tân Thuận,Email,,S/T/U,31,
+SSD-8TB-009,0,handover_received,2023-05-04,,,,K,32,handover_location_unknown
+SSD-8TB-009,1,usage_stage_1,2024-05-04,CMC Tân Thuận,Email,,S/T/U,32,
+SSD-8TB-010,0,handover_received,2023-05-04,,,,K,33,handover_location_unknown
+SSD-8TB-010,1,usage_stage_1,2024-05-04,CMC Tân Thuận,Email,,S/T/U,33,
+SSD-240-001,0,handover_received,2023-05-04,Kho,,,K,34,
+SSD-240-002,0,handover_received,2023-05-04,Kho,,,K,35,
+SSD-240-003,0,handover_received,2023-05-04,Kho,,,K,36,
+SSD-240-004,0,handover_received,2023-05-04,Kho,,,K,37,
+SSD-960-001,0,handover_received,2023-05-04,,,,K,38,handover_location_unknown
+SSD-960-001,1,usage_stage_1,2024-05-04,VNPT Tân Thuận,MBIN & MBCA,,S/T/U,38,
+SSD-960-002,0,handover_received,2023-05-04,,,,K,39,handover_location_unknown
+SSD-960-002,1,usage_stage_1,2024-05-04,VNPT Tân Thuận,MBIN & MBCA,,S/T/U,39,
+SSD-960-003,0,handover_received,2023-05-04,,,,K,40,handover_location_unknown
+SSD-960-003,1,usage_stage_1,2024-05-04,VNPT Tân Thuận,MBIN & MBCA,,S/T/U,40,
+SSD-960-004,0,handover_received,2023-05-04,,,,K,41,handover_location_unknown
+SSD-960-004,1,usage_stage_1,2024-05-04,VNPT Tân Thuận,MBIN & MBCA,,S/T/U,41,
+SSD-960-005,0,handover_received,2023-05-04,,,,K,42,handover_location_unknown
+SSD-960-005,1,usage_stage_1,2024-05-04,VNPT Tân Thuận,MBIN & MBCA,,S/T/U,42,
+SSD-960-006,0,handover_received,2023-05-04,,,,K,43,handover_location_unknown
+SSD-960-006,1,usage_stage_1,2024-05-04,VNPT Tân Thuận,MBIN & MBCA,,S/T/U,43,
+CAP-40-0001,0,handover_received,2023-05-04,,,,K,44,handover_location_unknown
+CAP-40-0001,1,usage_stage_1,2024-05-04,CMC Tân Thuận,Email,,S/T/U,44,
+CAP-40-0002,0,handover_received,2023-05-04,,,,K,45,handover_location_unknown
+CAP-40-0002,1,usage_stage_1,2024-05-04,CMC Tân Thuận,Email,,S/T/U,45,
+CAP-40-0003,0,handover_received,2023-05-04,,,,K,46,handover_location_unknown
+CAP-40-0003,1,usage_stage_1,2024-05-04,CMC Tân Thuận,Email,,S/T/U,46,
+CAP-40-0004,0,handover_received,2023-05-04,,,,K,47,handover_location_unknown
+CAP-40-0004,1,usage_stage_1,2024-05-04,CMC Tân Thuận,Email,,S/T/U,47,
+CAP-40-0005,0,handover_received,2023-05-04,,,,K,48,handover_location_unknown
+CAP-40-0005,1,usage_stage_1,2024-05-04,CMC Tân Thuận,Email,,S/T/U,48,
+CAP-40-0006,0,handover_received,2023-05-04,,,,K,49,handover_location_unknown
+CAP-40-0006,1,usage_stage_1,2024-05-04,CMC Tân Thuận,Email,,S/T/U,49,
+CAP-40-0007,0,handover_received,2023-05-04,,,,K,50,handover_location_unknown
+CAP-40-0007,1,usage_stage_1,2024-05-04,CMC Tân Thuận,Email,,S/T/U,50,
+CAP-40-0008,0,handover_received,2023-05-04,,,,K,51,handover_location_unknown
+CAP-40-0008,1,usage_stage_1,2024-05-04,CMC Tân Thuận,Email,,S/T/U,51,
+CAP-40-0009,0,handover_received,2023-05-04,,,,K,52,handover_location_unknown
+CAP-40-0009,1,usage_stage_1,2024-05-04,CMC Tân Thuận,Email,,S/T/U,52,
+CAP-40-0010,0,handover_received,2023-05-04,,,,K,53,handover_location_unknown
+CAP-40-0010,1,usage_stage_1,2024-05-04,CMC Tân Thuận,Email,,S/T/U,53,
+CAP-40-0011,0,handover_received,2023-05-04,,,,K,54,handover_location_unknown
+CAP-40-0011,1,usage_stage_1,2024-05-04,CMC Tân Thuận,Email,,S/T/U,54,
+CAP-40-0012,0,handover_received,2023-05-04,,,,K,55,handover_location_unknown
+CAP-40-0012,1,usage_stage_1,2024-05-04,CMC Tân Thuận,Email,,S/T/U,55,
+CAP-40-0013,0,handover_received,2023-05-04,,,,K,56,handover_location_unknown
+CAP-40-0013,1,usage_stage_1,2024-05-04,CMC Tân Thuận,Email,,S/T/U,56,
+CAP-40-0014,0,handover_received,2023-05-04,,,,K,57,handover_location_unknown
+CAP-40-0014,1,usage_stage_1,2024-05-04,CMC Tân Thuận,Email,,S/T/U,57,
+CAP-10-0001,0,handover_received,2023-05-04,,,,K,58,handover_location_unknown
+CAP-10-0001,1,usage_stage_1,2024-05-04,CMC Tân Thuận,Email,,S/T/U,58,
+CAP-10-0002,0,handover_received,2023-05-04,,,,K,59,handover_location_unknown
+CAP-10-0002,1,usage_stage_1,2024-05-04,CMC Tân Thuận,Email,,S/T/U,59,
+CAP-10-0003,0,handover_received,2023-05-04,,,,K,60,handover_location_unknown
+CAP-10-0003,1,usage_stage_1,2024-05-04,CMC Tân Thuận,Email,,S/T/U,60,
+CAP-10-0004,0,handover_received,2023-05-04,,,,K,61,handover_location_unknown
+CAP-10-0004,1,usage_stage_1,2024-05-04,CMC Tân Thuận,Email,,S/T/U,61,
+CAP-10-0005,0,handover_received,2023-05-04,,,,K,62,handover_location_unknown
+CAP-10-0005,1,usage_stage_1,2024-05-04,CMC Tân Thuận,Email,,S/T/U,62,
+CAP-10-0006,0,handover_received,2023-05-04,,,,K,63,handover_location_unknown
+CAP-10-0006,1,usage_stage_1,2024-05-04,CMC Tân Thuận,Email,,S/T/U,63,
+CAP-10-0007,0,handover_received,2023-05-04,,,,K,64,handover_location_unknown
+CAP-10-0007,1,usage_stage_1,2024-05-04,CMC Tân Thuận,Email,,S/T/U,64,
+CAP-10-0008,0,handover_received,2023-05-04,,,,K,65,handover_location_unknown
+CAP-10-0008,1,usage_stage_1,2024-05-04,CMC Tân Thuận,Email,,S/T/U,65,
+CAP-10-0009,0,handover_received,2023-05-04,,,,K,66,handover_location_unknown
+CAP-10-0009,1,usage_stage_1,2024-05-04,CMC Tân Thuận,Email,,S/T/U,66,
+CAP-10-0010,0,handover_received,2023-05-04,,,,K,67,handover_location_unknown
+CAP-10-0010,1,usage_stage_1,2024-05-04,CMC Tân Thuận,Email,,S/T/U,67,
+CAP-10-0011,0,handover_received,2023-05-04,,,,K,68,handover_location_unknown
+CAP-10-0011,1,usage_stage_1,2024-05-04,CMC Tân Thuận,Email,,S/T/U,68,
+CAP-10-0012,0,handover_received,2023-05-04,,,,K,69,handover_location_unknown
+CAP-10-0012,1,usage_stage_1,2024-05-04,CMC Tân Thuận,Email,,S/T/U,69,
+CAP-10-0013,0,handover_received,2023-05-04,,,,K,70,handover_location_unknown
+CAP-10-0013,1,usage_stage_1,2024-05-04,CMC Tân Thuận,Email,,S/T/U,70,
+CAP-10-0014,0,handover_received,2023-05-04,,,,K,71,handover_location_unknown
+CAP-10-0014,1,usage_stage_1,2024-05-04,CMC Tân Thuận,Email,,S/T/U,71,
+SW-P7-44,0,handover_received,2023-05-04,,,,K,72,handover_location_unknown
+SW-P7-44,1,usage_stage_1,2024-05-04,CMC Tân Thuận,Email,,S/T/U,72,
+SW-P7-45,0,handover_received,2023-05-04,,,,K,73,handover_location_unknown
+SW-P7-45,1,usage_stage_1,2024-05-04,CMC Tân Thuận,Email,,S/T/U,73,
+SW-P7-47,0,handover_received,2023-05-04,,,,K,74,handover_location_unknown
+SW-P7-47,1,usage_stage_1,2024-05-04,CMC Tân Thuận,Email,,S/T/U,74,
+SW-P7-48,0,handover_received,2023-05-04,,,,K,75,handover_location_unknown
+SW-P7-48,1,usage_stage_1,2024-05-04,CMC Tân Thuận,Email,,S/T/U,75,
+CAP-STACK-001,0,handover_received,2023-05-04,,,,K,76,handover_location_unknown
+CAP-STACK-001,1,usage_stage_1,2024-05-04,CMC Tân Thuận,Email,,S/T/U,76,
+CAP-STACK-002,0,handover_received,2023-05-04,,,,K,77,handover_location_unknown
+CAP-STACK-002,1,usage_stage_1,2024-05-04,CMC Tân Thuận,Email,,S/T/U,77,
+NGUON-600-001,0,handover_received,2024-04-23,Kho,,,K,78,
+NGUON-600-001,1,usage_stage_1,2024-04-23,Kho,,,S/T/U,78,
+SVR-J5-0607,0,usage_stage_1,2019-05-01,ODS,Email,,S/T/U,79,
+SVR-J5-0910,0,usage_stage_1,2019-05-01,ODS,Email,,S/T/U,80,
+SVR-J5-1112,0,usage_stage_1,2019-05-01,ODS,Email,,S/T/U,81,
+SVR-J5-1415,0,usage_stage_1,2019-05-01,ODS,Email,,S/T/U,82,
+SVR-J5-1617,0,usage_stage_1,2019-05-01,ODS,Email,,S/T/U,83,
+SVR-J5-1920,0,usage_stage_1,2019-05-01,ODS,Email,,S/T/U,84,
+SVR-J5-2122,0,usage_stage_1,2019-05-01,ODS,Email,,S/T/U,85,
+SVR-J5-2425,0,usage_stage_1,2019-05-01,ODS,Email,,S/T/U,86,
+SVR-J5-2627,0,usage_stage_1,2019-05-01,ODS,Email,,S/T/U,87,
+SVR-J5-2930,0,usage_stage_1,2019-05-01,ODS,Email,,S/T/U,88,
+SVR-J5-3132,0,usage_stage_1,2019-05-01,ODS,Email,,S/T/U,89,
+SVR-J5-3435,0,usage_stage_1,2019-05-01,ODS,Email,,S/T/U,90,
+SVR-J5-3637,0,usage_stage_1,2019-05-01,ODS,Email,,S/T/U,91,
+SW-J5-39,0,usage_stage_1,2019-05-01,ODS,Email,,S/T/U,92,
+SW-J5-40,0,usage_stage_1,2019-05-01,ODS,Email,,S/T/U,93,
+SW-J5-43,0,usage_stage_1,2019-05-01,ODS,Email,,S/T/U,94,
+SW-J5-45,0,usage_stage_1,2019-05-01,ODS,"Hosting, CloudServer, Email",,S/T/U,95,
+SW-J5-46,0,usage_stage_1,2019-05-01,ODS,"Hosting, CloudServer, Email",,S/T/U,96,
+SVR-J6-1516,0,usage_stage_1,2017-10-01,ODS,"Hosting, CloudServer",,S/T/U,97,
+SVR-J6-1516,1,usage_stage_2,2025-12-15,Kho,Lưu trữ,,V/W/X/Y,97,
+SVR-J6-1819,0,usage_stage_1,2017-10-01,ODS,Hosting,,S/T/U,98,
+SVR-J6-2021,0,usage_stage_1,2017-10-01,ODS,Hosting,,S/T/U,99,
+SVR-J6-2324,0,usage_stage_1,2017-10-01,ODS,Hosting,,S/T/U,100,
+SVR-J6-2526,0,usage_stage_1,2017-10-01,ODS,Hosting,,S/T/U,101,
+SVR-J6-2829,0,usage_stage_1,2017-10-01,ODS,Hosting,,S/T/U,102,
+SVR-J6-3031,0,usage_stage_1,2017-10-01,ODS,Hosting,,S/T/U,103,
+SVR-J6-4041,0,usage_stage_1,2017-10-01,ODS,Hosting,,S/T/U,104,
+SVR-J6-3839,0,usage_stage_1,2017-10-01,ODS,Hosting,,S/T/U,105,
+SVR-J6-3536,0,usage_stage_1,2017-10-01,ODS,Hosting,,S/T/U,106,
+SVR-J6-3334,0,usage_stage_1,2017-10-01,ODS,Hosting,,S/T/U,107,
+SW-J6-43,0,usage_stage_1,2017-10-01,ODS,Hosting,,S/T/U,108,
+SW-J6-44,0,usage_stage_1,2017-10-01,ODS,Hosting,,S/T/U,109,
+SW-J6-46,0,usage_stage_1,2017-10-01,ODS,Hosting,,S/T/U,110,
+SVR-J3-2425,0,usage_stage_1,2017-10-01,ODS,CloudServer,,S/T/U,111,
+SVR-J3-2425,1,usage_stage_2,2025-12-15,Kho,Lưu trữ,,V/W/X/Y,111,
+SVR-J3-2627,0,usage_stage_1,2017-10-01,ODS,CloudServer,,S/T/U,112,
+SVR-J3-2627,1,usage_stage_2,2025-12-15,Kho,Lưu trữ,,V/W/X/Y,112,
+SVR-J3-2931,0,usage_stage_1,2019-10-01,ODS,CloudServer,,S/T/U,113,
+SVR-J3-3234,0,usage_stage_1,2019-10-01,ODS,CloudServer,,S/T/U,114,
+SVR-J3-3637,0,usage_stage_1,2019-10-01,ODS,CloudServer,,S/T/U,115,
+SVR-J3-3839,0,usage_stage_1,2019-10-01,ODS,CloudServer,,S/T/U,116,
+SVR-J3-4142,0,usage_stage_1,2019-10-01,ODS,CloudServer,,S/T/U,117,
+SVR-J3-4344,0,usage_stage_1,2019-10-01,ODS,CloudServer,,S/T/U,118,
+SW-J3-45,0,usage_stage_1,2019-10-01,ODS,"MBO,Email,Hosting,CloudServer,MBIN&MBCA",,S/T/U,119,
+SW-J3-45,1,usage_stage_2,2026-08-09,CMC,,,V/W/X/Y,119,invalid_transition_count;history_tuple_incomplete;missing_usage_object
+SW-J3-46,0,usage_stage_1,2019-10-01,ODS,"MBO,Email,Hosting,CloudServer,MBIN&MBCA",,S/T/U,120,
+SVR-J4-0304,0,usage_stage_1,2019-10-01,ODS,CloudServer,,S/T/U,121,
+SVR-J4-0506,0,usage_stage_1,2019-10-01,ODS,CloudServer,,S/T/U,122,
+SVR-J4-0809,0,usage_stage_1,2019-10-01,ODS,CloudServer,,S/T/U,123,
+SVR-J4-1011,0,usage_stage_1,2019-10-01,ODS,CloudServer,,S/T/U,124,
+SVR-J4-1314,0,usage_stage_1,2019-10-01,ODS,CloudServer,,S/T/U,125,
+SVR-J4-1516,0,usage_stage_1,2019-10-01,ODS,CloudServer,,S/T/U,126,
+SVR-J4-1819,0,usage_stage_1,2019-10-01,ODS,CloudServer,,S/T/U,127,
+SVR-J4-2021,0,usage_stage_1,2019-10-01,ODS,CloudServer,,S/T/U,128,
+SVR-J4-2324,0,usage_stage_1,2019-10-01,ODS,CloudServer,,S/T/U,129,
+SVR-J4-2526,0,usage_stage_1,2019-10-01,ODS,CloudServer,,S/T/U,130,
+SVR-J4-2829,0,usage_stage_1,2019-10-01,ODS,CloudServer,,S/T/U,131,
+SVR-J4-3031,0,usage_stage_1,2019-10-01,ODS,CloudServer,,S/T/U,132,
+SVR-J4-4041,0,usage_stage_1,2019-10-01,ODS,CloudServer,,S/T/U,133,
+SVR-J4-3839,0,usage_stage_1,2019-10-01,ODS,CloudServer,,S/T/U,134,
+SVR-J4-3536,0,usage_stage_1,2019-10-01,ODS,CloudServer,,S/T/U,135,
+SVR-J4-3334,0,usage_stage_1,2019-10-01,ODS,CloudServer,,S/T/U,136,
+SW-J4-43,0,usage_stage_1,2019-10-01,ODS,CloudServer,,S/T/U,137,
+SW-J4-44,0,usage_stage_1,2019-10-01,ODS,CloudServer,,S/T/U,138,
+SW-J4-46,0,usage_stage_1,2019-10-01,ODS,CloudServer,,S/T/U,139,
+SVR-J6-0910,0,usage_stage_1,2017-10-01,ODS,MBO,2,S/T/U,140,
+SVR-J6-0910,1,usage_stage_2,2024-10-28,,Sangfor tạm,2,V/W/X/Y,140,history_tuple_incomplete;missing_event_location
+SVR-J6-0910,2,usage_stage_3,2025-12-15,,Cluster 9,2,V/W/X/Y,140,history_tuple_incomplete;missing_event_location
+SVR-J6-0708,0,usage_stage_1,2017-10-01,ODS,MBO,2,S/T/U,141,
+SVR-J6-0708,1,usage_stage_2,2024-10-28,,Sangfor tạm,2,V/W/X/Y,141,history_tuple_incomplete;missing_event_location
+SVR-J6-0708,2,usage_stage_3,2025-12-15,,Cluster 9,2,V/W/X/Y,141,history_tuple_incomplete;missing_event_location
+SVR-J6-0405,0,usage_stage_1,2017-10-01,ODS,MBO,2,S/T/U,142,
+SVR-J6-0405,1,usage_stage_2,2024-10-28,,Sangfor tạm,2,V/W/X/Y,142,history_tuple_incomplete;missing_event_location
+SVR-J6-0405,2,usage_stage_3,2025-12-15,,Cluster 9,2,V/W/X/Y,142,history_tuple_incomplete;missing_event_location
+SVR-AQ53-3031,0,usage_stage_1,2020-07-01,VNPT Tân Thuận,Hosting,,S/T/U,143,
+SVR-AQ53-1718,0,usage_stage_1,2020-07-01,VNPT Tân Thuận,Hosting,,S/T/U,144,
+SVR-AQ53-2627,0,usage_stage_1,2020-07-01,VNPT Tân Thuận,Hosting,,S/T/U,145,
+SVR-AQ53-2425,0,usage_stage_1,2020-07-01,VNPT Tân Thuận,Hosting,,S/T/U,146,
+SVR-AQ53-2223,0,usage_stage_1,2020-07-01,VNPT Tân Thuận,Hosting,,S/T/U,147,
+SVR-AQ53-2021,0,usage_stage_1,2020-07-01,VNPT Tân Thuận,Hosting,,S/T/U,148,
+SVR-AQ54-3637,0,usage_stage_1,2020-07-01,VNPT Tân Thuận,Hosting,,S/T/U,149,
+SVR-AQ54-3435,0,usage_stage_1,2020-07-01,VNPT Tân Thuận,Hosting,,S/T/U,150,
+SVR-AQ54-3233,0,usage_stage_1,2020-07-01,VNPT Tân Thuận,Hosting,,S/T/U,151,
+SVR-AQ54-2930,0,usage_stage_1,2017-10-01,VNPT Tân Thuận,Hosting,,S/T/U,152,
+SVR-AQ54-2627,0,usage_stage_1,2017-10-01,VNPT Tân Thuận,Hosting,2,S/T/U,153,
+SVR-AQ54-2627,1,usage_stage_2,2025-06-25,ODS,Sangfor tạm,2,V/W/X/Y,153,
+SVR-AQ54-2627,2,usage_stage_3,2025-12-17,VNPT,VNPT1,2,V/W/X/Y,153,
+SVR-AQ54-2324,0,usage_stage_1,2017-10-01,VNPT Tân Thuận,Hosting,,S/T/U,154,
+SW-AQ53-32,0,usage_stage_1,2020-07-01,VNPT Tân Thuận,Hosting,,S/T/U,155,
+SW-AQ53-33,0,usage_stage_1,2020-07-01,VNPT Tân Thuận,Hosting,,S/T/U,156,
+SW-AQ53-35,0,usage_stage_1,2020-07-01,VNPT Tân Thuận,Hosting,,S/T/U,157,
+SW-AQ53-36,0,usage_stage_1,2020-07-01,VNPT Tân Thuận,Hosting,,S/T/U,158,
+SVR-BD51-1314,0,usage_stage_1,2017-10-01,VNPT Tân Thuận,MBIN & MBCA,,S/T/U,159,
+SVR-BD51-1617,0,usage_stage_1,2017-10-01,VNPT Tân Thuận,MBIN & MBCA,,S/T/U,160,
+SVR-BD51-1920,0,usage_stage_1,2017-10-01,VNPT Tân Thuận,MBIN & MBCA,,S/T/U,161,
+SVR-BD51-3940,0,usage_stage_1,2017-10-01,VNPT Tân Thuận,MBIN & MBCA,,S/T/U,162,
+SVR-BD51-3738,0,usage_stage_1,2017-10-01,VNPT Tân Thuận,MBIN & MBCA,,S/T/U,163,
+SVR-BD51-3536,0,usage_stage_1,2017-10-01,VNPT Tân Thuận,MBIN & MBCA,,S/T/U,164,
+NAS-BD51-3334,0,usage_stage_1,2022-07-01,VNPT Tân Thuận,MBIN & MBCA,,S/T/U,165,
+FW-BD51-10,0,usage_stage_1,2022-07-01,VNPT Tân Thuận,MBIN & MBCA,,S/T/U,166,
+HSM-BD51-0405,0,usage_stage_1,2022-07-01,VNPT Tân Thuận,MBIN & MBCA,,S/T/U,168,
+HSM-BD51-0607,0,usage_stage_1,2022-07-01,VNPT Tân Thuận,MBIN & MBCA,,S/T/U,169,
+HSM-BD51-27,0,usage_stage_1,2022-07-01,VNPT Tân Thuận,MBIN & MBCA,,S/T/U,170,
+HSM-BD51-29,0,usage_stage_1,2022-07-01,VNPT Tân Thuận,MBIN & MBCA,,S/T/U,171,
+HSM-BD51-31,0,usage_stage_1,2022-07-01,VNPT Tân Thuận,MBIN & MBCA,,S/T/U,172,
+FW-BD51-08,0,usage_stage_1,2021-07-01,VNPT Tân Thuận,MBIN & MBCA,,S/T/U,173,
+FW-BD51-09,0,usage_stage_1,2021-07-01,VNPT Tân Thuận,MBIN & MBCA,,S/T/U,174,
+SW-BD51-11,0,usage_stage_1,2017-01-01,VNPT Tân Thuận,MBIN & MBCA,,S/T/U,175,
+SW-BD51-12,0,usage_stage_1,2017-01-01,VNPT Tân Thuận,MBIN & MBCA,,S/T/U,176,
+SW-BD51-22,0,usage_stage_1,2021-07-01,VNPT Tân Thuận,MBIN & MBCA,,S/T/U,177,
+SW-BD51-23,0,usage_stage_1,2021-07-01,VNPT Tân Thuận,MBIN & MBCA,,S/T/U,178,
+SVR-M08-3132,0,usage_stage_1,2017-10-01,CMC Quận 9,MBIN & MBCA,,S/T/U,179,
+SVR-M08-2829,0,usage_stage_1,2017-10-01,CMC Quận 9,MBIN & MBCA,,S/T/U,180,
+SVR-M08-2526,0,usage_stage_1,2017-10-01,CMC Quận 9,MBIN & MBCA,,S/T/U,181,
+NAS-M08-3435,0,usage_stage_1,2022-07-01,CMC Quận 9,MBIN & MBCA,,S/T/U,182,
+FW-M08-42,0,usage_stage_1,2022-07-01,CMC Quận 9,MBIN & MBCA,,S/T/U,183,
+FW-M08-41,0,usage_stage_1,2021-07-01,CMC Quận 9,MBIN & MBCA,,S/T/U,184,
+SW-M08-38,0,usage_stage_1,2017-01-01,CMC Quận 9,MBIN & MBCA,,S/T/U,185,
+HSM-M08-37,0,usage_stage_1,2022-07-01,CMC Quận 9,MBIN & MBCA,,S/T/U,186,
+HSM-M08-2324,0,usage_stage_1,2022-07-01,CMC Quận 9,MBIN & MBCA,,S/T/U,187,
+SVR-J3-1819,0,usage_stage_1,2017-01-01,ODS,"Hosting, CloudServer",,S/T/U,188,
+SVR-J3-1617,0,usage_stage_1,2017-01-01,ODS,"Hosting, CloudServer",,S/T/U,189,
+SVR-J3-1314,0,usage_stage_1,2017-01-01,ODS,"Hosting, CloudServer",,S/T/U,190,
+SVR-J3-1112,0,usage_stage_1,2017-01-01,ODS,"Hosting, CloudServer",,S/T/U,191,
+DAS-J3-0104,0,usage_stage_1,2017-01-01,ODS,"Hosting, CloudServer",,S/T/U,192,
+DAS-J3-0609,0,usage_stage_1,2017-01-01,ODS,"Hosting, CloudServer",,S/T/U,193,
+SVR-J2-4244,0,usage_stage_1,2019-10-01,ODS,"MBO,Email,Hosting,CloudServer,MBIN&MBCA",,S/T/U,194,
+SVR-J2-3941,0,usage_stage_1,2019-10-01,ODS,"MBO,Email,Hosting,CloudServer,MBIN&MBCA",,S/T/U,195,
+SVR-J2-3537,0,usage_stage_1,2019-10-01,ODS,"MBO,Email,Hosting,CloudServer,MBIN&MBCA",,S/T/U,196,
+SW-J2-46,0,usage_stage_1,2019-10-01,ODS,"MBO,Email,Hosting,CloudServer,MBIN&MBCA",,S/T/U,197,
+SW-J2-45,0,usage_stage_1,2019-10-01,ODS,"MBO,Email,Hosting,CloudServer,MBIN&MBCA",,S/T/U,198,
+SSD-SS-001,0,usage_stage_1,2024-06-08,VNPT Tân Thuận,MBIN & MBCA,,S/T/U,199,
+SSD-SS-002,0,usage_stage_1,2024-06-08,VNPT Tân Thuận,MBIN & MBCA,,S/T/U,200,
+SSD-SS-003,0,usage_stage_1,2024-06-08,VNPT Tân Thuận,MBIN & MBCA,,S/T/U,201,
+SSD-SS-004,0,usage_stage_1,2024-06-08,VNPT Tân Thuận,MBIN & MBCA,,S/T/U,202,
+SSD-SS-005,0,usage_stage_1,2024-06-08,VNPT Tân Thuận,MBIN & MBCA,,S/T/U,203,
+SSD-SS-006,0,usage_stage_1,2024-06-08,ODS,Cluster9,,S/T/U,204,
+SSD-SS-007,0,usage_stage_1,2024-06-08,ODS,Cluster9,,S/T/U,205,
+SSD-SS-008,0,usage_stage_1,2024-06-08,ODS,Cluster9,,S/T/U,206,
+SSD-SS-009,0,usage_stage_1,2024-06-08,ODS,Cluster9,,S/T/U,207,
+SSD-SS-010,0,usage_stage_1,2024-06-08,ODS,Cluster9,,S/T/U,208,
+SSD-SS-011,0,usage_stage_1,2024-06-08,ODS,Cluster9,,S/T/U,209,
+SVR-KHO-030,0,usage_stage_2,2025-06-25,ODS,Sangfor tạm,4,V/W/X/Y,239,
+SVR-KHO-030,1,usage_stage_3,2025-12-17,Kho,Kho,4,V/W/X/Y,239,
+SVR-KHO-030,2,usage_stage_4,2026-10-03,ODS,Lab (OPS),4,V/W/X/Y,239,
+SVR-KHO-030,3,usage_stage_5,2026-09-08,CMC,OPS Production,4,V/W/X/Y,239,
+SVR-KHO-031,0,usage_stage_2,2025-06-25,ODS,Sangfor tạm,4,V/W/X/Y,240,
+SVR-KHO-031,1,usage_stage_3,2025-12-17,Kho,Kho,4,V/W/X/Y,240,
+SVR-KHO-031,2,usage_stage_4,2025-12-23,ODS,Lab (OPS),4,V/W/X/Y,240,
+SVR-KHO-031,3,usage_stage_5,2026-09-08,CMC,OPS Production,4,V/W/X/Y,240,
+SVR-KHO-032,0,usage_stage_2,2025-06-25,ODS,Sangfor tạm,4,V/W/X/Y,241,
+SVR-KHO-032,1,usage_stage_3,2025-12-17,Kho,Kho,4,V/W/X/Y,241,
+SVR-KHO-032,2,usage_stage_4,2026-10-03,ODS,Lab (OPS),4,V/W/X/Y,241,
+SVR-KHO-032,3,usage_stage_5,2026-09-08,CMC,OPS Production,4,V/W/X/Y,241,
+SVR-KHO-035,0,usage_stage_2,2025-06-25,ODS,Sangfor tạm,4,V/W/X/Y,244,
+SVR-KHO-035,1,usage_stage_3,2025-12-17,Kho,Kho,4,V/W/X/Y,244,
+SVR-KHO-035,2,usage_stage_4,2026-10-03,ODS,Lab (OPS),4,V/W/X/Y,244,
+SVR-KHO-035,3,usage_stage_5,2026-09-08,CMC,OPS Production,4,V/W/X/Y,244,
+SVR-KHO-036,0,usage_stage_2,2025-06-25,ODS,Sangfor tạm,4,V/W/X/Y,245,
+SVR-KHO-036,1,usage_stage_3,2025-12-17,Kho,Kho,4,V/W/X/Y,245,
+SVR-KHO-036,2,usage_stage_4,2026-10-03,ODS,Lab (OPS),4,V/W/X/Y,245,
+SVR-KHO-036,3,usage_stage_5,2026-09-08,CMC,OPS Production,4,V/W/X/Y,245,
+SVR-KHO-037,0,usage_stage_2,2025-06-25,ODS,Sangfor tạm,4,V/W/X/Y,246,
+SVR-KHO-037,1,usage_stage_3,2025-12-17,Kho,Kho,4,V/W/X/Y,246,
+SVR-KHO-037,2,usage_stage_4,2025-12-23,ODS,Lab (OPS),4,V/W/X/Y,246,
+SVR-KHO-037,3,usage_stage_5,2026-09-08,CMC,OPS Production,4,V/W/X/Y,246,
+SVR-KHO-038,0,usage_stage_2,2025-06-25,ODS,Sangfor tạm,4,V/W/X/Y,247,
+SVR-KHO-038,1,usage_stage_3,2025-12-17,Kho,Kho,4,V/W/X/Y,247,
+SVR-KHO-038,2,usage_stage_4,2025-12-23,ODS,Lab (OPS),4,V/W/X/Y,247,
+SVR-KHO-038,3,usage_stage_5,2026-09-08,CMC,OPS Production,4,V/W/X/Y,247,
+SVR-KHO-039,0,usage_stage_2,2025-06-25,ODS,Sangfor tạm,4,V/W/X/Y,248,
+SVR-KHO-039,1,usage_stage_3,2025-12-17,Kho,Kho,4,V/W/X/Y,248,
+SVR-KHO-039,2,usage_stage_4,2026-10-03,ODS,Lab (OPS),4,V/W/X/Y,248,
+SVR-KHO-039,3,usage_stage_5,2026-09-08,CMC,OPS Production,4,V/W/X/Y,248,
+SW-KHO-01,0,usage_stage_2,2025-06-25,ODS,Sangfor tạm,3,V/W/X/Y,259,
+SW-KHO-01,1,usage_stage_3,2025-12-17,Kho,Kho,3,V/W/X/Y,259,
+SW-KHO-01,2,usage_stage_4,2026-09-08,CMC,POC Openstack,3,V/W/X/Y,259,
+SW-KHO-02,0,usage_stage_2,2025-06-25,ODS,Sangfor tạm,3,V/W/X/Y,260,
+SW-KHO-02,1,usage_stage_3,2025-12-17,Kho,Kho,3,V/W/X/Y,260,
+SW-KHO-02,2,usage_stage_4,2026-09-08,CMC,POC Openstack,3,V/W/X/Y,260,
+SVR-J2-2526,0,usage_stage_2,2025-08-01,ODS,Sangfor tạm,2,V/W/X/Y,272,
+SVR-J2-2526,1,usage_stage_3,2025-12-17,Kho,Kho,2,V/W/X/Y,272,
+SVR-J2-2930,0,usage_stage_2,2025-08-01,ODS,Sangfor tạm,2,V/W/X/Y,274,
+SVR-J2-2930,1,usage_stage_3,2025-12-17,Kho,Kho,2,V/W/X/Y,274,
+SVR-J2-3132,0,usage_stage_2,2025-08-01,ODS,Sangfor tạm,2,V/W/X/Y,275,
+SVR-J2-3132,1,usage_stage_3,2025-12-17,Kho,Kho,2,V/W/X/Y,275,
+CAP-40-0015,0,usage_stage_2,2025-06-25,ODS,Sangfor tạm,3,V/W/X/Y,277,
+CAP-40-0015,1,usage_stage_3,2025-12-17,Kho,Kho,3,V/W/X/Y,277,
+CAP-40-0015,2,usage_stage_4,2026-09-08,CMC,POC Openstack,3,V/W/X/Y,277,
+CAP-40-0016,0,usage_stage_2,2025-06-25,ODS,Sangfor tạm,3,V/W/X/Y,278,
+CAP-40-0016,1,usage_stage_3,2025-12-17,Kho,Kho,3,V/W/X/Y,278,
+CAP-40-0016,2,usage_stage_4,2026-09-08,CMC,POC Openstack,3,V/W/X/Y,278,
+CAP-10-0015,0,usage_stage_2,2025-06-25,ODS,Sangfor tạm,3,V/W/X/Y,283,
+CAP-10-0015,1,usage_stage_3,2025-12-17,Kho,Kho,3,V/W/X/Y,283,
+CAP-10-0015,2,usage_stage_4,2025-12-23,ODS,Sangfor tạm,3,V/W/X/Y,283,
+CAP-10-0016,0,usage_stage_2,2025-06-25,ODS,Sangfor tạm,3,V/W/X/Y,284,
+CAP-10-0016,1,usage_stage_3,2025-12-17,Kho,Kho,3,V/W/X/Y,284,
+CAP-10-0016,2,usage_stage_4,2025-12-23,ODS,Sangfor tạm,3,V/W/X/Y,284,
+CAP-10-0017,0,usage_stage_2,2025-06-25,ODS,Sangfor tạm,3,V/W/X/Y,285,
+CAP-10-0017,1,usage_stage_3,2025-12-17,Kho,Kho,3,V/W/X/Y,285,
+CAP-10-0017,2,usage_stage_4,2025-12-23,ODS,Sangfor tạm,3,V/W/X/Y,285,
+CAP-10-0018,0,usage_stage_2,2025-06-25,ODS,Sangfor tạm,3,V/W/X/Y,286,
+CAP-10-0018,1,usage_stage_3,2025-12-17,Kho,Kho,3,V/W/X/Y,286,
+CAP-10-0018,2,usage_stage_4,2025-12-23,ODS,Sangfor tạm,3,V/W/X/Y,286,
+CAP-10-0019,0,usage_stage_2,2025-06-25,ODS,Sangfor tạm,3,V/W/X/Y,287,
+CAP-10-0019,1,usage_stage_3,2025-12-17,Kho,Kho,3,V/W/X/Y,287,
+CAP-10-0019,2,usage_stage_4,2025-12-23,ODS,Sangfor tạm,3,V/W/X/Y,287,
+CAP-10-0020,0,usage_stage_2,2025-06-25,ODS,Sangfor tạm,3,V/W/X/Y,288,
+CAP-10-0020,1,usage_stage_3,2025-12-17,Kho,Kho,3,V/W/X/Y,288,
+CAP-10-0020,2,usage_stage_4,2025-12-23,ODS,Sangfor tạm,3,V/W/X/Y,288,
+CAP-10-0021,0,usage_stage_2,2025-06-25,ODS,Sangfor tạm,2,V/W/X/Y,289,
+CAP-10-0021,1,usage_stage_3,2025-12-17,Kho,Kho,2,V/W/X/Y,289,
+CAP-10-0022,0,usage_stage_2,2025-06-25,ODS,Sangfor tạm,2,V/W/X/Y,290,
+CAP-10-0022,1,usage_stage_3,2025-12-17,Kho,Kho,2,V/W/X/Y,290,
+CAP-10-0023,0,usage_stage_2,2025-06-25,ODS,Sangfor tạm,2,V/W/X/Y,291,
+CAP-10-0023,1,usage_stage_3,2025-12-17,Kho,Kho,2,V/W/X/Y,291,
+CAP-10-0024,0,usage_stage_2,2025-06-25,ODS,Sangfor tạm,2,V/W/X/Y,292,
+CAP-10-0024,1,usage_stage_3,2025-12-17,Kho,Kho,2,V/W/X/Y,292,
+CAP-10-0025,0,usage_stage_2,2025-06-25,ODS,Sangfor tạm,2,V/W/X/Y,293,
+CAP-10-0025,1,usage_stage_3,2025-12-17,Kho,Kho,2,V/W/X/Y,293,
+CAP-10-0026,0,usage_stage_2,2025-06-25,ODS,Sangfor tạm,2,V/W/X/Y,294,
+CAP-10-0026,1,usage_stage_3,2025-12-17,Kho,Kho,2,V/W/X/Y,294,
+CAP-10-0027,0,usage_stage_2,2025-06-25,ODS,Sangfor tạm,2,V/W/X/Y,295,
+CAP-10-0027,1,usage_stage_3,2025-12-17,Kho,Kho,2,V/W/X/Y,295,
+CAP-10-0028,0,usage_stage_2,2025-06-25,ODS,Sangfor tạm,2,V/W/X/Y,296,
+CAP-10-0028,1,usage_stage_3,2025-12-17,Kho,Kho,2,V/W/X/Y,296,
+CAP-10-0029,0,usage_stage_2,2025-06-25,ODS,Sangfor tạm,2,V/W/X/Y,297,
+CAP-10-0029,1,usage_stage_3,2025-12-17,Kho,Kho,2,V/W/X/Y,297,
+CAP-10-0030,0,usage_stage_2,2025-06-25,ODS,Sangfor tạm,2,V/W/X/Y,298,
+CAP-10-0030,1,usage_stage_3,2025-12-17,Kho,Kho,2,V/W/X/Y,298,
+CAP-10-0031,0,usage_stage_2,2025-06-25,ODS,Sangfor tạm,2,V/W/X/Y,299,
+CAP-10-0031,1,usage_stage_3,2025-12-17,Kho,Kho,2,V/W/X/Y,299,
+CAP-10-0032,0,usage_stage_2,2025-06-25,ODS,Sangfor tạm,2,V/W/X/Y,300,
+CAP-10-0032,1,usage_stage_3,2025-12-17,Kho,Kho,2,V/W/X/Y,300,
+CAP-10-0033,0,usage_stage_2,2025-08-01,ODS,Sangfor tạm,2,V/W/X/Y,301,
+CAP-10-0033,1,usage_stage_3,2025-12-17,Kho,Kho,2,V/W/X/Y,301,
+CAP-10-0034,0,usage_stage_2,2025-08-01,ODS,Sangfor tạm,2,V/W/X/Y,302,
+CAP-10-0034,1,usage_stage_3,2025-12-17,Kho,Kho,2,V/W/X/Y,302,
+CAP-10-0035,0,usage_stage_2,2025-08-01,ODS,Sangfor tạm,2,V/W/X/Y,303,
+CAP-10-0035,1,usage_stage_3,2025-12-17,Kho,Kho,2,V/W/X/Y,303,
+CAP-10-0036,0,usage_stage_2,2025-08-01,ODS,Sangfor tạm,2,V/W/X/Y,304,
+CAP-10-0036,1,usage_stage_3,2025-12-17,Kho,Kho,2,V/W/X/Y,304,
+CAP-10-0037,0,usage_stage_2,2025-06-25,ODS,Sangfor tạm,3,V/W/X/Y,305,
+CAP-10-0037,1,usage_stage_3,2025-12-17,Kho,Kho,3,V/W/X/Y,305,
+CAP-10-0037,2,usage_stage_4,2026-09-08,CMC,POC Openstack,3,V/W/X/Y,305,
+CAP-10-0038,0,usage_stage_2,2025-06-25,ODS,Sangfor tạm,3,V/W/X/Y,306,
+CAP-10-0038,1,usage_stage_3,2025-12-17,Kho,Kho,3,V/W/X/Y,306,
+CAP-10-0038,2,usage_stage_4,2026-09-08,CMC,POC Openstack,3,V/W/X/Y,306,
+CAP-10-0039,0,usage_stage_2,2026-08-09,CMC,OPC Openstack,1,V/W/X/Y,307,
+CAP-10-0040,0,usage_stage_2,2026-08-09,CMC,OPC Openstack,1,V/W/X/Y,308,
+CAP-10-0041,0,usage_stage_2,2026-08-09,CMC,OPC Openstack,1,V/W/X/Y,309,
+CAP-10-0042,0,usage_stage_2,2026-08-09,CMC,OPC Openstack,1,V/W/X/Y,310,
+CAP-10-0043,0,usage_stage_2,2026-08-09,CMC,OPC Openstack,1,V/W/X/Y,311,
+CAP-10-0044,0,usage_stage_2,2026-08-09,CMC,OPC Openstack,1,V/W/X/Y,312,
+CAP-10-0045,0,usage_stage_2,2026-08-09,CMC,OPC Openstack,1,V/W/X/Y,313,
+CAP-10-0046,0,usage_stage_2,2026-08-09,CMC,OPC Openstack,1,V/W/X/Y,314,
+HDD-4TB-0001,0,usage_stage_2,2026-05-19,ODS,POC Openstack,1,V/W/X/Y,388,
+HDD-4TB-0002,0,usage_stage_2,2026-05-19,ODS,POC Openstack,1,V/W/X/Y,389,
+HDD-4TB-0003,0,usage_stage_2,2026-05-19,ODS,POC Openstack,1,V/W/X/Y,390,
+HDD-4TB-0004,0,usage_stage_2,2026-05-19,ODS,POC Openstack,1,V/W/X/Y,391,
+HDD-4TB-0005,0,usage_stage_2,2026-05-19,ODS,POC Openstack,1,V/W/X/Y,392,
+HDD-4TB-0006,0,usage_stage_2,2026-05-19,ODS,POC Openstack,1,V/W/X/Y,393,
+HDD-4TB-0007,0,usage_stage_2,2026-05-19,ODS,POC Openstack,1,V/W/X/Y,394,
+HDD-4TB-0008,0,usage_stage_2,2026-05-19,ODS,POC Openstack,1,V/W/X/Y,395,
+HDD-4TB-0009,0,usage_stage_2,2026-05-19,ODS,POC Openstack,1,V/W/X/Y,396,
+HDD-4TB-0010,0,usage_stage_2,2026-05-19,ODS,POC Openstack,1,V/W/X/Y,397,
+HDD-4TB-0011,0,usage_stage_2,2026-05-19,ODS,POC Openstack,1,V/W/X/Y,398,
+HDD-4TB-0012,0,usage_stage_2,2026-05-19,ODS,POC Openstack,1,V/W/X/Y,399,
+HDD-4TB-0013,0,usage_stage_2,2026-05-19,ODS,POC Openstack,1,V/W/X/Y,400,
+HDD-4TB-0014,0,usage_stage_2,2026-05-19,ODS,POC Openstack,1,V/W/X/Y,401,
+HDD-4TB-0015,0,usage_stage_2,2026-05-19,ODS,POC Openstack,1,V/W/X/Y,402,
+HDD-4TB-0016,0,usage_stage_2,2026-06-15,ODS,Backup01,1,V/W/X/Y,403,
+HDD-4TB-0022,0,usage_stage_2,2025-09-12,ODS,103.15.49.66,1,V/W/X/Y,409,
+HDD-4TB-0023,0,usage_stage_2,2025-09-12,ODS,103.15.49.66,1,V/W/X/Y,410,
+HDD-4TB-0024,0,usage_stage_2,2025-11-25,ODS,103.15.49.169,1,V/W/X/Y,411,
+HDD-4TB-0025,0,usage_stage_2,2025-07-28,ODS,DASbk2,1,V/W/X/Y,412,
+HDD-4TB-0026,0,usage_stage_2,2025-07-28,ODS,X114,1,V/W/X/Y,413,
+HDD-4TB-0027,0,usage_stage_2,2025-07-28,ODS,X114,1,V/W/X/Y,414,
+HDD-4TB-0028,0,usage_stage_2,2025-07-28,ODS,X114,1,V/W/X/Y,415,
+HDD-4TB-0029,0,usage_stage_2,2025-06-08,ODS,DASbk2,1,V/W/X/Y,416,
+HDD-4TB-0032,0,usage_stage_2,2025-10-29,ODS,DASbk2,,V/W/X/Y,419,
+HDD-4TB-0035,0,usage_stage_2,2025-10-01,ODS,DASbk1,1,V/W/X/Y,422,
+SSD-480-001,0,usage_stage_2,2025-10-22,ODS,Node 103.15.49.184,1,V/W/X/Y,433,
+SSD-480-002,0,usage_stage_2,2025-11-25,ODS,103.15.49.169,1,V/W/X/Y,434,
+SSD-240-005,0,usage_stage_2,2025-06-25,ODS,Sangfor tạm,2,V/W/X/Y,441,
+SSD-240-005,1,usage_stage_3,2025-12-17,Kho,Kho,2,V/W/X/Y,441,
+SSD-240-006,0,usage_stage_2,2025-06-25,ODS,Sangfor tạm,2,V/W/X/Y,442,
+SSD-240-006,1,usage_stage_3,2025-12-17,Kho,Kho,2,V/W/X/Y,442,
+SSD-240-007,0,usage_stage_2,2025-06-25,ODS,Sangfor tạm,2,V/W/X/Y,443,
+SSD-240-007,1,usage_stage_3,2025-12-17,Kho,Kho,2,V/W/X/Y,443,
+SSD-240-008,0,usage_stage_2,2025-06-25,ODS,Sangfor tạm,2,V/W/X/Y,444,
+SSD-240-008,1,usage_stage_3,2025-12-17,Kho,Kho,2,V/W/X/Y,444,
+SSD-240-009,0,usage_stage_2,2025-06-25,ODS,Sangfor tạm,2,V/W/X/Y,445,
+SSD-240-009,1,usage_stage_3,2025-12-17,Kho,Kho,2,V/W/X/Y,445,
+SSD-240-010,0,usage_stage_2,2025-08-01,ODS,Sangfor tạm,2,V/W/X/Y,446,
+SSD-240-010,1,usage_stage_3,2025-12-17,Kho,Kho,2,V/W/X/Y,446,
+SSD-240-011,0,usage_stage_2,2025-08-01,ODS,Sangfor tạm,2,V/W/X/Y,447,
+SSD-240-011,1,usage_stage_3,2025-12-17,Kho,Kho,2,V/W/X/Y,447,
+SSD-240-012,0,usage_stage_2,2025-08-01,ODS,Sangfor tạm,2,V/W/X/Y,448,
+SSD-240-012,1,usage_stage_3,2025-12-17,Kho,Kho,2,V/W/X/Y,448,
+SSD-240-013,0,usage_stage_2,2026-07-30,ODS,Cluster9 - 103.15.49.220 (49.181 cũ),1,V/W/X/Y,449,
+SSD-240-031,0,usage_stage_2,2026-04-28,ODS,Openstack POC,1,V/W/X/Y,467,
+SSD-240-040,0,usage_stage_2,2025-06-25,ODS,Sangfor tạm,2,V/W/X/Y,476,
+SSD-240-040,1,usage_stage_3,2025-12-17,Kho,Kho,2,V/W/X/Y,476,
+SSD-240-041,0,usage_stage_2,2025-06-25,ODS,Sangfor tạm,2,V/W/X/Y,477,
+SSD-240-041,1,usage_stage_3,2025-12-17,Kho,Kho,2,V/W/X/Y,477,
+SSD-240-042,0,usage_stage_2,2025-06-25,ODS,Sangfor tạm,2,V/W/X/Y,478,
+SSD-240-042,1,usage_stage_3,2025-12-17,Kho,Kho,2,V/W/X/Y,478,
+SSD-960-007,0,usage_stage_2,2025-12-23,ODS,POC OpenStack,2,V/W/X/Y,479,history_tuple_incomplete
+SSD-960-007,1,usage_stage_3,2026-05-19,,Kho,2,V/W/X/Y,479,history_tuple_incomplete;missing_event_location
+SSD-960-008,0,usage_stage_2,2025-12-23,ODS,POC OpenStack,2,V/W/X/Y,480,history_tuple_incomplete
+SSD-960-008,1,usage_stage_3,2026-05-19,,Kho,2,V/W/X/Y,480,history_tuple_incomplete;missing_event_location
+SSD-960-009,0,usage_stage_2,2025-12-23,ODS,POC OpenStack,2,V/W/X/Y,481,history_tuple_incomplete
+SSD-960-009,1,usage_stage_3,2026-05-19,,Kho,2,V/W/X/Y,481,history_tuple_incomplete;missing_event_location
+SSD-960-010,0,usage_stage_2,2025-12-23,ODS,POC OpenStack,2,V/W/X/Y,482,history_tuple_incomplete
+SSD-960-010,1,usage_stage_3,2026-05-19,,Kho,2,V/W/X/Y,482,history_tuple_incomplete;missing_event_location
+SSD-960-011,0,usage_stage_2,2025-12-23,ODS,POC OpenStack,2,V/W/X/Y,483,history_tuple_incomplete
+SSD-960-011,1,usage_stage_3,2026-05-19,,Kho,2,V/W/X/Y,483,history_tuple_incomplete;missing_event_location
+SSD-960-012,0,usage_stage_2,2025-12-23,ODS,POC OpenStack,2,V/W/X/Y,484,history_tuple_incomplete
+SSD-960-012,1,usage_stage_3,2026-05-19,,Kho,2,V/W/X/Y,484,history_tuple_incomplete;missing_event_location
+SSD-960-013,0,usage_stage_2,2025-12-23,ODS,POC OpenStack,3,V/W/X/Y,485,history_tuple_incomplete
+SSD-960-013,1,usage_stage_3,2026-05-19,,Kho,3,V/W/X/Y,485,history_tuple_incomplete;missing_event_location
+SSD-960-013,2,usage_stage_4,2025-06-15,,Backup 03,3,V/W/X/Y,485,history_tuple_incomplete;missing_event_location
+SSD-960-014,0,usage_stage_2,2025-12-23,ODS,POC OpenStack,1,V/W/X/Y,486,
+SSD-960-015,0,usage_stage_2,2025-12-23,ODS,POC OpenStack,1,V/W/X/Y,487,
+SSD-960-016,0,usage_stage_2,2025-06-08,ODS,Sangfor Cloudserver,1,V/W/X/Y,488,
+SSD-960-017,0,usage_stage_2,2025-06-08,ODS,Sangfor Cloudserver,1,V/W/X/Y,489,
+SSD-960-018,0,usage_stage_2,2025-06-08,ODS,Sangfor Cloudserver,1,V/W/X/Y,490,
+SSD-960-019,0,usage_stage_2,2025-12-23,ODS,POC OpenStack,1,V/W/X/Y,491,
+SSD-960-020,0,usage_stage_2,2025-12-23,ODS,POC OpenStack,1,V/W/X/Y,492,
+SSD-960-021,0,usage_stage_2,2025-12-23,ODS,POC OpenStack,1,V/W/X/Y,493,
+SSD-960-024,0,usage_stage_2,2025-10-05,MBCA,mbca05,1,V/W/X/Y,496,
+SSD-960-025,0,usage_stage_2,2025-04-29,ODS,cluster930,1,V/W/X/Y,497,
+SSD-960-026,0,usage_stage_2,2025-04-29,ODS,cluster930,1,V/W/X/Y,498,
+SSD-960-027,0,usage_stage_2,2025-04-29,ODS,cluster930,1,V/W/X/Y,499,
+SSD-960-028,0,usage_stage_2,2025-04-29,ODS,cluster930,1,V/W/X/Y,500,
+SSD-960-029,0,usage_stage_2,2025-03-20,MBCA,mbca06,1,V/W/X/Y,501,
+SSD-960-030,0,usage_stage_2,2025-10-01,ODS,cluster930,1,V/W/X/Y,502,
+SSD-960-031,0,usage_stage_2,2025-10-01,ODS,cluster930,1,V/W/X/Y,503,
+CAP-10-0125,0,usage_stage_2,2025-12-15,Kho,Lưu trữ,,V/W/X/Y,536,
+CAP-10-0149,0,usage_stage_2,2025-12-15,Kho,Lưu trữ,,V/W/X/Y,562,
+CAP-10-0150,0,usage_stage_2,2025-12-15,Kho,Lưu trữ,,V/W/X/Y,563,
+CAP-10-0207,0,usage_stage_2,2024-10-28,,Sangfor tạm,2,V/W/X/Y,622,history_tuple_incomplete;missing_event_location
+CAP-10-0207,1,usage_stage_3,2025-12-15,,Cluster 9,2,V/W/X/Y,622,history_tuple_incomplete;missing_event_location
+CAP-10-0208,0,usage_stage_2,2024-10-28,,Sangfor tạm,2,V/W/X/Y,623,history_tuple_incomplete;missing_event_location
+CAP-10-0208,1,usage_stage_3,2025-12-15,,Cluster 9,2,V/W/X/Y,623,history_tuple_incomplete;missing_event_location
+CAP-10-0209,0,usage_stage_2,2024-10-28,,Sangfor tạm,2,V/W/X/Y,624,history_tuple_incomplete;missing_event_location
+CAP-10-0209,1,usage_stage_3,2025-12-15,,Cluster 9,2,V/W/X/Y,624,history_tuple_incomplete;missing_event_location
+CAP-10-0210,0,usage_stage_2,2024-10-28,,Sangfor tạm,2,V/W/X/Y,625,history_tuple_incomplete;missing_event_location
+CAP-10-0210,1,usage_stage_3,2025-12-15,,Cluster 9,2,V/W/X/Y,625,history_tuple_incomplete;missing_event_location
+CAP-10-0211,0,usage_stage_2,2024-10-28,,Sangfor tạm,2,V/W/X/Y,626,history_tuple_incomplete;missing_event_location
+CAP-10-0211,1,usage_stage_3,2025-12-15,,Cluster 9,2,V/W/X/Y,626,history_tuple_incomplete;missing_event_location
+CAP-10-0212,0,usage_stage_2,2024-10-28,,Sangfor tạm,2,V/W/X/Y,627,history_tuple_incomplete;missing_event_location
+CAP-10-0212,1,usage_stage_3,2025-12-15,,Cluster 9,2,V/W/X/Y,627,history_tuple_incomplete;missing_event_location
+CAP-10-0228,0,usage_stage_2,2025-06-25,ODS,Sangfor tạm,2,V/W/X/Y,645,
+CAP-10-0228,1,usage_stage_3,2025-12-17,VNPT,VNPT1,2,V/W/X/Y,645,
+CAP-10-0229,0,usage_stage_2,2025-06-25,ODS,Sangfor tạm,2,V/W/X/Y,646,
+CAP-10-0229,1,usage_stage_3,2025-12-17,VNPT,VNPT1,2,V/W/X/Y,646,
+CAP-40-0029,0,usage_stage_2,2025-06-25,Kho,Kho,2,V/W/X/Y,671,
+CAP-40-0029,1,usage_stage_3,2025-12-17,VNPT,VNPT,2,V/W/X/Y,671,
+CAP-40-0030,0,usage_stage_2,2025-06-25,Kho,Kho,2,V/W/X/Y,672,
+CAP-40-0030,1,usage_stage_3,2025-12-17,VNPT,VNPT,2,V/W/X/Y,672,
+S6EPNC0Y506115,0,usage_stage_1,2025-06-25,ODS,Sangfor tạm,1,S/T/U,726,
+S6EPNC0Y506115,1,usage_stage_2,2025-03-12,CMC Tân Thuận,Cụm CMC,1,V/W/X/Y,726,
+S6EPNC0Y506116,0,usage_stage_1,2025-06-25,ODS,Sangfor tạm,1,S/T/U,727,
+S6EPNC0Y506116,1,usage_stage_2,2025-03-12,CMC Tân Thuận,Cụm CMC,1,V/W/X/Y,727,
+S6EPNC0Y506117,0,usage_stage_1,2025-06-25,ODS,Sangfor tạm,1,S/T/U,728,
+S6EPNC0Y506117,1,usage_stage_2,2025-03-12,CMC Tân Thuận,Cụm CMC,1,V/W/X/Y,728,
+S6EPNC0Y506118,0,usage_stage_1,2025-06-25,ODS,Sangfor tạm,1,S/T/U,729,
+S6EPNC0Y506118,1,usage_stage_2,2025-03-12,CMC Tân Thuận,Cụm CMC,1,V/W/X/Y,729,
+S6EPNC0Y506119,0,usage_stage_1,2025-06-25,ODS,Sangfor tạm,1,S/T/U,730,
+S6EPNC0Y506119,1,usage_stage_2,2025-03-12,CMC Tân Thuận,Cụm CMC,1,V/W/X/Y,730,
+S6EPNC0Y506121,0,usage_stage_1,2025-06-25,ODS,Sangfor tạm,1,S/T/U,731,
+S6EPNC0Y506121,1,usage_stage_2,2025-03-12,CMC Tân Thuận,Cụm CMC,1,V/W/X/Y,731,
+S6EPNC0Y506122,0,usage_stage_1,2025-06-25,ODS,Sangfor tạm,1,S/T/U,732,
+S6EPNC0Y506122,1,usage_stage_2,2025-03-12,CMC Tân Thuận,Cụm CMC,1,V/W/X/Y,732,
+S6EPNC0Y506124,0,usage_stage_1,2025-06-25,ODS,Sangfor tạm,1,S/T/U,733,
+S6EPNC0Y506124,1,usage_stage_2,2025-09-12,CMC Tân Thuận,Cụm CMC,1,V/W/X/Y,733,
+S6EPNC0Y506125,0,usage_stage_1,2025-06-25,ODS,Sangfor tạm,1,S/T/U,734,
+S6EPNC0Y506125,1,usage_stage_2,2025-09-12,CMC Tân Thuận,Cụm CMC,1,V/W/X/Y,734,
+S6EPNC0Y506126,0,usage_stage_1,2025-06-25,ODS,Sangfor tạm,1,S/T/U,735,
+S6EPNC0Y506126,1,usage_stage_2,2025-09-12,CMC Tân Thuận,Cụm CMC,1,V/W/X/Y,735,
+S6EPNC0Y506127,0,usage_stage_1,2025-06-25,ODS,Sangfor tạm,1,S/T/U,736,
+S6EPNC0Y506127,1,usage_stage_2,2025-09-12,CMC Tân Thuận,Cụm CMC,1,V/W/X/Y,736,
+S6EPNC0Y506128,0,usage_stage_1,2025-06-25,ODS,Sangfor tạm,1,S/T/U,737,
+S6EPNC0Y506128,1,usage_stage_2,2025-09-12,CMC Tân Thuận,Cụm CMC,1,V/W/X/Y,737,
+S6EPNC0Y506130,0,usage_stage_1,2025-06-25,ODS,Sangfor tạm,1,S/T/U,738,
+S6EPNC0Y506130,1,usage_stage_2,2025-09-12,CMC Tân Thuận,Cụm CMC,1,V/W/X/Y,738,
+S6EPNC0Y506131,0,usage_stage_1,2025-06-25,ODS,Sangfor tạm,1,S/T/U,739,
+S6EPNC0Y506131,1,usage_stage_2,2025-09-12,CMC Tân Thuận,Cụm CMC,1,V/W/X/Y,739,
+S6EPNC0Y506132,0,usage_stage_1,2025-06-25,ODS,Sangfor tạm,1,S/T/U,740,
+S6EPNC0Y506132,1,usage_stage_2,2025-09-12,CMC Tân Thuận,Cụm CMC,1,V/W/X/Y,740,
+S6EPNC0Y506133,0,usage_stage_1,2025-06-25,ODS,Sangfor tạm,1,S/T/U,741,
+S6EPNC0Y506133,1,usage_stage_2,2025-09-12,CMC Tân Thuận,Cụm CMC,1,V/W/X/Y,741,
+S6EPNC0Y506134,0,usage_stage_1,2025-06-25,ODS,Sangfor tạm,1,S/T/U,742,
+S6EPNC0Y506134,1,usage_stage_2,2025-09-12,CMC Tân Thuận,Cụm CMC,1,V/W/X/Y,742,
+S6EPNC0Y506135,0,usage_stage_1,2025-06-25,ODS,Sangfor tạm,1,S/T/U,743,
+S6EPNC0Y506135,1,usage_stage_2,2025-09-12,CMC Tân Thuận,Cụm CMC,1,V/W/X/Y,743,
+S6EPNC0Y506136,0,usage_stage_1,2025-06-25,ODS,Sangfor tạm,1,S/T/U,744,
+S6EPNC0Y506136,1,usage_stage_2,2025-09-12,CMC Tân Thuận,Cụm CMC,1,V/W/X/Y,744,
+S6EPNC0Y506137,0,usage_stage_1,2025-06-25,ODS,Sangfor tạm,1,S/T/U,745,
+S6EPNC0Y506137,1,usage_stage_2,2025-09-12,CMC Tân Thuận,Cụm CMC,1,V/W/X/Y,745,
+S6EPNC0Y506138,0,usage_stage_1,2025-06-25,ODS,Sangfor tạm,1,S/T/U,746,
+S6EPNC0Y506138,1,usage_stage_2,2025-12-15,CMC Tân Thuận,Cụm CMC,1,V/W/X/Y,746,
+S6EPNC0Y506139,0,usage_stage_1,2025-06-25,ODS,Sangfor tạm,1,S/T/U,747,
+S6EPNC0Y506139,1,usage_stage_2,2025-12-15,CMC Tân Thuận,Cụm CMC,1,V/W/X/Y,747,
+S6EPNC0Y506140,0,usage_stage_1,2025-06-25,ODS,Sangfor tạm,1,S/T/U,748,
+S6EPNC0Y506140,1,usage_stage_2,2025-12-15,CMC Tân Thuận,Cụm CMC,1,V/W/X/Y,748,
+S6EPNC0Y506141,0,usage_stage_1,2025-06-25,ODS,Sangfor tạm,1,S/T/U,749,
+S6EPNC0Y506141,1,usage_stage_2,2025-12-15,CMC Tân Thuận,Cụm CMC,1,V/W/X/Y,749,
+S6EPNC0Y506142,0,usage_stage_1,2025-06-25,ODS,Sangfor tạm,1,S/T/U,750,
+S6EPNC0Y506142,1,usage_stage_2,2025-12-15,CMC Tân Thuận,Cụm CMC,1,V/W/X/Y,750,
+S6EPNC0Y506143,0,usage_stage_1,2025-06-25,ODS,Sangfor tạm,1,S/T/U,751,
+S6EPNC0Y506143,1,usage_stage_2,2025-12-15,CMC Tân Thuận,Cụm CMC,1,V/W/X/Y,751,
+S6EPNC0Y506144,0,usage_stage_1,2025-06-25,ODS,Sangfor tạm,1,S/T/U,752,
+S6EPNC0Y506144,1,usage_stage_2,2025-12-15,CMC Tân Thuận,Cụm CMC,1,V/W/X/Y,752,
+S6EPNC0Y506145,0,usage_stage_1,2025-06-25,ODS,Sangfor tạm,1,S/T/U,753,
+S6EPNC0Y506145,1,usage_stage_2,2025-12-15,CMC Tân Thuận,Cụm CMC,1,V/W/X/Y,753,
+S6EPNC0Y506146,0,usage_stage_1,2025-06-25,ODS,Sangfor tạm,1,S/T/U,754,
+S6EPNC0Y506146,1,usage_stage_2,2025-12-15,CMC Tân Thuận,Cụm CMC,1,V/W/X/Y,754,
+S6EPNC0Y506147,0,usage_stage_1,2025-06-25,ODS,Sangfor tạm,1,S/T/U,755,
+S6EPNC0Y506147,1,usage_stage_2,2025-12-15,CMC Tân Thuận,Cụm CMC,1,V/W/X/Y,755,
+S6EPNC0Y506148,0,usage_stage_1,2025-06-25,ODS,Sangfor tạm,1,S/T/U,756,
+S6EPNC0Y506148,1,usage_stage_2,2025-12-15,CMC Tân Thuận,Cụm CMC,1,V/W/X/Y,756,
+S6EPNC0Y506149,0,usage_stage_1,2025-06-25,ODS,Sangfor tạm,1,S/T/U,757,
+S6EPNC0Y506149,1,usage_stage_2,2025-12-15,CMC Tân Thuận,Cụm CMC,1,V/W/X/Y,757,
+S6EPNC0Y506150,0,usage_stage_1,2025-06-25,ODS,Sangfor tạm,1,S/T/U,758,
+S6EPNC0Y506150,1,usage_stage_2,2025-12-15,CMC Tân Thuận,Cụm CMC,1,V/W/X/Y,758,
+S6EPNC0Y506151,0,usage_stage_1,2025-06-25,ODS,Sangfor tạm,1,S/T/U,759,
+S6EPNC0Y506151,1,usage_stage_2,2025-12-15,CMC Tân Thuận,Cụm CMC,1,V/W/X/Y,759,
+S6EPNC0Y506152,0,usage_stage_1,2025-06-25,ODS,Sangfor tạm,1,S/T/U,760,
+S6EPNC0Y506152,1,usage_stage_2,2025-12-15,CMC Tân Thuận,Cụm CMC,1,V/W/X/Y,760,
+S724NS0Y500169D,0,usage_stage_1,2025-02-10,ODS,Hosting,,S/T/U,768,
+S724NS0Y500165Y,0,usage_stage_1,2025-02-10,ODS,Hosting,,S/T/U,769,
+S724NS0Y500162W,0,usage_stage_1,2025-02-10,ODS,Hosting,,S/T/U,770,
+S724NS0Y500160A,0,usage_stage_1,2025-02-10,ODS,Hosting,,S/T/U,771,
+S724NS0Y500164X,0,usage_stage_1,2025-02-10,ODS,Hosting,,S/T/U,772,
+S724NS0Y500167M,0,usage_stage_1,2025-02-10,ODS,Hosting,,S/T/U,773,
+CAP-RAID-0001,0,usage_stage_1,2025-11-13,CMC Tân Thuận,Email,,S/T/U,774,
+CAP-RAID-0002,0,usage_stage_1,2025-11-13,CMC Tân Thuận,Email,,S/T/U,775,
+CAP-RAID-0003,0,usage_stage_1,2025-11-13,CMC Tân Thuận,Email,,S/T/U,776,
+CAP-RAID-0004,0,usage_stage_1,2025-11-13,CMC Tân Thuận,Email,,S/T/U,777,
+CAP-RAID-0005,0,usage_stage_1,2025-11-16,CMC Tân Thuận,Email,,S/T/U,778,
+CAP-RAID-0006,0,usage_stage_1,2025-11-16,CMC Tân Thuận,Email,,S/T/U,779,
+CAP-RAID-0007,0,usage_stage_1,2025-11-18,CMC Tân Thuận,Email,,S/T/U,780,
+CAP-RAID-0008,0,usage_stage_1,2025-11-18,CMC Tân Thuận,Email,,S/T/U,781,
+CAP-RAID-0009,0,usage_stage_1,2025-11-18,CMC Tân Thuận,Email,,S/T/U,782,
+CAP-RAID-0010,0,usage_stage_1,2025-11-18,CMC Tân Thuận,Email,,S/T/U,783,
+CAP-RAID-0011,0,usage_stage_1,2025-11-25,CMC Tân Thuận,Email,,S/T/U,784,
+CAP-RAID-0012,0,usage_stage_1,2025-11-25,CMC Tân Thuận,Email,,S/T/U,785,
+CAP-RAID-0013,0,usage_stage_1,2025-11-25,CMC Tân Thuận,Email,,S/T/U,786,
+CAP-RAID-0014,0,usage_stage_1,2025-11-25,CMC Tân Thuận,Email,,S/T/U,787,
+CAP-10-097,0,usage_stage_1,2026-10-03,ODS,POC Openstack,1,S/T/U,788,
+CAP-10-097,1,usage_stage_2,2026-08-09,Kho,,1,V/W/X/Y,788,history_tuple_incomplete;missing_usage_object
+CAP-10-098,0,usage_stage_1,2026-10-03,ODS,POC Openstack,1,S/T/U,789,
+CAP-10-098,1,usage_stage_2,2026-08-09,Kho,,1,V/W/X/Y,789,history_tuple_incomplete;missing_usage_object
+CAP-10-099,0,usage_stage_1,2026-10-03,ODS,POC Openstack,1,S/T/U,790,
+CAP-10-099,1,usage_stage_2,2026-08-09,Kho,,1,V/W/X/Y,790,history_tuple_incomplete;missing_usage_object
+CAP-10-100,0,usage_stage_1,2026-10-03,ODS,POC Openstack,1,S/T/U,791,
+CAP-10-100,1,usage_stage_2,2026-08-09,Kho,,1,V/W/X/Y,791,history_tuple_incomplete;missing_usage_object
+CAP-10-101,0,usage_stage_1,2026-10-03,ODS,POC Openstack,1,S/T/U,792,
+CAP-10-101,1,usage_stage_2,2026-08-09,Kho,,1,V/W/X/Y,792,history_tuple_incomplete;missing_usage_object
+CAP-10-102,0,usage_stage_1,2026-10-03,ODS,POC Openstack,1,S/T/U,793,
+CAP-10-102,1,usage_stage_2,2026-08-09,Kho,,1,V/W/X/Y,793,history_tuple_incomplete;missing_usage_object
+CAP-10-103,0,usage_stage_1,2026-10-03,ODS,POC Openstack,1,S/T/U,794,
+CAP-10-103,1,usage_stage_2,2026-08-09,Kho,,1,V/W/X/Y,794,history_tuple_incomplete;missing_usage_object
+CAP-10-104,0,usage_stage_1,2026-10-03,ODS,POC Openstack,1,S/T/U,795,
+CAP-10-104,1,usage_stage_2,2026-08-09,Kho,,1,V/W/X/Y,795,history_tuple_incomplete;missing_usage_object
+CAP-10-105,0,usage_stage_1,2026-10-03,ODS,POC Openstack,,S/T/U,796,
+CAP-10-106,0,usage_stage_1,2026-10-03,ODS,POC Openstack,,S/T/U,797,
+P605A1252A38042,0,usage_stage_1,2026-03-24,ODS,Cloudserver,,S/T/U,798,
+S6ESNS0W303693,0,usage_stage_1,2026-05-19,ODS,POC Openstack,1,S/T/U,799,
+S6ESNS0W303693,1,usage_stage_2,2026-08-09,CMC,,1,V/W/X/Y,799,history_tuple_incomplete;missing_usage_object
+S6ESNS0W304017,0,usage_stage_1,2026-05-19,ODS,POC Openstack,1,S/T/U,800,
+S6ESNS0W304017,1,usage_stage_2,2026-08-09,CMC,,1,V/W/X/Y,800,history_tuple_incomplete;missing_usage_object
+S6ESNS0W306991,0,usage_stage_1,2026-05-19,ODS,POC Openstack,1,S/T/U,801,
+S6ESNS0W306991,1,usage_stage_2,2026-08-09,CMC,,1,V/W/X/Y,801,history_tuple_incomplete;missing_usage_object
+S6ESNS0W307357,0,usage_stage_1,2026-05-19,ODS,POC Openstack,1,S/T/U,802,
+S6ESNS0W307357,1,usage_stage_2,2026-08-09,CMC,,1,V/W/X/Y,802,history_tuple_incomplete;missing_usage_object
+S6ESNS0W306996,0,usage_stage_1,2026-05-19,ODS,POC Openstack,1,S/T/U,803,
+S6ESNS0W306996,1,usage_stage_2,2026-08-09,CMC,,1,V/W/X/Y,803,history_tuple_incomplete;missing_usage_object
+S6ESNS0W303671,0,usage_stage_1,2026-05-19,ODS,POC Openstack,1,S/T/U,804,
+S6ESNS0W303671,1,usage_stage_2,2026-08-09,CMC,,1,V/W/X/Y,804,history_tuple_incomplete;missing_usage_object
+S6ESNS0W304005,0,usage_stage_1,2026-05-19,ODS,POC Openstack,1,S/T/U,805,
+S6ESNS0W304005,1,usage_stage_2,2026-08-09,CMC,,1,V/W/X/Y,805,history_tuple_incomplete;missing_usage_object
+S6ESNS0W303660,0,usage_stage_1,2026-05-19,ODS,POC Openstack,1,S/T/U,806,
+S6ESNS0W303660,1,usage_stage_2,2026-08-09,CMC,,1,V/W/X/Y,806,history_tuple_incomplete;missing_usage_object
+S6ESNS0W304034,0,usage_stage_1,2026-05-19,ODS,POC Openstack,1,S/T/U,807,
+S6ESNS0W304034,1,usage_stage_2,2026-08-09,CMC,,1,V/W/X/Y,807,history_tuple_incomplete;missing_usage_object
+S6ESNS0W304014,0,usage_stage_1,2026-05-19,ODS,POC Openstack,1,S/T/U,808,
+S6ESNS0W304014,1,usage_stage_2,2026-08-09,CMC,,1,V/W/X/Y,808,history_tuple_incomplete;missing_usage_object
+S11D9E957,0,usage_stage_1,2026-05-19,ODS,POC Openstack,1,S/T/U,813,
+S11D9E957,1,usage_stage_2,2026-08-09,CMC,,1,V/W/X/Y,813,history_tuple_incomplete;missing_usage_object
+S13EE9E68,0,usage_stage_1,2026-05-19,ODS,POC Openstack,1,S/T/U,814,
+S13EE9E68,1,usage_stage_2,2026-08-09,CMC,,1,V/W/X/Y,814,history_tuple_incomplete;missing_usage_object
+S13EE7DD2,0,usage_stage_1,2026-05-19,ODS,POC Openstack,1,S/T/U,815,
+S13EE7DD2,1,usage_stage_2,2026-08-09,CMC,,1,V/W/X/Y,815,history_tuple_incomplete;missing_usage_object
+S12309ED5,0,usage_stage_1,2026-05-19,ODS,POC Openstack,1,S/T/U,816,
+S12309ED5,1,usage_stage_2,2026-08-09,CMC,,1,V/W/X/Y,816,history_tuple_incomplete;missing_usage_object
+S11D9EA03,0,usage_stage_1,2026-05-19,ODS,POC Openstack,1,S/T/U,817,
+S11D9EA03,1,usage_stage_2,2026-08-09,CMC,,1,V/W/X/Y,817,history_tuple_incomplete;missing_usage_object
+S11DC6554,0,usage_stage_1,2026-05-19,ODS,POC Openstack,1,S/T/U,818,
+S11DC6554,1,usage_stage_2,2026-08-09,CMC,,1,V/W/X/Y,818,history_tuple_incomplete;missing_usage_object
+S124B27AA,0,usage_stage_1,2026-05-19,ODS,POC Openstack,1,S/T/U,819,
+S124B27AA,1,usage_stage_2,2026-08-09,CMC,,1,V/W/X/Y,819,history_tuple_incomplete;missing_usage_object
+S11D9EA63,0,usage_stage_1,2026-05-19,ODS,POC Openstack,1,S/T/U,820,
+S11D9EA63,1,usage_stage_2,2026-08-09,CMC,,1,V/W/X/Y,820,history_tuple_incomplete;missing_usage_object
+S12309F0A,0,usage_stage_1,2026-05-19,ODS,POC Openstack,1,S/T/U,821,
+S12309F0A,1,usage_stage_2,2026-08-09,CMC,,1,V/W/X/Y,821,history_tuple_incomplete;missing_usage_object
+S13DF5A4E,0,usage_stage_1,2026-05-19,ODS,POC Openstack,1,S/T/U,822,
+S13DF5A4E,1,usage_stage_2,2026-08-09,CMC,,1,V/W/X/Y,822,history_tuple_incomplete;missing_usage_object
+S11D9E9CF,0,usage_stage_1,2026-05-19,ODS,POC Openstack,1,S/T/U,823,
+S11D9E9CF,1,usage_stage_2,2026-08-09,CMC,,1,V/W/X/Y,823,history_tuple_incomplete;missing_usage_object
+S11DC6441,0,usage_stage_1,2026-05-19,ODS,POC Openstack,1,S/T/U,824,
+S11DC6441,1,usage_stage_2,2026-08-09,CMC,,1,V/W/X/Y,824,history_tuple_incomplete;missing_usage_object
+S11D9E94C,0,usage_stage_1,2026-05-19,ODS,POC Openstack,1,S/T/U,825,
+S11D9E94C,1,usage_stage_2,2026-08-09,CMC,,1,V/W/X/Y,825,history_tuple_incomplete;missing_usage_object
+S11DC66B2,0,usage_stage_1,2026-05-19,ODS,POC Openstack,1,S/T/U,826,
+S11DC66B2,1,usage_stage_2,2026-08-09,CMC,,1,V/W/X/Y,826,history_tuple_incomplete;missing_usage_object
+S11D9E951,0,usage_stage_1,2026-05-19,ODS,POC Openstack,1,S/T/U,827,
+S11D9E951,1,usage_stage_2,2026-08-09,CMC,,1,V/W/X/Y,827,history_tuple_incomplete;missing_usage_object
+S13EE9A66,0,usage_stage_1,2026-05-19,ODS,POC Openstack,1,S/T/U,828,
+S13EE9A66,1,usage_stage_2,2026-08-09,CMC,,1,V/W/X/Y,828,history_tuple_incomplete;missing_usage_object
+S11D9EA78,0,usage_stage_1,2026-05-19,ODS,POC Openstack,1,S/T/U,829,
+S11D9EA78,1,usage_stage_2,2026-08-09,CMC,,1,V/W/X/Y,829,history_tuple_incomplete;missing_usage_object
+S120113B6,0,usage_stage_1,2026-05-19,ODS,POC Openstack,1,S/T/U,830,
+S120113B6,1,usage_stage_2,2026-08-09,CMC,,1,V/W/X/Y,830,history_tuple_incomplete;missing_usage_object
+S11D9E958,0,usage_stage_1,2026-05-19,ODS,POC Openstack,1,S/T/U,831,
+S11D9E958,1,usage_stage_2,2026-08-09,CMC,,1,V/W/X/Y,831,history_tuple_incomplete;missing_usage_object
+S11DC63FE,0,usage_stage_1,2026-05-19,ODS,POC Openstack,1,S/T/U,832,
+S11DC63FE,1,usage_stage_2,2026-08-09,CMC,,1,V/W/X/Y,832,history_tuple_incomplete;missing_usage_object
+S11D9E94D,0,usage_stage_1,2026-05-19,ODS,POC Openstack,1,S/T/U,833,
+S11D9E94D,1,usage_stage_2,2026-08-09,CMC,,1,V/W/X/Y,833,history_tuple_incomplete;missing_usage_object
+S13EF024C,0,usage_stage_1,2026-05-19,ODS,POC Openstack,1,S/T/U,834,
+S13EF024C,1,usage_stage_2,2026-08-09,CMC,,1,V/W/X/Y,834,history_tuple_incomplete;missing_usage_object
+S13EE9E64,0,usage_stage_1,2026-05-19,ODS,POC Openstack,1,S/T/U,835,
+S13EE9E64,1,usage_stage_2,2026-08-09,CMC,,1,V/W/X/Y,835,history_tuple_incomplete;missing_usage_object
+S11E67451,0,usage_stage_1,2026-05-19,ODS,POC Openstack,1,S/T/U,836,
+S11E67451,1,usage_stage_2,2026-08-09,CMC,,1,V/W/X/Y,836,history_tuple_incomplete;missing_usage_object
+SOFDBC13A,0,usage_stage_1,2026-05-19,ODS,POC Openstack,1,S/T/U,837,
+SOFDBC13A,1,usage_stage_2,2026-08-09,CMC,,1,V/W/X/Y,837,history_tuple_incomplete;missing_usage_object
+S11586B58,0,usage_stage_1,2026-05-19,ODS,POC Openstack,1,S/T/U,838,
+S11586B58,1,usage_stage_2,2026-08-09,CMC,,1,V/W/X/Y,838,history_tuple_incomplete;missing_usage_object
+S11586B4E,0,usage_stage_1,2026-05-19,ODS,POC Openstack,1,S/T/U,839,
+S11586B4E,1,usage_stage_2,2026-08-09,CMC,,1,V/W/X/Y,839,history_tuple_incomplete;missing_usage_object
+S11E13E30,0,usage_stage_1,2026-05-19,ODS,POC Openstack,1,S/T/U,840,
+S11E13E30,1,usage_stage_2,2026-08-09,CMC,,1,V/W/X/Y,840,history_tuple_incomplete;missing_usage_object
+SOF7C576F,0,usage_stage_1,2026-05-19,ODS,POC Openstack,1,S/T/U,841,
+SOF7C576F,1,usage_stage_2,2026-08-09,CMC,,1,V/W/X/Y,841,history_tuple_incomplete;missing_usage_object
+SOF7C5770,0,usage_stage_1,2026-05-19,ODS,POC Openstack,1,S/T/U,842,
+SOF7C5770,1,usage_stage_2,2026-08-09,CMC,,1,V/W/X/Y,842,history_tuple_incomplete;missing_usage_object
+S0F7C6A87,0,usage_stage_1,2026-05-19,ODS,POC Openstack,1,S/T/U,843,
+S0F7C6A87,1,usage_stage_2,2026-08-09,CMC,,1,V/W/X/Y,843,history_tuple_incomplete;missing_usage_object
+S1181AAA0,0,usage_stage_1,2026-05-19,ODS,POC Openstack,1,S/T/U,844,
+S1181AAA0,1,usage_stage_2,2026-08-09,CMC,,1,V/W/X/Y,844,history_tuple_incomplete;missing_usage_object
+M6P24T1802257,0,usage_stage_1,2026-05-19,ODS,POC Openstack,1,S/T/U,845,
+M6P24T1802257,1,usage_stage_2,2026-08-09,CMC,,1,V/W/X/Y,845,history_tuple_incomplete;missing_usage_object
+M7VF915500185,0,usage_stage_1,2026-05-19,ODS,POC Openstack,1,S/T/U,846,
+M7VF915500185,1,usage_stage_2,2026-08-09,CMC,,1,V/W/X/Y,846,history_tuple_incomplete;missing_usage_object
+M772XT5800807,0,usage_stage_1,2026-05-19,ODS,POC Openstack,1,S/T/U,847,
+M772XT5800807,1,usage_stage_2,2026-08-09,CMC,,1,V/W/X/Y,847,history_tuple_incomplete;missing_usage_object
+M8RU258401900,0,usage_stage_1,2026-05-19,ODS,POC Openstack,1,S/T/U,848,
+M8RU258401900,1,usage_stage_2,2026-08-09,CMC,,1,V/W/X/Y,848,history_tuple_incomplete;missing_usage_object
+M6L68C6300519,0,usage_stage_1,2026-05-19,ODS,POC Openstack,1,S/T/U,849,
+M6L68C6300519,1,usage_stage_2,2026-08-09,CMC,,1,V/W/X/Y,849,history_tuple_incomplete;missing_usage_object
+M7YY867501625,0,usage_stage_1,2026-05-19,ODS,POC Openstack,1,S/T/U,850,
+M7YY867501625,1,usage_stage_2,2026-08-09,CMC,,1,V/W/X/Y,850,history_tuple_incomplete;missing_usage_object

@@ -1,0 +1,11 @@
+{
+  "name": "mgmt-device-tests",
+  "private": true,
+  "description": "Bộ kiểm khói chạy index.html trong jsdom, đối chiếu với dữ liệu thật của API.",
+  "scripts": {
+    "test": "node tests/run.js"
+  },
+  "dependencies": {
+    "jsdom": "^30.0.1"
+  }
+}

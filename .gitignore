@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.env
+.venv/
+node_modules/
+api-data.json
+
+# Sinh ra từ script, đừng commit — chạy lại là có
+*_map.json
+netbox_assets_import.csv
+backup_*.sql

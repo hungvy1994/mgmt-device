@@ -1,0 +1,22 @@
+{
+  "auditedAt": "2026-09-09T16:14:31+07:00",
+  "by": "vydh",
+  "byEmail": "vydh@matbao.com",
+  "team": "sa",
+  "checklist": {
+    "ARCH": "pass",
+    "PRD": "pass",
+    "README": "pass",
+    "CLAUDE": "pass",
+    "git": "fail",
+    "stack": "standard"
+  },
+  "stackNote": "Mockup tinh (HTML/CSS/JS thuan + Python scripts). Khong dung cong nghe ngoai chuan nen khong can request_tech_exception. Target: Next.js + FastAPI + Postgres + Docker Compose.",
+  "cve": { "scanned": false, "reason": "khong co package.json / requirements.txt", "high": 0, "critical": 0 },
+  "warnings": [
+    "git: chua init, chua co remote git.matbao.support",
+    "secrets: mat khau demo hardcode trong form login index.html",
+    "deps: scripts/clean_asset_workbook.py can openpyxl nhung khong co requirements.txt"
+  ],
+  "techExceptions": []
+}

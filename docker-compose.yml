@@ -1,0 +1,80 @@
+# Không đặt `name:` và `version:` ở đây:
+#   - `name:` chỉ Compose v2 hiểu, docker-compose v1 báo lỗi "'name' does not match any of the regexes: '^x-'"
+#   - `version:` đã lỗi thời với Compose v2 (in cảnh báo), còn v1 (1.27+) tự nhận diện cấu trúc services
+# Tên project đặt bằng COMPOSE_PROJECT_NAME trong .env để cả hai bản đặt tên container giống nhau.
+
+services:
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-mgmt-device}
+      POSTGRES_USER: ${POSTGRES_USER:-mgmt-device}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-mgmt-device}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./db/schema.sql:/docker-entrypoint-initdb.d/10-schema.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-mgmt-device} -d ${POSTGRES_DB:-mgmt-device}"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  api:
+    build: ./api
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-mgmt-device}:${POSTGRES_PASSWORD:-mgmt-device}@db:5432/${POSTGRES_DB:-mgmt-device}
+      SESSION_HOURS: ${SESSION_HOURS:-8}
+      COOKIE_SECURE: ${COOKIE_SECURE:-0}
+      BACKUP_DIR: /backups
+    volumes:
+      - backups:/backups
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import urllib.request;urllib.request.urlopen('http://127.0.0.1:8000/api/health')\""]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  # Nạp 2 file CSV vào database, chạy một lần rồi thoát.
+  # Nạp đè:  docker compose run --rm -e SEED_FORCE=1 seed
+  seed:
+    build: ./api
+    command: ["python", "seed.py"]
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-mgmt-device}:${POSTGRES_PASSWORD:-mgmt-device}@db:5432/${POSTGRES_DB:-mgmt-device}
+      SEED_DIR: /data
+      ADMIN_USERNAME: ${ADMIN_USERNAME:-admin}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-}
+      ADMIN_NAME: "${ADMIN_NAME:-Quản trị viên}"
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-}
+    volumes:
+      - ./asset_import.csv:/data/asset_import.csv:ro
+      - ./asset_history_import.csv:/data/asset_history_import.csv:ro
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: "no"
+
+  web:
+    image: nginx:alpine
+    restart: unless-stopped
+    ports:
+      - "${WEB_PORT:-8084}:80"
+    volumes:
+      - ./web/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./index.html:/usr/share/nginx/html/index.html:ro
+      - ./data:/usr/share/nginx/html/data:ro
+      - ./xem-bai-tarot.html:/usr/share/nginx/html/xem-bai-tarot.html:ro
+      - ./gieo-que-kinh-dich.html:/usr/share/nginx/html/gieo-que-kinh-dich.html:ro
+      - ./cv-landing-builder.html:/usr/share/nginx/html/cv-landing-builder.html:ro
+    depends_on:
+      api:
+        condition: service_healthy
+
+volumes:
+  pgdata:
+  backups:

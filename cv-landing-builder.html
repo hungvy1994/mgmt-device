@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CV → Landing Page</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<style>
+  :root{
+    --bg:#f7f7f5; --panel:#ffffff; --ink:#18181b; --ink-soft:#6b6b66;
+    --line:#e4e3de; --line-strong:#d3d2cb; --accent:#1F3A5F; --accent-soft:#eef1f5;
+    --danger:#a13d3d; --radius:6px; --focus:#1F3A5F;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]) {
+      --bg:#151513; --panel:#1d1d1a; --ink:#f1f0ec; --ink-soft:#a3a29c;
+      --line:#33332e; --line-strong:#403f39; --accent-soft:#22303e;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#151513; --panel:#1d1d1a; --ink:#f1f0ec; --ink-soft:#a3a29c;
+    --line:#33332e; --line-strong:#403f39; --accent-soft:#22303e;
+  }
+  *{box-sizing:border-box;}
+  html,body{height:100%;}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+    display:flex; flex-direction:column;
+  }
+  a{color:inherit;}
+  button{font-family:inherit;}
+
+  header.appbar{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:.8rem 1.2rem; border-bottom:1px solid var(--line); background:var(--panel);
+    flex:0 0 auto; gap:1rem;
+  }
+  .brand{display:flex; align-items:baseline; gap:.5rem; font-family:'Fraunces',serif;}
+  .brand b{font-weight:600; font-size:1.05rem;}
+  .brand span{font-size:.78rem; color:var(--ink-soft); font-family:'Inter',sans-serif;}
+  .appbar-actions{display:flex; gap:.5rem; align-items:center;}
+
+  .btn{
+    border:1px solid var(--line-strong); background:var(--panel); color:var(--ink);
+    padding:.5rem .9rem; border-radius:var(--radius); font-size:.85rem; cursor:pointer;
+    display:inline-flex; align-items:center; gap:.4rem; transition:border-color .15s, background .15s;
+  }
+  .btn:hover{border-color:var(--accent);}
+  .btn:focus-visible{outline:2px solid var(--focus); outline-offset:1px;}
+  .btn-primary{background:var(--accent); border-color:var(--accent); color:#fff;}
+  .btn-primary:hover{filter:brightness(1.08);}
+  .btn-ghost{border-color:transparent; background:transparent;}
+  .btn-ghost:hover{border-color:var(--line-strong);}
+  .btn-sm{padding:.3rem .55rem; font-size:.78rem;}
+  .btn[disabled]{opacity:.5; cursor:not-allowed;}
+
+  main.layout{flex:1 1 auto; display:flex; min-height:0;}
+
+  #sidebar{
+    width:400px; flex:0 0 400px; border-right:1px solid var(--line);
+    background:var(--panel); overflow-y:auto; padding:1.1rem 1.1rem 6rem;
+  }
+  #preview-pane{flex:1 1 auto; min-width:0; display:flex; flex-direction:column; background:var(--bg);}
+  #preview-toolbar{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:.6rem 1rem; border-bottom:1px solid var(--line); flex:0 0 auto;
+  }
+  #preview-toolbar .zoomctl{display:flex; gap:.3rem; align-items:center; font-size:.8rem; color:var(--ink-soft);}
+  #preview-frame-wrap{flex:1 1 auto; overflow:auto; padding:1.5rem; display:flex; justify-content:center;}
+  iframe#preview{
+    width:900px; max-width:100%; min-height:100%; border:1px solid var(--line-strong);
+    background:#fff; box-shadow:0 8px 30px rgba(0,0,0,.08);
+  }
+
+  .section{margin-bottom:1.6rem;}
+  .section-title{
+    font-size:.72rem; letter-spacing:.02em; color:var(--ink-soft);
+    margin:0 0 .6rem; font-weight:600; text-transform:uppercase;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .field{margin-bottom:.65rem;}
+  .field label{display:block; font-size:.78rem; color:var(--ink-soft); margin-bottom:.25rem;}
+  .field input[type="text"], .field textarea, .field input[type="email"]{
+    width:100%; padding:.5rem .6rem; border:1px solid var(--line-strong); border-radius:var(--radius);
+    background:var(--bg); color:var(--ink); font-size:.88rem; font-family:inherit; resize:vertical;
+  }
+  .field input:focus, .field textarea:focus{outline:2px solid var(--focus); outline-offset:0; border-color:var(--accent);}
+  .row2{display:grid; grid-template-columns:1fr 1fr; gap:.6rem;}
+
+  .upload-box{
+    border:1.5px dashed var(--line-strong); border-radius:var(--radius); padding:1.1rem;
+    text-align:center; margin-bottom:.7rem; background:var(--bg);
+  }
+  .upload-box.drag{border-color:var(--accent); background:var(--accent-soft);}
+  .upload-box p{margin:.3rem 0; font-size:.82rem; color:var(--ink-soft);}
+  .upload-status{font-size:.78rem; margin-top:.4rem; min-height:1.1em;}
+  .upload-status.ok{color:#2b6b3f;}
+  .upload-status.err{color:var(--danger);}
+  .upload-status.busy{color:var(--ink-soft);}
+
+  .paste-toggle{font-size:.78rem; color:var(--accent); background:none; border:none; cursor:pointer; padding:0; text-decoration:underline;}
+
+  .field-label-inline{font-size:.78rem; color:var(--ink-soft); margin:0 0 .4rem;}
+  .template-grid{display:grid; grid-template-columns:1fr 1fr; gap:.55rem;}
+  .tpl-card{
+    border:1.5px solid var(--line-strong); border-radius:var(--radius); padding:.55rem .6rem;
+    cursor:pointer; text-align:left; background:var(--bg); display:flex; flex-direction:column; gap:.4rem;
+  }
+  .tpl-card:hover{border-color:var(--accent);}
+  .tpl-card.active{border-color:var(--accent); box-shadow:0 0 0 1px var(--accent);}
+  .tpl-swatch{height:34px; border-radius:3px; display:flex; overflow:hidden;}
+  .tpl-swatch span{flex:1;}
+  .tpl-card b{font-size:.78rem; font-weight:600;}
+  .tpl-card small{font-size:.7rem; color:var(--ink-soft); line-height:1.3;}
+
+  .accent-row{display:flex; gap:.5rem; flex-wrap:wrap; align-items:center;}
+  .swatch-custom{
+    width:28px; height:28px; border-radius:50%; border:2px solid var(--line-strong); padding:0; overflow:hidden; cursor:pointer;
+  }
+  .swatch-custom::-webkit-color-swatch-wrapper{padding:0;}
+  .swatch-custom::-webkit-color-swatch{border:none; border-radius:50%;}
+  .swatch-custom::-moz-color-swatch{border:none; border-radius:50%;}
+  .swatch{
+    width:28px; height:28px; border-radius:50%; border:2px solid transparent; cursor:pointer; position:relative;
+  }
+  .swatch.active{border-color:var(--ink);}
+  .swatch.active::after{content:"✓"; position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:#fff; font-size:.75rem;}
+
+  .entry-card{
+    border:1px solid var(--line); border-radius:var(--radius); padding:.75rem; margin-bottom:.7rem; background:var(--bg);
+  }
+  .entry-card-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:.4rem;}
+  .entry-card-head span{font-size:.75rem; color:var(--ink-soft); font-weight:600;}
+  .remove-btn{background:none; border:none; color:var(--danger); cursor:pointer; font-size:.75rem; padding:0;}
+  .add-btn{width:100%; border:1px dashed var(--line-strong); background:none; border-radius:var(--radius); padding:.5rem; font-size:.82rem; color:var(--ink-soft); cursor:pointer;}
+  .add-btn:hover{border-color:var(--accent); color:var(--accent);}
+
+  .hint{font-size:.76rem; color:var(--ink-soft); margin:.3rem 0 0;}
+
+  #dl-status{font-size:.78rem; color:var(--ink-soft); margin-top:.4rem; text-align:center;}
+
+  @media (max-width:900px){
+    main.layout{flex-direction:column;}
+    #sidebar{width:auto; flex:0 0 auto; max-height:46vh; border-right:none; border-bottom:1px solid var(--line);}
+    iframe#preview{width:100%;}
+    #preview-frame-wrap{padding:.8rem;}
+  }
+</style>
+</head>
+<body>
+
+<header class="appbar">
+  <div class="brand"><b>CV → Landing Page</b><span>chuyển CV PDF thành trang giới thiệu cá nhân</span></div>
+  <div class="appbar-actions">
+    <button class="btn btn-primary" id="downloadBtn">Tải file HTML</button>
+  </div>
+</header>
+
+<main class="layout">
+  <aside id="sidebar">
+
+    <div class="section">
+      <p class="section-title">1. Nhập nội dung CV</p>
+      <div class="upload-box" id="dropzone">
+        <p><strong>Kéo thả file PDF vào đây</strong> hoặc</p>
+        <button class="btn btn-sm" id="pickFileBtn">Chọn file PDF</button>
+        <input type="file" id="fileInput" accept="application/pdf" style="display:none">
+        <p class="upload-status" id="uploadStatus"></p>
+      </div>
+      <button class="paste-toggle" id="pasteToggle">Không có file PDF? Dán nội dung CV dạng văn bản</button>
+      <div id="pasteBox" style="display:none; margin-top:.5rem;">
+        <textarea id="pasteText" rows="6" placeholder="Dán toàn bộ nội dung CV vào đây..."></textarea>
+        <button class="btn btn-sm" id="parsePasteBtn" style="margin-top:.4rem;">Phân tích nội dung</button>
+      </div>
+      <p class="hint">Dữ liệu được trích xuất tự động — hãy kiểm tra và chỉnh lại các trường bên dưới cho chính xác.</p>
+    </div>
+
+    <div class="section">
+      <p class="section-title">2. Ảnh đại diện (tuỳ chọn)</p>
+      <div style="display:flex; align-items:center; gap:.8rem;">
+        <div id="photoPreviewWrap" style="width:56px; height:56px; border-radius:50%; overflow:hidden; background:var(--bg); border:1px solid var(--line-strong); flex:0 0 auto; display:flex; align-items:center; justify-content:center;">
+          <img id="photoPreview" src="" alt="" style="width:100%; height:100%; object-fit:cover; display:none;">
+        </div>
+        <div>
+          <button class="btn btn-sm" id="pickPhotoBtn">Tải ảnh lên</button>
+          <button class="btn btn-sm btn-ghost" id="removePhotoBtn" style="display:none;">Gỡ ảnh</button>
+          <input type="file" id="photoInput" accept="image/*" style="display:none">
+        </div>
+      </div>
+      <p class="hint">Ảnh sẽ xuất hiện cạnh tên bạn và được dùng làm hình nền mờ phía sau phần đầu trang.</p>
+    </div>
+
+    <div class="section">
+      <p class="section-title">3. Thiết kế</p>
+      <p class="field-label-inline">Kiểu mẫu</p>
+      <div class="template-grid" id="templateGrid"></div>
+      <p class="field-label-inline" style="margin-top:.9rem;">Màu chủ đạo</p>
+      <div class="accent-row" id="accentRow"></div>
+    </div>
+
+    <div class="section">
+      <p class="section-title">4. Thông tin cơ bản</p>
+      <div class="field"><label>Họ tên</label><input type="text" data-bind="name"></div>
+      <div class="field"><label>Chức danh / định vị</label><input type="text" data-bind="title"></div>
+      <div class="row2">
+        <div class="field"><label>Email</label><input type="text" data-bind="email"></div>
+        <div class="field"><label>Điện thoại</label><input type="text" data-bind="phone"></div>
+      </div>
+      <div class="row2">
+        <div class="field"><label>Địa điểm</label><input type="text" data-bind="location"></div>
+        <div class="field"><label>Website</label><input type="text" data-bind="website"></div>
+      </div>
+      <div class="row2">
+        <div class="field"><label>LinkedIn</label><input type="text" data-bind="linkedin"></div>
+        <div class="field"><label>GitHub</label><input type="text" data-bind="github"></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <p class="section-title">5. Giới thiệu</p>
+      <div class="field"><textarea rows="4" data-bind="summary" placeholder="Vài câu tóm tắt về bản thân, thế mạnh, định hướng nghề nghiệp..."></textarea></div>
+    </div>
+
+    <div class="section">
+      <p class="section-title">6. Kinh nghiệm làm việc</p>
+      <div id="experienceList"></div>
+      <button class="add-btn" data-action="add-experience">+ Thêm kinh nghiệm</button>
+    </div>
+
+    <div class="section">
+      <p class="section-title">7. Học vấn</p>
+      <div id="educationList"></div>
+      <button class="add-btn" data-action="add-education">+ Thêm học vấn</button>
+    </div>
+
+    <div class="section">
+      <p class="section-title">8. Kỹ năng</p>
+      <div class="field"><textarea rows="3" data-bind="skillsRaw" placeholder="Ngăn cách bằng dấu phẩy: Figma, Quản lý dự án, Excel..."></textarea></div>
+    </div>
+
+    <div class="section">
+      <p class="section-title">9. Dự án nổi bật (tuỳ chọn)</p>
+      <div id="projectsList"></div>
+      <button class="add-btn" data-action="add-project">+ Thêm dự án</button>
+    </div>
+
+    <div class="section">
+      <p class="section-title">10. Chứng chỉ / Giải thưởng (tuỳ chọn)</p>
+      <div class="field"><textarea rows="2" data-bind="certifications" placeholder="Mỗi dòng một chứng chỉ hoặc giải thưởng"></textarea></div>
+    </div>
+
+  </aside>
+
+  <section id="preview-pane">
+    <div id="preview-toolbar">
+      <span style="font-size:.8rem; color:var(--ink-soft);">Xem trước trực tiếp</span>
+      <button class="btn btn-ghost btn-sm" id="openTabBtn">Mở toàn màn hình ↗</button>
+    </div>
+    <div id="preview-frame-wrap">
+      <iframe id="preview" title="Xem trước landing page"></iframe>
+    </div>
+  </section>
+</main>
+
+<script>
+/* ============================= DATA MODEL ============================= */
+const ACCENTS = [
+  {name:'Xanh mực',  hex:'#1F3A5F'},
+  {name:'Xanh rêu',  hex:'#2B4C3F'},
+  {name:'Đỏ mận',    hex:'#7A2E35'},
+  {name:'Vàng đất',  hex:'#A8701B'},
+  {name:'Xám than',  hex:'#3F3F3F'},
+];
+
+const TEMPLATES = [
+  {key:'editorial', name:'Dossier biên tập', desc:'Nền giấy, timeline theo mốc thời gian, mục lục ở đầu trang.', colors:['#F6F4EE','#201F1C','var(--tpl-accent)']},
+  {key:'minimal',   name:'Tối giản hiện đại', desc:'Nền trắng, một cột, gọn gàng, chữ sans-serif.', colors:['#FFFFFF','#15161A','var(--tpl-accent)']},
+  {key:'bold',      name:'Bold sáng tạo', desc:'Nền tối, tiêu đề lớn, thẻ nổi bật.', colors:['#131215','#F2F0EA','var(--tpl-accent)']},
+  {key:'classic',   name:'Doanh nhân cổ điển', desc:'Căn giữa, trang trọng, kiểu CV truyền thống.', colors:['#FCFBF8','#1E1D1B','var(--tpl-accent)']},
+];
+
+function sampleData(){
+  return {
+    accent: ACCENTS[0].hex,
+    template: 'editorial',
+    photo: '',
+    name: 'Nguyễn Minh Anh',
+    title: 'Product Designer',
+    email: 'minhanh.design@email.com',
+    phone: '+84 90 123 4567',
+    location: 'TP. Hồ Chí Minh',
+    website: 'minhanh.design',
+    linkedin: 'linkedin.com/in/minhanh',
+    github: '',
+    summary: 'Product designer với 5 năm kinh nghiệm xây dựng hệ thống thiết kế và sản phẩm số cho các công ty fintech. Tập trung vào nghiên cứu người dùng, thiết kế có hệ thống và cộng tác chặt chẽ với kỹ sư để đưa sản phẩm ra thị trường nhanh và chỉn chu.',
+    experience: [
+      {role:'Senior Product Designer', company:'Fintory', dates:'2022 — Hiện tại',
+       bullets:'Dẫn dắt thiết kế hệ thống cho ứng dụng ngân hàng số, phục vụ hơn 800.000 người dùng.\nXây dựng design system dùng chung cho 4 nhóm sản phẩm, giảm 30% thời gian bàn giao thiết kế.\nDẫn dắt nghiên cứu người dùng định kỳ, trực tiếp phỏng vấn hơn 60 khách hàng mỗi quý.'},
+      {role:'Product Designer', company:'Lumo Studio', dates:'2019 — 2022',
+       bullets:'Thiết kế trải nghiệm cho 3 sản phẩm SaaS từ giai đoạn ý tưởng đến ra mắt.\nHợp tác trực tiếp với founder và kỹ sư trong đội ngũ 8 người.'}
+    ],
+    education: [
+      {degree:'Cử nhân Thiết kế Truyền thông', school:'Đại học Kiến trúc TP.HCM', dates:'2015 — 2019', detail:'Tốt nghiệp loại Giỏi'}
+    ],
+    skillsRaw: 'Figma, Design systems, Nghiên cứu người dùng, Prototyping, HTML/CSS, Quản lý dự án',
+    projects: [
+      {name:'Hệ thống thiết kế Fintory', link:'', image:'', description:'Xây dựng bộ thư viện component và nguyên tắc thiết kế dùng chung cho toàn công ty.'}
+    ],
+    certifications: 'Google UX Design Certificate (2021)'
+  };
+}
+
+let data = sampleData();
+
+/* ============================= UTIL ============================= */
+function esc(s){
+  return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function nl2br(s){ return esc(s).split('\n').filter(Boolean).map(l=>`<p>${l}</p>`).join(''); }
+function bulletsToLi(s){
+  return String(s||'').split('\n').map(l=>l.trim()).filter(Boolean)
+    .map(l=>`<li>${esc(l)}</li>`).join('');
+}
+function setPath(obj, path, value){
+  const parts = path.split('.');
+  let cur = obj;
+  for(let i=0;i<parts.length-1;i++){
+    const p = parts[i];
+    const key = /^\d+$/.test(p) ? Number(p) : p;
+    cur = cur[key];
+  }
+  const last = parts[parts.length-1];
+  const key = /^\d+$/.test(last) ? Number(last) : last;
+  cur[key] = value;
+}
+function getPath(obj, path){
+  return path.split('.').reduce((o,p)=> o == null ? o : o[/^\d+$/.test(p)?Number(p):p], obj);
+}
+function debounce(fn, ms){ let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a), ms); }; }
+function resizeImageFile(file, maxDim, quality){
+  maxDim = maxDim || 640; quality = quality || 0.85;
+  return new Promise((resolve, reject)=>{
+    const reader = new FileReader();
+    reader.onload = ()=>{
+      const img = new Image();
+      img.onload = ()=>{
+        let {width, height} = img;
+        if(width > height){ if(width > maxDim){ height = Math.round(height * maxDim/width); width = maxDim; } }
+        else { if(height > maxDim){ width = Math.round(width * maxDim/height); height = maxDim; } }
+        const canvas = document.createElement('canvas');
+        canvas.width = width; canvas.height = height;
+        canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+        resolve(canvas.toDataURL('image/jpeg', quality));
+      };
+      img.onerror = () => reject(new Error('invalid image'));
+      img.src = reader.result;
+    };
+    reader.onerror = () => reject(reader.error);
+    reader.readAsDataURL(file);
+  });
+}
+function stripDiacritics(s){
+  return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/gi,'d');
+}
+function normLine(s){
+  return stripDiacritics(s).toLowerCase().replace(/[:：]+\s*$/,'').trim().replace(/\s+/g,' ');
+}
+
+/* ============================= RESUME PARSER ============================= */
+const KEYWORDS = {
+  summary: ['gioi thieu','gioi thieu ban than','tom tat','tom tat ban than','muc tieu','muc tieu nghe nghiep','summary','professional summary','objective','profile','about me','about'],
+  experience: ['kinh nghiem','kinh nghiem lam viec','qua trinh cong tac','qua trinh lam viec','experience','work experience','employment history','professional experience','work history'],
+  education: ['hoc van','trinh do hoc van','qua trinh hoc tap','giao duc','education','academic background'],
+  skills: ['ky nang','ky nang chuyen mon','skills','technical skills','core competencies','key skills'],
+  projects: ['du an','du an noi bat','projects','selected projects','project experience'],
+  certifications: ['chung chi','chung nhan','giai thuong','certifications','certification','licenses','licenses and certifications','awards'],
+};
+
+function isContactLine(l){
+  return /@/.test(l) || /https?:\/\//i.test(l) || /linkedin\.com|github\.com/i.test(l) || /^\+?\d[\d .\-()]{6,}\d$/.test(l);
+}
+
+function parseEntries(block){
+  block = (block||'').trim();
+  if(!block) return [];
+  let chunks = block.split(/\n\s*\n+/).map(c=>c.trim()).filter(Boolean);
+  if(chunks.length <= 1){
+    const lines = block.split('\n').map(l=>l.trim()).filter(Boolean);
+    if(lines.length > 2){
+      const grouped = []; let cur = []; let lastWasBullet = false;
+      lines.forEach(line=>{
+        const isBullet = /^[-•*●▪◦]/.test(line);
+        if(!isBullet && cur.length && lastWasBullet){ grouped.push(cur.join('\n')); cur = []; }
+        cur.push(line); lastWasBullet = isBullet;
+      });
+      if(cur.length) grouped.push(cur.join('\n'));
+      if(grouped.length > 1) chunks = grouped;
+    }
+  }
+  const dateRe = /((?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\.?\s*\d{4}|\d{1,2}\/\d{4}|\d{4})\s*(?:-|–|—|to|đến)\s*(present|hiện tại|hien tai|now|(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\.?\s*\d{4}|\d{1,2}\/\d{4}|\d{4})/i;
+
+  return chunks.map(chunk=>{
+    let lines = chunk.split('\n').map(l=>l.trim()).filter(Boolean);
+    let headerLine = lines[0] || '';
+    let rest = lines.slice(1);
+    let dates = '';
+    let m = headerLine.match(dateRe);
+    if(m){ dates = m[0]; headerLine = (headerLine.slice(0,m.index) + headerLine.slice(m.index+m[0].length)).replace(/[,|–—-]+$/,'').replace(/^[,|–—-]+/,'').trim(); }
+    else if(rest[0] && dateRe.test(rest[0])){ dates = rest[0].match(dateRe)[0]; rest = rest.slice(1); }
+    let role = headerLine, company = '';
+    const sep = headerLine.match(/\s(?:[-–—|]|at|tai|@)\s/i) || headerLine.match(/,/);
+    if(sep){
+      const idx = headerLine.indexOf(sep[0]);
+      role = headerLine.slice(0, idx).trim();
+      company = headerLine.slice(idx + sep[0].length).trim();
+    }
+    const bullets = rest.map(l=>l.replace(/^[-•*●▪◦]\s*/,'')).join('\n');
+    return {role, company, dates, bullets, degree: role, school: company, detail: bullets, name: role, link:'', description: [company, bullets].filter(Boolean).join(' — ')};
+  });
+}
+
+function parseResumeText(text){
+  text = String(text||'').replace(/\r/g,'');
+  const rawLines = text.split('\n').map(l=>l.trim());
+  const headers = [];
+  rawLines.forEach((line, idx)=>{
+    if(!line || line.length > 45) return;
+    const n = normLine(line);
+    for(const cat of Object.keys(KEYWORDS)){
+      if(KEYWORDS[cat].includes(n)){ headers.push({idx, cat}); break; }
+    }
+  });
+
+  const headerStart = headers.length ? headers[0].idx : Math.min(8, rawLines.length);
+  const preamble = rawLines.slice(0, headerStart).filter(Boolean);
+  const candidateLines = preamble.filter(l => !isContactLine(l));
+
+  const out = {};
+  if(candidateLines[0]) out.name = candidateLines[0];
+  if(candidateLines[1] && candidateLines[1].length < 80) out.title = candidateLines[1];
+  const locLine = preamble.find(l => /,/.test(l) && l.length < 60 && !isContactLine(l) && l !== out.name && l !== out.title);
+  if(locLine) out.location = locLine;
+
+  const emailMatch = text.match(/[\w.+-]+@[\w-]+\.[a-zA-Z]{2,}/);
+  const phoneMatch = text.match(/(\+?\d[\d .\-()]{7,}\d)/);
+  const linkedinMatch = text.match(/linkedin\.com\/[^\s,|)]+/i);
+  const githubMatch = text.match(/github\.com\/[^\s,|)]+/i);
+  const urlMatch = text.match(/https?:\/\/[^\s,|)]+|(?:^|\s)www\.[^\s,|)]+/i);
+  if(emailMatch) out.email = emailMatch[0];
+  if(phoneMatch) out.phone = phoneMatch[0].trim();
+  if(linkedinMatch) out.linkedin = linkedinMatch[0];
+  if(githubMatch) out.github = githubMatch[0];
+  if(urlMatch && !/linkedin|github/i.test(urlMatch[0])) out.website = urlMatch[0].trim();
+
+  const sections = {};
+  headers.forEach((h,i)=>{
+    const next = headers[i+1] ? headers[i+1].idx : rawLines.length;
+    const block = rawLines.slice(h.idx+1, next).join('\n').trim();
+    sections[h.cat] = sections[h.cat] ? sections[h.cat] + '\n\n' + block : block;
+  });
+
+  if(sections.summary) out.summary = sections.summary;
+  else if(!headers.length && rawLines.slice(headerStart).join(' ').trim()){
+    out.summary = rawLines.slice(headerStart).join('\n').trim().slice(0, 600);
+  }
+  if(sections.experience) out.experience = parseEntries(sections.experience);
+  if(sections.education) out.education = parseEntries(sections.education);
+  if(sections.projects) out.projects = parseEntries(sections.projects);
+  if(sections.skills) out.skillsRaw = sections.skills.replace(/\n+/g, ', ').replace(/,\s*,/g,',');
+  if(sections.certifications) out.certifications = sections.certifications;
+
+  return out;
+}
+
+/* ============================= PDF EXTRACTION ============================= */
+function setupPdfWorker(){
+  const workerUrl = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  const blob = new Blob([`importScripts(${JSON.stringify(workerUrl)});`], {type:'application/javascript'});
+  pdfjsLib.GlobalWorkerOptions.workerSrc = URL.createObjectURL(blob);
+}
+setupPdfWorker();
+
+async function extractTextFromPdf(arrayBuffer){
+  const pdf = await pdfjsLib.getDocument({data: arrayBuffer}).promise;
+  let fullText = '';
+  for(let p=1; p<=pdf.numPages; p++){
+    const page = await pdf.getPage(p);
+    const content = await page.getTextContent();
+    let lastY = null, lineBuf = [];
+    const lines = [];
+    content.items.forEach(item=>{
+      const y = item.transform[5];
+      if(lastY !== null && Math.abs(y - lastY) > 2){
+        lines.push(lineBuf.join(' ').replace(/\s+/g,' ').trim());
+        lineBuf = [];
+      }
+      lineBuf.push(item.str);
+      lastY = y;
+    });
+    if(lineBuf.length) lines.push(lineBuf.join(' ').replace(/\s+/g,' ').trim());
+    fullText += lines.join('\n') + '\n';
+  }
+  return fullText;
+}
+
+/* ============================= LANDING PAGE TEMPLATE ============================= */
+function buildModel(d){
+  const sections = [];
+  if((d.summary||'').trim()) sections.push({id:'gioi-thieu', label:'Giới thiệu'});
+  if((d.experience||[]).filter(e=>e.role||e.company).length) sections.push({id:'kinh-nghiem', label:'Kinh nghiệm'});
+  if((d.projects||[]).filter(p=>p.name).length) sections.push({id:'du-an', label:'Dự án'});
+  if((d.education||[]).filter(e=>e.degree||e.school).length) sections.push({id:'hoc-van', label:'Học vấn'});
+  if((d.skillsRaw||'').trim()) sections.push({id:'ky-nang', label:'Kỹ năng'});
+  if((d.certifications||'').trim()) sections.push({id:'chung-chi', label:'Chứng chỉ'});
+
+  const link = (raw, label) => `<a href="https://${esc(raw.replace(/^https?:\/\//,''))}" target="_blank" rel="noopener">${esc(label || raw.replace(/^https?:\/\//,''))}</a>`;
+  const contact = [];
+  if(d.email) contact.push(`<a href="mailto:${esc(d.email)}">${esc(d.email)}</a>`);
+  if(d.phone) contact.push(esc(d.phone));
+  if(d.location) contact.push(esc(d.location));
+  if(d.website) contact.push(link(d.website));
+  if(d.linkedin) contact.push(link(d.linkedin, 'LinkedIn'));
+  if(d.github) contact.push(link(d.github, 'GitHub'));
+
+  return {
+    sections, contact,
+    experience: (d.experience||[]).filter(e=>e.role||e.company),
+    education: (d.education||[]).filter(e=>e.degree||e.school),
+    projects: (d.projects||[]).filter(p=>p.name),
+    skills: (d.skillsRaw||'').split(/[,\n•]/).map(s=>s.trim()).filter(Boolean),
+    certifications: (d.certifications||'').split('\n').map(l=>l.trim()).filter(Boolean),
+    year: new Date().getFullYear(),
+  };
+}
+
+/* ---------- Template 1: Dossier biên tập (editorial, timeline) ---------- */
+function renderEditorial(d, m){
+  const toc = m.sections.map((s,i)=>`<li><a href="#${s.id}"><span class="num">${String(i+1).padStart(2,'0')}</span><span>${esc(s.label)}</span></a></li>`).join('');
+  const expHtml = m.experience.map(e=>`
+    <div class="exp-item">
+      <div class="exp-dates">${esc(e.dates||'')}</div>
+      <div class="exp-body">
+        <p class="exp-role">${esc(e.role||'')}${e.company?` <span class="at">tại</span> ${esc(e.company)}`:''}</p>
+        ${e.bullets ? `<ul>${bulletsToLi(e.bullets)}</ul>` : ''}
+      </div>
+    </div>`).join('');
+  const eduHtml = m.education.map(e=>`
+    <div class="exp-item">
+      <div class="exp-dates">${esc(e.dates||'')}</div>
+      <div class="exp-body">
+        <p class="exp-role">${esc(e.degree||'')}${e.school?` <span class="at">tại</span> ${esc(e.school)}`:''}</p>
+        ${e.detail ? `<p class="edu-detail">${esc(e.detail)}</p>` : ''}
+      </div>
+    </div>`).join('');
+  const skillsHtml = m.skills.map(s=>`<span class="skill">${esc(s)}</span>`).join('');
+  const projHtml = m.projects.map(p=>`
+    <div class="proj-item">
+      ${p.image ? `<img class="proj-image" src="${p.image}" alt="${esc(p.name)}">` : ''}
+      <p class="proj-name">${esc(p.name)}${p.link ? ` <a class="proj-link" href="${/^https?:\/\//i.test(p.link)?esc(p.link):'https://'+esc(p.link)}" target="_blank" rel="noopener">→</a>` : ''}</p>
+      ${p.description ? `<p class="proj-desc">${esc(p.description)}</p>` : ''}
+    </div>`).join('');
+  const certHtml = m.certifications.map(l=>`<li>${esc(l)}</li>`).join('');
+
+  return `<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${esc(d.name||'CV')} — ${esc(d.title||'')}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{ --paper:#F6F4EE; --ink:#201F1C; --ink-soft:#5B584F; --line:rgba(32,31,28,.15); --accent:${esc(d.accent||'#1F3A5F')}; }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{ margin:0; background:var(--paper); color:var(--ink); font-family:'Inter',system-ui,-apple-system,sans-serif; font-size:16px; line-height:1.6; }
+  a{color:var(--accent); text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  .wrap{max-width:920px; margin:0 auto; padding:3.2rem 1.6rem 4rem;}
+  .hero-wrap{position:relative; overflow:hidden; border-bottom:1px solid var(--line); margin:0 0 2.2rem; padding:2.4rem 2rem 2.2rem; border-radius:3px;}
+  .hero-bg{position:absolute; inset:-20%; background-size:cover; background-position:center; filter:blur(55px) saturate(1.15); transform:scale(1.1); opacity:.5; z-index:0;}
+  .hero-bg.fallback{ background:radial-gradient(circle at 15% 20%, var(--accent) 0%, transparent 55%), radial-gradient(circle at 88% 78%, var(--accent) 0%, transparent 50%); opacity:.16; filter:blur(30px); transform:none; inset:0; }
+  .hero-scrim{position:absolute; inset:0; background:linear-gradient(180deg, color-mix(in srgb, var(--paper) 35%, transparent) 0%, var(--paper) 88%); z-index:1;}
+  .hero{position:relative; z-index:2; display:grid; grid-template-columns:1.35fr .65fr; gap:2.5rem;}
+  .hero-left{display:flex; gap:1.3rem; align-items:flex-start;}
+  .avatar{width:84px; height:84px; border-radius:50%; object-fit:cover; flex:0 0 auto; border:3px solid var(--paper); box-shadow:0 0 0 1px var(--line);}
+  .hero-text{min-width:0;}
+  .hero h1{font-family:'Fraunces',serif; font-weight:500; font-size:clamp(2.1rem,4.6vw,3.3rem); line-height:1.05; margin:0;}
+  .hero .role{font-size:1.1rem; color:var(--accent); margin:.5rem 0 1.1rem; font-weight:500;}
+  .hero .summary{max-width:62ch; color:var(--ink-soft); margin:0 0 1.2rem;}
+  .contact-row{display:flex; flex-wrap:wrap; gap:0; font-size:.88rem;}
+  .contact-row span{padding:0 .7rem; border-left:1px solid var(--line);}
+  .contact-row span:first-child{padding-left:0; border-left:none;}
+  nav.toc{padding-top:.3rem;}
+  nav.toc p{font-size:.78rem; color:var(--ink-soft); margin:0 0 .7rem;}
+  nav.toc ol{list-style:none; margin:0; padding:0;}
+  nav.toc li{margin-bottom:.55rem;}
+  nav.toc a{display:flex; align-items:baseline; gap:.6rem; color:var(--ink);}
+  nav.toc a:hover{color:var(--accent); text-decoration:none;}
+  nav.toc .num{font-family:ui-monospace,'SFMono-Regular',Menlo,monospace; font-size:.78rem; color:var(--accent);}
+  section.block{padding:2.4rem 0; border-bottom:1px solid var(--line);}
+  section.block:last-of-type{border-bottom:none;}
+  section.block h2{font-family:'Fraunces',serif; font-weight:500; font-size:1.5rem; margin:0 0 1.3rem;}
+  .exp-item{display:grid; grid-template-columns:130px 1fr; gap:1.4rem; padding:1.1rem 0; border-top:1px solid var(--line);}
+  .exp-item:first-child{border-top:none; padding-top:0;}
+  .exp-dates{font-family:ui-monospace,'SFMono-Regular',Menlo,monospace; font-size:.82rem; color:var(--ink-soft); padding-top:.15rem;}
+  .exp-role{margin:0 0 .5rem; font-weight:600;}
+  .exp-role .at{font-weight:400; color:var(--ink-soft);}
+  .exp-body ul{margin:0; padding-left:1.1rem; color:var(--ink-soft);}
+  .exp-body li{margin-bottom:.3rem;}
+  .edu-detail{margin:0; color:var(--ink-soft);}
+  .skills-wrap{display:flex; flex-wrap:wrap; gap:.55rem;}
+  .skill{border:1px solid var(--line); padding:.4rem .8rem; font-size:.85rem; color:var(--ink); background:rgba(0,0,0,.015);}
+  .proj-item{padding:1rem 0; border-top:1px solid var(--line);}
+  .proj-item:first-child{border-top:none; padding-top:0;}
+  .proj-image{width:100%; max-height:260px; object-fit:cover; border:1px solid var(--line); margin-bottom:.8rem; display:block;}
+  .proj-name{margin:0 0 .3rem; font-weight:600;}
+  .proj-link{margin-left:.3rem;}
+  .proj-desc{margin:0; color:var(--ink-soft);}
+  ul.plain{margin:0; padding-left:1.1rem; color:var(--ink-soft);}
+  ul.plain li{margin-bottom:.35rem;}
+  footer{display:flex; flex-wrap:wrap; gap:.6rem 1.2rem; justify-content:space-between; padding-top:2rem; font-size:.85rem; color:var(--ink-soft);}
+  @media (max-width:680px){ .hero{grid-template-columns:1fr;} .hero-wrap{padding:1.6rem 1.2rem 1.8rem;} .hero-left{flex-direction:column; gap:.9rem;} .exp-item{grid-template-columns:1fr; gap:.3rem;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero-wrap">
+    <div class="hero-bg${d.photo ? '' : ' fallback'}"${d.photo ? ` style="background-image:url('${d.photo}')"` : ''}></div>
+    <div class="hero-scrim"></div>
+    <div class="hero">
+      <div class="hero-left">
+        ${d.photo ? `<img class="avatar" src="${d.photo}" alt="${esc(d.name||'')}">` : ''}
+        <div class="hero-text">
+          <h1>${esc(d.name||'Họ và tên')}</h1>
+          ${d.title ? `<p class="role">${esc(d.title)}</p>` : ''}
+          ${d.summary ? `<p class="summary">${esc((d.summary.split('\n').filter(Boolean)[0]||'').slice(0,220))}</p>` : ''}
+          ${m.contact.length ? `<div class="contact-row">${m.contact.map(c=>`<span>${c}</span>`).join('')}</div>` : ''}
+        </div>
+      </div>
+      ${m.sections.length ? `<nav class="toc"><p>Nội dung</p><ol>${toc}</ol></nav>` : ''}
+    </div>
+  </div>
+  ${(d.summary||'').trim() ? `<section class="block" id="gioi-thieu"><h2>Giới thiệu</h2>${nl2br(d.summary)}</section>` : ''}
+  ${expHtml ? `<section class="block" id="kinh-nghiem"><h2>Kinh nghiệm</h2>${expHtml}</section>` : ''}
+  ${projHtml ? `<section class="block" id="du-an"><h2>Dự án</h2>${projHtml}</section>` : ''}
+  ${eduHtml ? `<section class="block" id="hoc-van"><h2>Học vấn</h2>${eduHtml}</section>` : ''}
+  ${skillsHtml ? `<section class="block" id="ky-nang"><h2>Kỹ năng</h2><div class="skills-wrap">${skillsHtml}</div></section>` : ''}
+  ${certHtml ? `<section class="block" id="chung-chi"><h2>Chứng chỉ</h2><ul class="plain">${certHtml}</ul></section>` : ''}
+  <footer><span>© ${m.year} ${esc(d.name||'')}</span><span>${m.contact.map(c=>c.replace(/<[^>]+>/g,'')).slice(0,2).join('   ')}</span></footer>
+</div>
+</body>
+</html>`;
+}
+
+/* ---------- Template 2: Tối giản hiện đại (minimal) ---------- */
+function renderMinimal(d, m){
+  const expHtml = m.experience.map(e=>`
+    <div class="item">
+      <div class="item-head">
+        <p class="item-title">${esc(e.role||'')}${e.company?` <span class="soft">— ${esc(e.company)}</span>`:''}</p>
+        <p class="item-dates">${esc(e.dates||'')}</p>
+      </div>
+      ${e.bullets ? `<ul>${bulletsToLi(e.bullets)}</ul>` : ''}
+    </div>`).join('');
+  const eduHtml = m.education.map(e=>`
+    <div class="item">
+      <div class="item-head">
+        <p class="item-title">${esc(e.degree||'')}${e.school?` <span class="soft">— ${esc(e.school)}</span>`:''}</p>
+        <p class="item-dates">${esc(e.dates||'')}</p>
+      </div>
+      ${e.detail ? `<p class="soft-p">${esc(e.detail)}</p>` : ''}
+    </div>`).join('');
+  const skillsHtml = m.skills.map(s=>`<span class="skill">${esc(s)}</span>`).join('');
+  const projHtml = m.projects.map(p=>`
+    <div class="item">
+      ${p.image ? `<img class="proj-image" src="${p.image}" alt="${esc(p.name)}">` : ''}
+      <p class="item-title">${esc(p.name)}${p.link ? ` <a href="${/^https?:\/\//i.test(p.link)?esc(p.link):'https://'+esc(p.link)}" target="_blank" rel="noopener">→</a>` : ''}</p>
+      ${p.description ? `<p class="soft-p">${esc(p.description)}</p>` : ''}
+    </div>`).join('');
+  const certHtml = m.certifications.map(l=>`<li>${esc(l)}</li>`).join('');
+
+  return `<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${esc(d.name||'CV')} — ${esc(d.title||'')}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{ --bg:#ffffff; --ink:#15161A; --soft:#6E6E76; --line:#E7E7E9; --accent:${esc(d.accent||'#1F3A5F')}; }
+  *{box-sizing:border-box;}
+  body{ margin:0; background:var(--bg); color:var(--ink); font-family:'Inter',system-ui,sans-serif; font-size:16px; line-height:1.65; }
+  a{color:var(--accent); text-decoration:none; border-bottom:1px solid currentColor;}
+  .wrap{max-width:680px; margin:0 auto; padding:4rem 1.5rem 4.5rem;}
+  .hero{display:flex; gap:1.2rem; align-items:flex-start; margin-bottom:2.6rem;}
+  .avatar{width:60px; height:60px; border-radius:8px; object-fit:cover; flex:0 0 auto;}
+  h1{font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:clamp(1.9rem,4.4vw,2.6rem); margin:0 0 .3rem; letter-spacing:-.01em;}
+  .role{color:var(--accent); font-weight:500; margin:0 0 .9rem;}
+  .summary{color:var(--soft); max-width:56ch; margin:0 0 1rem;}
+  .contact-col{display:flex; flex-direction:column; gap:.15rem; font-size:.88rem; color:var(--soft);}
+  .contact-col a{color:var(--soft); border-bottom:none;}
+  .contact-col a:hover{color:var(--accent);}
+  h2{font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1rem; display:flex; align-items:center; gap:.55rem; margin:0 0 1.1rem;}
+  h2::before{content:""; width:9px; height:9px; background:var(--accent); flex:0 0 auto;}
+  section.block{padding:1.8rem 0; border-top:1px solid var(--line);}
+  .item{margin-bottom:1.3rem;}
+  .item:last-child{margin-bottom:0;}
+  .item-head{display:flex; justify-content:space-between; align-items:baseline; gap:1rem; flex-wrap:wrap;}
+  .item-title{margin:0; font-weight:600;}
+  .item-title .soft{font-weight:400; color:var(--soft);}
+  .item-dates{margin:0; font-size:.82rem; color:var(--soft); white-space:nowrap;}
+  .soft-p{color:var(--soft); margin:.3rem 0 0;}
+  .proj-image{width:100%; max-height:220px; object-fit:cover; border-radius:6px; margin-bottom:.7rem; display:block;}
+  ul{margin:.5rem 0 0; padding-left:1.15rem; color:var(--soft);}
+  li{margin-bottom:.3rem;}
+  .skills-wrap{display:flex; flex-wrap:wrap; gap:.4rem 1rem;}
+  .skill{font-size:.9rem; padding-bottom:.1rem; border-bottom:1px solid var(--line);}
+  ul.plain{margin:0; padding-left:1.15rem; color:var(--soft);}
+  footer{margin-top:2.6rem; padding-top:1.6rem; border-top:1px solid var(--line); font-size:.82rem; color:var(--soft); display:flex; justify-content:space-between; flex-wrap:wrap; gap:.5rem;}
+  @media (max-width:520px){ .hero{flex-direction:column;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    ${d.photo ? `<img class="avatar" src="${d.photo}" alt="${esc(d.name||'')}">` : ''}
+    <div>
+      <h1>${esc(d.name||'Họ và tên')}</h1>
+      ${d.title ? `<p class="role">${esc(d.title)}</p>` : ''}
+      ${d.summary ? `<p class="summary">${esc((d.summary.split('\n').filter(Boolean)[0]||'').slice(0,220))}</p>` : ''}
+      ${m.contact.length ? `<div class="contact-col">${m.contact.map(c=>`<span>${c}</span>`).join('')}</div>` : ''}
+    </div>
+  </div>
+  ${(d.summary||'').trim() ? `<section class="block"><h2>Giới thiệu</h2>${nl2br(d.summary)}</section>` : ''}
+  ${expHtml ? `<section class="block"><h2>Kinh nghiệm</h2>${expHtml}</section>` : ''}
+  ${projHtml ? `<section class="block"><h2>Dự án</h2>${projHtml}</section>` : ''}
+  ${eduHtml ? `<section class="block"><h2>Học vấn</h2>${eduHtml}</section>` : ''}
+  ${skillsHtml ? `<section class="block"><h2>Kỹ năng</h2><div class="skills-wrap">${skillsHtml}</div></section>` : ''}
+  ${certHtml ? `<section class="block"><h2>Chứng chỉ</h2><ul class="plain">${certHtml}</ul></section>` : ''}
+  <footer><span>© ${m.year} ${esc(d.name||'')}</span></footer>
+</div>
+</body>
+</html>`;
+}
+
+/* ---------- Template 3: Bold sáng tạo (dark, expressive) ---------- */
+function renderBold(d, m){
+  const expHtml = m.experience.map(e=>`
+    <div class="card">
+      <p class="dates">${esc(e.dates||'')}</p>
+      <p class="role">${esc(e.role||'')}</p>
+      ${e.company ? `<p class="company">${esc(e.company)}</p>` : ''}
+      ${e.bullets ? `<ul>${bulletsToLi(e.bullets)}</ul>` : ''}
+    </div>`).join('');
+  const eduHtml = m.education.map(e=>`
+    <div class="card">
+      <p class="dates">${esc(e.dates||'')}</p>
+      <p class="role">${esc(e.degree||'')}</p>
+      ${e.school ? `<p class="company">${esc(e.school)}</p>` : ''}
+      ${e.detail ? `<p class="soft-p">${esc(e.detail)}</p>` : ''}
+    </div>`).join('');
+  const skillsHtml = m.skills.map(s=>`<span class="skill">${esc(s)}</span>`).join('');
+  const projHtml = m.projects.map(p=>`
+    <div class="card">
+      ${p.image ? `<img class="proj-image" src="${p.image}" alt="${esc(p.name)}">` : ''}
+      <p class="role">${esc(p.name)}${p.link ? ` <a href="${/^https?:\/\//i.test(p.link)?esc(p.link):'https://'+esc(p.link)}" target="_blank" rel="noopener">→</a>` : ''}</p>
+      ${p.description ? `<p class="soft-p">${esc(p.description)}</p>` : ''}
+    </div>`).join('');
+  const certHtml = m.certifications.map(l=>`<li>${esc(l)}</li>`).join('');
+
+  return `<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${esc(d.name||'CV')} — ${esc(d.title||'')}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{ --bg:#131215; --panel:#1b1a1e; --ink:#F2F0EA; --soft:#A6A3AA; --line:rgba(255,255,255,.1);
+         --accent:${esc(d.accent||'#1F3A5F')}; --accent-bright: color-mix(in srgb, var(--accent) 65%, white 35%); }
+  *{box-sizing:border-box;}
+  body{ margin:0; background:var(--bg); color:var(--ink); font-family:'Inter',system-ui,sans-serif; font-size:16px; line-height:1.6; }
+  a{color:var(--accent-bright); text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  .wrap{max-width:900px; margin:0 auto; padding:3.6rem 1.6rem 4.5rem;}
+  .hero{margin-bottom:2.6rem; display:flex; gap:1.6rem; align-items:flex-end; flex-wrap:wrap;}
+  .avatar{width:96px; height:96px; border-radius:14px; object-fit:cover; border:1px solid var(--line); flex:0 0 auto;}
+  h1{font-family:'Fraunces',serif; font-weight:700; font-size:clamp(2.6rem,7vw,4.6rem); line-height:.98; margin:0 0 .5rem; letter-spacing:-.01em;}
+  .role{color:var(--accent-bright); font-size:1.15rem; font-weight:600; margin:0 0 1rem;}
+  .summary{color:var(--soft); max-width:60ch; margin:0 0 1.1rem;}
+  .contact-row{display:flex; flex-wrap:wrap; gap:.5rem;}
+  .contact-row span{border:1px solid var(--line); padding:.35rem .8rem; border-radius:99px; font-size:.82rem; color:var(--soft);}
+  .contact-row a{color:var(--soft);}
+  h2{font-family:'Fraunces',serif; font-weight:600; font-size:1.4rem; margin:0 0 1.1rem; color:var(--ink);}
+  section.block{padding:2.2rem 0;}
+  .cards{display:grid; gap:.9rem;}
+  .card{border:1px solid var(--line); background:var(--panel); border-radius:10px; padding:1.2rem 1.3rem;}
+  .proj-image{width:100%; max-height:240px; object-fit:cover; border-radius:8px; margin-bottom:.9rem; display:block;}
+  .dates{margin:0 0 .3rem; font-family:ui-monospace,'SFMono-Regular',Menlo,monospace; font-size:.78rem; color:var(--accent-bright);}
+  .role{margin:0; font-weight:600; font-size:1.05rem;}
+  .company{margin:.15rem 0 0; color:var(--soft);}
+  .card ul{margin:.7rem 0 0; padding-left:1.1rem; color:var(--soft);}
+  .card li{margin-bottom:.3rem;}
+  .soft-p{color:var(--soft); margin:.4rem 0 0;}
+  .skills-wrap{display:flex; flex-wrap:wrap; gap:.55rem;}
+  .skill{background:color-mix(in srgb, var(--accent) 22%, transparent); border:1px solid var(--line); color:var(--ink); padding:.4rem .85rem; border-radius:99px; font-size:.85rem;}
+  ul.plain{margin:0; padding-left:1.15rem; color:var(--soft);}
+  footer{margin-top:1rem; padding-top:1.6rem; border-top:1px solid var(--line); font-size:.82rem; color:var(--soft); display:flex; justify-content:space-between; flex-wrap:wrap; gap:.5rem;}
+  @media (max-width:600px){ .hero{align-items:flex-start;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    ${d.photo ? `<img class="avatar" src="${d.photo}" alt="${esc(d.name||'')}">` : ''}
+    <div>
+      <h1>${esc(d.name||'Họ và tên')}</h1>
+      ${d.title ? `<p class="role">${esc(d.title)}</p>` : ''}
+      ${d.summary ? `<p class="summary">${esc((d.summary.split('\n').filter(Boolean)[0]||'').slice(0,220))}</p>` : ''}
+      ${m.contact.length ? `<div class="contact-row">${m.contact.map(c=>`<span>${c}</span>`).join('')}</div>` : ''}
+    </div>
+  </div>
+  ${(d.summary||'').trim() ? `<section class="block"><h2>Giới thiệu</h2><div class="soft-p">${nl2br(d.summary)}</div></section>` : ''}
+  ${expHtml ? `<section class="block"><h2>Kinh nghiệm</h2><div class="cards">${expHtml}</div></section>` : ''}
+  ${projHtml ? `<section class="block"><h2>Dự án</h2><div class="cards">${projHtml}</div></section>` : ''}
+  ${eduHtml ? `<section class="block"><h2>Học vấn</h2><div class="cards">${eduHtml}</div></section>` : ''}
+  ${skillsHtml ? `<section class="block"><h2>Kỹ năng</h2><div class="skills-wrap">${skillsHtml}</div></section>` : ''}
+  ${certHtml ? `<section class="block"><h2>Chứng chỉ</h2><ul class="plain">${certHtml}</ul></section>` : ''}
+  <footer><span>© ${m.year} ${esc(d.name||'')}</span></footer>
+</div>
+</body>
+</html>`;
+}
+
+/* ---------- Template 4: Doanh nhân cổ điển (classic, centered) ---------- */
+function renderClassic(d, m){
+  const expHtml = m.experience.map(e=>`
+    <div class="item">
+      <div class="item-head"><p class="role">${esc(e.role||'')}${e.company?` — ${esc(e.company)}`:''}</p><p class="dates">${esc(e.dates||'')}</p></div>
+      ${e.bullets ? `<ul>${bulletsToLi(e.bullets)}</ul>` : ''}
+    </div>`).join('');
+  const eduHtml = m.education.map(e=>`
+    <div class="item">
+      <div class="item-head"><p class="role">${esc(e.degree||'')}${e.school?` — ${esc(e.school)}`:''}</p><p class="dates">${esc(e.dates||'')}</p></div>
+      ${e.detail ? `<p class="soft-p">${esc(e.detail)}</p>` : ''}
+    </div>`).join('');
+  const skillsHtml = m.skills.join('  •  ');
+  const projHtml = m.projects.map(p=>`
+    <div class="item">
+      ${p.image ? `<img class="proj-image" src="${p.image}" alt="${esc(p.name)}">` : ''}
+      <p class="role">${esc(p.name)}</p>
+      ${p.description ? `<p class="soft-p">${esc(p.description)}</p>` : ''}
+    </div>`).join('');
+  const certHtml = m.certifications.map(l=>`<li>${esc(l)}</li>`).join('');
+
+  return `<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${esc(d.name||'CV')} — ${esc(d.title||'')}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{ --bg:#FCFBF8; --ink:#1E1D1B; --soft:#66625B; --line:#DAD6CC; --accent:${esc(d.accent||'#1F3A5F')}; }
+  *{box-sizing:border-box;}
+  body{ margin:0; background:var(--bg); color:var(--ink); font-family:'Inter',system-ui,sans-serif; font-size:15.5px; line-height:1.65; }
+  a{color:var(--accent);}
+  .wrap{max-width:680px; margin:0 auto; padding:3.6rem 1.5rem 4.5rem;}
+  .hero{text-align:center; padding-bottom:1.6rem; border-bottom:2px solid var(--ink); position:relative;}
+  .avatar{width:76px; height:76px; border-radius:50%; object-fit:cover; position:absolute; right:0; top:0;}
+  h1{font-family:'Fraunces',serif; font-weight:600; font-size:2.2rem; margin:0 0 .3rem;}
+  .role{color:var(--accent); font-weight:500; margin:0 0 .9rem;}
+  .contact-row{display:flex; justify-content:center; flex-wrap:wrap; gap:0; font-size:.85rem; color:var(--soft);}
+  .contact-row span{padding:0 .6rem; border-left:1px solid var(--line);}
+  .contact-row span:first-child{border-left:none;}
+  h2{font-family:'Inter',sans-serif; font-weight:700; font-size:.82rem; letter-spacing:.08em; text-transform:uppercase; text-align:center; margin:0 0 1.2rem; color:var(--ink);}
+  section.block{padding:2rem 0; border-bottom:1px solid var(--line);}
+  section.block:last-of-type{border-bottom:none;}
+  .summary{max-width:56ch; margin:0 auto; text-align:center; color:var(--soft);}
+  .item{margin-bottom:1.2rem;}
+  .item:last-child{margin-bottom:0;}
+  .item-head{display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap;}
+  .item-head .role{margin:0; font-weight:600; color:var(--ink);}
+  .item-head .dates{margin:0; font-size:.82rem; color:var(--soft); white-space:nowrap;}
+  .proj-image{max-width:360px; width:100%; display:block; margin:0 auto .8rem; border-radius:4px; object-fit:cover; max-height:200px; border:1px solid var(--line);}
+  ul{margin:.5rem 0 0; padding-left:1.15rem; color:var(--soft);}
+  li{margin-bottom:.3rem;}
+  .soft-p{color:var(--soft); margin:.3rem 0 0;}
+  .skills-line{text-align:center; color:var(--soft);}
+  ul.plain{margin:0; padding-left:1.15rem; color:var(--soft); max-width:56ch; margin-left:auto; margin-right:auto;}
+  footer{text-align:center; margin-top:1.5rem; padding-top:1.5rem; border-top:1px solid var(--line); font-size:.82rem; color:var(--soft);}
+  @media (max-width:480px){ .avatar{position:static; margin:0 auto 1rem;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    ${d.photo ? `<img class="avatar" src="${d.photo}" alt="${esc(d.name||'')}">` : ''}
+    <h1>${esc(d.name||'Họ và tên')}</h1>
+    ${d.title ? `<p class="role">${esc(d.title)}</p>` : ''}
+    ${m.contact.length ? `<div class="contact-row">${m.contact.map(c=>`<span>${c}</span>`).join('')}</div>` : ''}
+  </div>
+  ${(d.summary||'').trim() ? `<section class="block"><h2>Giới thiệu</h2><p class="summary">${esc(d.summary)}</p></section>` : ''}
+  ${expHtml ? `<section class="block"><h2>Kinh nghiệm</h2>${expHtml}</section>` : ''}
+  ${projHtml ? `<section class="block"><h2>Dự án</h2>${projHtml}</section>` : ''}
+  ${eduHtml ? `<section class="block"><h2>Học vấn</h2>${eduHtml}</section>` : ''}
+  ${skillsHtml ? `<section class="block"><h2>Kỹ năng</h2><p class="skills-line">${esc(skillsHtml)}</p></section>` : ''}
+  ${certHtml ? `<section class="block"><h2>Chứng chỉ</h2><ul class="plain">${certHtml}</ul></section>` : ''}
+  <footer>© ${m.year} ${esc(d.name||'')}</footer>
+</div>
+</body>
+</html>`;
+}
+
+function buildLandingPageHTML(d){
+  const m = buildModel(d);
+  switch(d.template){
+    case 'minimal': return renderMinimal(d, m);
+    case 'bold': return renderBold(d, m);
+    case 'classic': return renderClassic(d, m);
+    default: return renderEditorial(d, m);
+  }
+}
+
+/* ============================= RENDERING SIDEBAR ============================= */
+const $ = sel => document.querySelector(sel);
+const $$ = sel => Array.from(document.querySelectorAll(sel));
+
+function renderPhoto(){
+  const img = $('#photoPreview');
+  const removeBtn = $('#removePhotoBtn');
+  if(data.photo){
+    img.src = data.photo; img.style.display = 'block';
+    removeBtn.style.display = 'inline-flex';
+  } else {
+    img.src = ''; img.style.display = 'none';
+    removeBtn.style.display = 'none';
+  }
+}
+
+function renderTemplates(){
+  $('#templateGrid').innerHTML = TEMPLATES.map(t=>`
+    <button type="button" class="tpl-card ${data.template===t.key?'active':''}" data-template="${t.key}" title="${esc(t.desc)}">
+      <div class="tpl-swatch" style="--tpl-accent:${data.accent}; background:${t.colors[0]};">
+        <span style="background:${t.colors[0]};"></span><span style="background:${data.accent};width:8px; flex:0 0 8px;"></span><span style="background:${t.colors[1]};width:8px; flex:0 0 8px;"></span>
+      </div>
+      <b>${esc(t.name)}</b>
+      <small>${esc(t.desc)}</small>
+    </button>`).join('');
+}
+
+function renderAccents(){
+  const presets = ACCENTS.map(a=>
+    `<button class="swatch ${data.accent===a.hex?'active':''}" style="background:${a.hex}" data-accent="${a.hex}" title="${a.name}" aria-label="${a.name}"></button>`
+  ).join('');
+  const isPreset = ACCENTS.some(a=>a.hex.toLowerCase()===String(data.accent).toLowerCase());
+  const custom = `<input type="color" class="swatch-custom" id="customAccent" value="${esc(data.accent)}" title="Chọn màu tuỳ chỉnh" style="${isPreset?'':'box-shadow:0 0 0 2px var(--ink);'}">`;
+  $('#accentRow').innerHTML = presets + custom;
+}
+
+function renderSimpleFields(){
+  $$('[data-bind]').forEach(el=>{
+    const path = el.dataset.bind;
+    if(el.tagName === 'TEXTAREA' || el.type === 'text'){
+      const v = getPath(data, path);
+      if(document.activeElement !== el) el.value = v || '';
+    }
+  });
+}
+
+function renderExperience(){
+  const list = data.experience || [];
+  $('#experienceList').innerHTML = list.map((e,i)=>`
+    <div class="entry-card">
+      <div class="entry-card-head"><span>Kinh nghiệm ${i+1}</span><button class="remove-btn" data-remove="experience.${i}">Xoá</button></div>
+      <div class="row2">
+        <div class="field"><label>Vị trí</label><input type="text" data-bind="experience.${i}.role"></div>
+        <div class="field"><label>Công ty</label><input type="text" data-bind="experience.${i}.company"></div>
+      </div>
+      <div class="field"><label>Thời gian</label><input type="text" data-bind="experience.${i}.dates" placeholder="VD: 2022 — Hiện tại"></div>
+      <div class="field"><label>Mô tả (mỗi dòng một ý)</label><textarea rows="3" data-bind="experience.${i}.bullets"></textarea></div>
+    </div>`).join('');
+  fillArrayFieldValues('experience');
+}
+
+function renderEducation(){
+  const list = data.education || [];
+  $('#educationList').innerHTML = list.map((e,i)=>`
+    <div class="entry-card">
+      <div class="entry-card-head"><span>Học vấn ${i+1}</span><button class="remove-btn" data-remove="education.${i}">Xoá</button></div>
+      <div class="field"><label>Bằng cấp / chuyên ngành</label><input type="text" data-bind="education.${i}.degree"></div>
+      <div class="row2">
+        <div class="field"><label>Trường</label><input type="text" data-bind="education.${i}.school"></div>
+        <div class="field"><label>Thời gian</label><input type="text" data-bind="education.${i}.dates"></div>
+      </div>
+      <div class="field"><label>Ghi chú</label><input type="text" data-bind="education.${i}.detail" placeholder="VD: Tốt nghiệp loại Giỏi"></div>
+    </div>`).join('');
+  fillArrayFieldValues('education');
+}
+
+function renderProjects(){
+  const list = data.projects || [];
+  $('#projectsList').innerHTML = list.map((p,i)=>`
+    <div class="entry-card">
+      <div class="entry-card-head"><span>Dự án ${i+1}</span><button class="remove-btn" data-remove="projects.${i}">Xoá</button></div>
+      <div class="field"><label>Tên dự án</label><input type="text" data-bind="projects.${i}.name"></div>
+      <div class="field"><label>Liên kết (tuỳ chọn)</label><input type="text" data-bind="projects.${i}.link"></div>
+      <div class="field">
+        <label>Hình ảnh minh hoạ (tuỳ chọn)</label>
+        <div style="display:flex; align-items:center; gap:.6rem;">
+          <div style="width:60px; height:42px; border-radius:4px; overflow:hidden; background:var(--bg); border:1px solid var(--line-strong); flex:0 0 auto; display:flex; align-items:center; justify-content:center;">
+            <img src="${p.image||''}" style="width:100%; height:100%; object-fit:cover; display:${p.image?'block':'none'};">
+          </div>
+          <button type="button" class="btn btn-sm proj-img-pick" data-img-index="${i}">Thêm ảnh</button>
+          <button type="button" class="btn btn-sm btn-ghost proj-img-remove" data-img-index="${i}" style="display:${p.image?'inline-flex':'none'};">Gỡ ảnh</button>
+          <input type="file" accept="image/*" class="proj-img-input" data-img-index="${i}" style="display:none">
+        </div>
+      </div>
+      <div class="field"><label>Mô tả</label><textarea rows="2" data-bind="projects.${i}.description"></textarea></div>
+    </div>`).join('');
+  fillArrayFieldValues('projects');
+}
+
+function fillArrayFieldValues(key){
+  $$(`[data-bind^="${key}."]`).forEach(el=>{
+    const v = getPath(data, el.dataset.bind);
+    el.value = v || '';
+  });
+}
+
+function renderSidebar(){
+  renderPhoto();
+  renderTemplates();
+  renderAccents();
+  renderSimpleFields();
+  renderExperience();
+  renderEducation();
+  renderProjects();
+}
+
+/* ============================= PREVIEW ============================= */
+const updatePreview = debounce(()=>{
+  $('#preview').srcdoc = buildLandingPageHTML(data);
+}, 150);
+
+/* ============================= EVENTS ============================= */
+document.addEventListener('input', e=>{
+  const el = e.target;
+  if(el.id === 'customAccent'){
+    data.accent = el.value;
+    renderTemplates();
+    updatePreview();
+    return;
+  }
+  if(el.dataset && el.dataset.bind){
+    setPath(data, el.dataset.bind, el.value);
+    updatePreview();
+  }
+});
+
+document.addEventListener('click', e=>{
+  const imgPickBtn = e.target.closest('.proj-img-pick');
+  if(imgPickBtn){
+    const idx = imgPickBtn.dataset.imgIndex;
+    const input = document.querySelector(`.proj-img-input[data-img-index="${idx}"]`);
+    if(input) input.click();
+    return;
+  }
+  const imgRemoveBtn = e.target.closest('.proj-img-remove');
+  if(imgRemoveBtn){
+    const idx = Number(imgRemoveBtn.dataset.imgIndex);
+    if(data.projects[idx]){ data.projects[idx].image = ''; renderProjects(); updatePreview(); }
+    return;
+  }
+  const tplBtn = e.target.closest('[data-template]');
+  if(tplBtn){
+    data.template = tplBtn.dataset.template;
+    renderTemplates();
+    updatePreview();
+    return;
+  }
+  const accentBtn = e.target.closest('[data-accent]');
+  if(accentBtn){
+    data.accent = accentBtn.dataset.accent;
+    renderAccents();
+    updatePreview();
+    return;
+  }
+  const addAction = e.target.closest('[data-action]');
+  if(addAction){
+    const act = addAction.dataset.action;
+    if(act === 'add-experience'){ (data.experience ||= []).push({role:'',company:'',dates:'',bullets:''}); renderExperience(); }
+    if(act === 'add-education'){ (data.education ||= []).push({degree:'',school:'',dates:'',detail:''}); renderEducation(); }
+    if(act === 'add-project'){ (data.projects ||= []).push({name:'',link:'',image:'',description:''}); renderProjects(); }
+    updatePreview();
+    return;
+  }
+  const removeBtn = e.target.closest('[data-remove]');
+  if(removeBtn){
+    const [key, idxStr] = removeBtn.dataset.remove.split('.');
+    data[key].splice(Number(idxStr), 1);
+    if(key==='experience') renderExperience();
+    if(key==='education') renderEducation();
+    if(key==='projects') renderProjects();
+    updatePreview();
+    return;
+  }
+});
+
+/* ---- Upload / parse ---- */
+const uploadStatus = $('#uploadStatus');
+function setStatus(msg, cls){ uploadStatus.textContent = msg; uploadStatus.className = 'upload-status ' + (cls||''); }
+
+async function handlePdfFile(file){
+  if(!file) return;
+  if(file.type !== 'application/pdf' && !/\.pdf$/i.test(file.name)){
+    setStatus('Vui lòng chọn một file PDF.', 'err'); return;
+  }
+  setStatus('Đang đọc file PDF...', 'busy');
+  try{
+    const buf = await file.arrayBuffer();
+    const text = await extractTextFromPdf(buf);
+    if(!text.trim()){
+      setStatus('Không đọc được nội dung văn bản từ file này (có thể là bản scan ảnh). Hãy thử dán nội dung thủ công.', 'err');
+      return;
+    }
+    const parsed = parseResumeText(text);
+    Object.assign(data, parsed);
+    renderSidebar();
+    updatePreview();
+    setStatus('Đã trích xuất xong — hãy kiểm tra lại các trường bên dưới.', 'ok');
+  }catch(err){
+    console.error(err);
+    setStatus('Có lỗi khi đọc file PDF. Hãy thử lại hoặc dán nội dung thủ công.', 'err');
+  }
+}
+
+document.addEventListener('change', async e=>{
+  const el = e.target;
+  if(el.classList && el.classList.contains('proj-img-input')){
+    const idx = Number(el.dataset.imgIndex);
+    const file = el.files[0];
+    if(!file) return;
+    if(!file.type.startsWith('image/')){ alert('Vui lòng chọn một file ảnh.'); return; }
+    try{
+      const dataUrl = await resizeImageFile(file, 900, 0.82);
+      data.projects[idx].image = dataUrl;
+      renderProjects();
+      updatePreview();
+    }catch(err){
+      console.error(err);
+      alert('Không thể xử lý ảnh này. Hãy thử một ảnh khác.');
+    }
+  }
+});
+
+$('#pickPhotoBtn').addEventListener('click', ()=> $('#photoInput').click());
+$('#photoInput').addEventListener('change', async e=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  if(!file.type.startsWith('image/')){ alert('Vui lòng chọn một file ảnh.'); return; }
+  try{
+    data.photo = await resizeImageFile(file, 640, 0.85);
+    renderPhoto();
+    updatePreview();
+  }catch(err){
+    console.error(err);
+    alert('Không thể xử lý ảnh này. Hãy thử một ảnh khác.');
+  }
+});
+$('#removePhotoBtn').addEventListener('click', ()=>{
+  data.photo = '';
+  $('#photoInput').value = '';
+  renderPhoto();
+  updatePreview();
+});
+
+$('#pickFileBtn').addEventListener('click', ()=> $('#fileInput').click());
+$('#fileInput').addEventListener('change', e=> handlePdfFile(e.target.files[0]));
+
+const dz = $('#dropzone');
+['dragenter','dragover'].forEach(ev=> dz.addEventListener(ev, e=>{ e.preventDefault(); dz.classList.add('drag'); }));
+['dragleave','drop'].forEach(ev=> dz.addEventListener(ev, e=>{ e.preventDefault(); dz.classList.remove('drag'); }));
+dz.addEventListener('drop', e=>{
+  const file = e.dataTransfer.files[0];
+  handlePdfFile(file);
+});
+
+$('#pasteToggle').addEventListener('click', ()=>{
+  const box = $('#pasteBox');
+  box.style.display = box.style.display === 'none' ? 'block' : 'none';
+});
+$('#parsePasteBtn').addEventListener('click', ()=>{
+  const text = $('#pasteText').value;
+  if(!text.trim()){ setStatus('Chưa có nội dung để phân tích.', 'err'); return; }
+  const parsed = parseResumeText(text);
+  Object.assign(data, parsed);
+  renderSidebar();
+  updatePreview();
+  setStatus('Đã trích xuất xong từ văn bản dán vào — hãy kiểm tra lại.', 'ok');
+});
+
+/* ---- Open full screen ---- */
+$('#openTabBtn').addEventListener('click', ()=>{
+  const html = buildLandingPageHTML(data);
+  const blob = new Blob([html], {type:'text/html'});
+  const url = URL.createObjectURL(blob);
+  window.open(url, '_blank');
+});
+
+/* ---- Download ---- */
+$('#downloadBtn').addEventListener('click', async ()=>{
+  const btn = $('#downloadBtn');
+  const html = buildLandingPageHTML(data);
+  const filename = (data.name || 'cv').toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d')
+    .replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'') + '-landing-page.html';
+  btn.disabled = true; const original = btn.textContent; btn.textContent = 'Đang chuẩn bị...';
+  try{
+    const downloads = (window.claude && typeof window.claude.use === 'function') ? await window.claude.use('downloads') : null;
+    if(downloads){
+      await downloads.save({filename, data: html});
+    } else {
+      const blob = new Blob([html], {type:'text/html'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = filename; document.body.appendChild(a); a.click(); a.remove();
+      URL.revokeObjectURL(url);
+    }
+  }catch(err){
+    console.error(err);
+    alert('Không thể lưu file tự động. Bạn có thể dùng nút "Mở toàn màn hình" rồi lưu trang bằng Ctrl/Cmd+S.');
+  }finally{
+    btn.disabled = false; btn.textContent = original;
+  }
+});
+
+/* ============================= INIT ============================= */
+renderSidebar();
+updatePreview();
+</script>
+</body>
+</html>

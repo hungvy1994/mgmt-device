@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Xem Bài Tarot</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-0:#0c0a17;
+    --bg-1:#181129;
+    --ink:#e9e2d0;
+    --ink-dim:#a79bc4;
+    --violet:#8a5fd1;
+    --violet-bright:#b892f0;
+    --gold:#d4af6a;
+    --gold-bright:#f0d193;
+    --parchment:#efe6d2;
+    --parchment-dim:#ddd2b7;
+    --font-body: 'Noto Serif', 'Times New Roman', serif;
+    --font-deco: 'Cinzel Decorative', 'Noto Serif', serif;
+    box-sizing:border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  html{ scroll-padding-top: env(safe-area-inset-top, 0px); }
+  *{ box-sizing:border-box; }
+  html, body{ height:100%; }
+  body{
+    margin:0;
+    background:var(--bg-0);
+    color:var(--ink);
+    font-family:var(--font-body);
+    min-height:100%;
+    overflow-x:hidden;
+    position:relative;
+  }
+
+  .sky{
+    position:fixed; inset:0; z-index:0;
+    background:
+      radial-gradient(ellipse 120% 70% at 50% -10%, rgba(138,95,209,0.22), transparent 55%),
+      radial-gradient(ellipse 100% 60% at 50% 110%, rgba(212,175,106,0.10), transparent 60%),
+      linear-gradient(180deg, var(--bg-0), var(--bg-1) 60%, var(--bg-0));
+  }
+  .stars{ position:fixed; inset:0; z-index:0; opacity:.6; }
+  .moonglow{
+    position:fixed; z-index:0; top:-120px; left:50%; transform:translateX(-50%);
+    width:420px; height:420px; border-radius:50%;
+    background:radial-gradient(circle, rgba(212,175,106,0.18), transparent 70%);
+    filter:blur(10px);
+  }
+
+  .wrap{
+    position:relative; z-index:1;
+    max-width:720px; margin:0 auto;
+    padding:36px 20px 64px;
+    min-height:100%;
+    display:flex; flex-direction:column; align-items:center;
+  }
+  header{ text-align:center; margin-bottom:6px; }
+  .eyebrow{ font-size:13px; letter-spacing:.14em; color:var(--violet-bright); font-style:italic; }
+  h1{
+    font-family:var(--font-deco);
+    font-weight:700;
+    font-size:clamp(28px,7vw,42px);
+    margin:6px 0 8px;
+    color:var(--gold-bright);
+    text-shadow:0 0 22px rgba(212,175,106,.25);
+    line-height:1.1;
+  }
+  .sub{ color:var(--ink-dim); font-size:14.5px; max-width:440px; margin:0 auto; line-height:1.6; }
+  .divider{ width:120px; height:14px; margin:18px auto 24px; opacity:.85; }
+
+  /* ---------- spread picker ---------- */
+  .picker{
+    display:flex; gap:14px; flex-wrap:wrap; justify-content:center;
+    margin-bottom:26px; width:100%;
+  }
+  .picker.hidden{ display:none; }
+  .spread-card{
+    flex:1 1 220px; max-width:260px;
+    background:linear-gradient(180deg, rgba(138,95,209,.12), rgba(138,95,209,.03));
+    border:1px solid rgba(184,146,240,.35);
+    border-radius:10px;
+    padding:18px 16px;
+    cursor:pointer;
+    text-align:center;
+    transition:transform .2s ease, border-color .2s ease, background .2s ease;
+  }
+  .spread-card:hover{ transform:translateY(-3px); border-color:var(--violet-bright); background:rgba(138,95,209,.18); }
+  .spread-card:focus-visible{ outline:2px solid var(--gold-bright); outline-offset:3px; }
+  .spread-icon{ font-size:30px; margin-bottom:8px; }
+  .spread-title{ font-weight:700; font-size:15.5px; color:var(--parchment); margin-bottom:4px; }
+  .spread-desc{ font-size:12.5px; color:var(--ink-dim); line-height:1.5; }
+
+  /* ---------- question note ---------- */
+  .intent{
+    text-align:center; color:var(--ink-dim); font-size:13.5px;
+    margin:0 0 24px; max-width:440px; font-style:italic;
+  }
+
+  /* ---------- draw stage ---------- */
+  .stage{ display:none; width:100%; flex-direction:column; align-items:center; }
+  .stage.active{ display:flex; }
+
+  .deck-zone{
+    display:flex; flex-direction:column; align-items:center; gap:16px;
+    margin-bottom:8px;
+  }
+  .deck{
+    position:relative; width:120px; height:190px;
+    cursor:pointer;
+    filter:drop-shadow(0 10px 22px rgba(0,0,0,.5));
+  }
+  .deck .card-back{
+    position:absolute; inset:0;
+    border-radius:10px;
+  }
+  .deck .card-back:nth-child(1){ transform:translate(4px,4px) rotate(-2deg); }
+  .deck .card-back:nth-child(2){ transform:translate(2px,2px) rotate(1deg); }
+  .deck .card-back:nth-child(3){ transform:translate(0,0) rotate(0deg); }
+  .deck.shuffling{ animation: shuffle-wobble 1.4s ease-in-out; }
+  @keyframes shuffle-wobble{
+    0%,100%{ transform:rotate(0deg); }
+    20%{ transform:rotate(-4deg); }
+    40%{ transform:rotate(3deg); }
+    60%{ transform:rotate(-3deg); }
+    80%{ transform:rotate(2deg); }
+  }
+  @media (prefers-reduced-motion: reduce){ .deck.shuffling{ animation:none; } }
+
+  .card-back-face{
+    width:100%; height:100%; border-radius:10px;
+    background:
+      repeating-linear-gradient(135deg, rgba(212,175,106,.10) 0 2px, transparent 2px 14px),
+      linear-gradient(160deg, #241a3d, #150f26 60%, #0c0a17);
+    border:2px solid var(--gold);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:inset 0 0 22px rgba(212,175,106,.15);
+  }
+  .card-back-face .glyph{ font-size:34px; color:var(--gold-bright); opacity:.85; }
+
+  .deck-label{ font-size:14px; color:var(--parchment); font-weight:600; letter-spacing:.03em; }
+  .deck-hint{ font-size:12px; color:var(--ink-dim); margin-top:-8px; }
+
+  .draw-status{ min-height:20px; color:var(--violet-bright); font-size:13px; letter-spacing:.04em; margin:6px 0 4px; }
+
+  /* ---------- result cards ---------- */
+  .reading{
+    display:flex; gap:22px; flex-wrap:wrap; justify-content:center;
+    width:100%; margin-top:10px;
+  }
+  .card-slot{ width:220px; display:flex; flex-direction:column; align-items:center; opacity:0; }
+  .card-slot.show{ animation: card-in .55s ease forwards; }
+  @keyframes card-in{ from{ opacity:0; transform:translateY(16px);} to{ opacity:1; transform:translateY(0);} }
+  .position-label{
+    font-size:12px; letter-spacing:.12em; color:var(--violet-bright);
+    text-transform:uppercase; margin-bottom:10px; font-weight:600;
+  }
+  .tarot-card{
+    width:170px; height:270px; position:relative;
+    perspective:1000px;
+  }
+  .tarot-card-inner{
+    position:relative; width:100%; height:100%;
+    transform-style:preserve-3d;
+    transition:transform .8s cubic-bezier(.4,.2,.2,1);
+  }
+  .tarot-card.flipped .tarot-card-inner{ transform:rotateY(180deg); }
+  .tarot-face{
+    position:absolute; inset:0;
+    backface-visibility:hidden;
+    border-radius:12px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .tarot-face.back{
+    background:
+      repeating-linear-gradient(135deg, rgba(212,175,106,.10) 0 2px, transparent 2px 14px),
+      linear-gradient(160deg, #241a3d, #150f26 60%, #0c0a17);
+    border:2px solid var(--gold);
+    box-shadow:inset 0 0 24px rgba(212,175,106,.15);
+  }
+  .tarot-face.back .glyph{ font-size:40px; color:var(--gold-bright); opacity:.85; }
+  .tarot-face.front{
+    background:linear-gradient(180deg, var(--parchment), var(--parchment-dim));
+    color:#2a2113;
+    transform:rotateY(180deg);
+    flex-direction:column;
+    padding:14px 12px 10px;
+    border:2px solid var(--violet);
+    box-shadow:0 10px 26px rgba(0,0,0,.4);
+    text-align:center;
+  }
+  .tarot-face.front.reversed{ }
+  .tarot-face.front .card-emblem{ font-size:30px; margin-bottom:6px; color:#5a3d8f; }
+  .tarot-face.front .card-name{ font-size:15px; font-weight:700; line-height:1.25; margin-bottom:2px; }
+  .tarot-face.front .card-orient{ font-size:11px; letter-spacing:.08em; color:#8f2a2a; font-weight:700; margin-bottom:6px; }
+  .tarot-face.front .card-orient.up{ color:#3d6b3d; }
+  .tarot-face.front .card-suitline{ font-size:10.5px; color:#6b5c3c; margin-bottom:4px; }
+
+  .interp-panel{
+    width:100%; max-width:640px;
+    background:linear-gradient(180deg, rgba(138,95,209,.10), rgba(138,95,209,.02));
+    border:1px solid rgba(184,146,240,.3);
+    border-radius:10px;
+    padding:20px 22px;
+    margin-top:26px;
+    opacity:0;
+  }
+  .interp-panel.show{ animation: card-in .6s ease forwards .3s; }
+  .interp-panel h3{
+    margin:0 0 4px; font-size:14px; color:var(--gold-bright); letter-spacing:.04em;
+  }
+  .interp-panel .orient-tag{ font-size:11.5px; font-weight:700; letter-spacing:.06em; }
+  .interp-panel .orient-tag.up{ color:#8fd39a; }
+  .interp-panel .orient-tag.rev{ color:#e0918c; }
+  .interp-panel p{ margin:4px 0 14px; font-size:14.5px; line-height:1.6; color:var(--ink); }
+  .interp-panel .block{ padding-bottom:10px; margin-bottom:10px; border-bottom:1px dashed rgba(184,146,240,.25); }
+  .interp-panel .block:last-child{ border-bottom:none; margin-bottom:0; padding-bottom:0; }
+
+  .again-btn{
+    margin-top:28px;
+    background:transparent;
+    border:1px solid var(--violet-bright);
+    color:var(--violet-bright);
+    font-family:var(--font-body);
+    font-size:14px; letter-spacing:.04em;
+    padding:11px 26px; border-radius:2px;
+    cursor:pointer;
+    transition:background .2s ease, color .2s ease;
+  }
+  .again-btn:hover{ background:var(--violet-bright); color:var(--bg-0); }
+  .again-btn:focus-visible{ outline:2px solid var(--gold-bright); outline-offset:3px; }
+
+  footer{
+    margin-top:auto; padding-top:34px;
+    font-size:11.5px; color:var(--ink-dim);
+    text-align:center; max-width:440px; line-height:1.6;
+  }
+  ::selection{ background:var(--violet); color:#fff; }
+</style>
+</head>
+<body>
+
+<div class="sky"></div>
+<div class="moonglow"></div>
+<svg class="stars" id="stars"></svg>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Tarot · Ẩn Ngữ Của Vũ Trụ</div>
+    <h1>Xem Bài Tarot</h1>
+    <p class="sub">Tĩnh tâm, nghĩ về điều bạn đang trăn trở, chọn một trải bài rồi chạm vào cỗ bài để rút quẻ.</p>
+    <svg class="divider" viewBox="0 0 120 14"><line x1="0" y1="7" x2="120" y2="7" stroke="#d4af6a" stroke-width="1" opacity="0.6"/><circle cx="60" cy="7" r="3" fill="#d4af6a"/></svg>
+  </header>
+
+  <div class="picker" id="picker">
+    <div class="spread-card" tabindex="0" role="button" data-spread="1">
+      <div class="spread-icon">🌙</div>
+      <div class="spread-title">1 Lá Bài</div>
+      <div class="spread-desc">Thông điệp nhanh cho câu hỏi hoặc tâm trạng hiện tại của bạn.</div>
+    </div>
+    <div class="spread-card" tabindex="0" role="button" data-spread="3">
+      <div class="spread-icon">✨</div>
+      <div class="spread-title">3 Lá Bài</div>
+      <div class="spread-desc">Quá Khứ — Hiện Tại — Tương Lai, cái nhìn trọn vẹn theo dòng thời gian.</div>
+    </div>
+  </div>
+
+  <div class="stage" id="stage">
+    <div class="deck-zone">
+      <div class="deck" id="deck">
+        <div class="card-back"><div class="card-back-face"><span class="glyph">✦</span></div></div>
+        <div class="card-back"><div class="card-back-face"><span class="glyph">✦</span></div></div>
+        <div class="card-back"><div class="card-back-face"><span class="glyph">✦</span></div></div>
+      </div>
+      <div class="deck-label" id="deckLabel">Chạm vào cỗ bài để rút quẻ</div>
+      <div class="deck-hint" id="deckHint">78 lá bài đã được xáo trộn ngẫu nhiên</div>
+    </div>
+    <div class="draw-status" id="drawStatus"></div>
+
+    <div class="reading" id="reading"></div>
+    <div class="interp-panel" id="interpPanel"></div>
+
+    <button class="again-btn" id="againBtn" style="display:none;">Xem Trải Bài Khác</button>
+  </div>
+
+  <footer>
+    Ứng dụng không lưu lại lịch sử xem bài — mỗi lượt rút bài là ngẫu nhiên và riêng tư, tải lại trang sẽ bắt đầu lại từ đầu.<br>
+    Tarot mang tính chiêm nghiệm, gợi mở góc nhìn — quyết định cuối cùng luôn thuộc về bạn.
+  </footer>
+</div>
+
+<script>
+/* ================= STARFIELD ================= */
+(function drawStars(){
+  const svg = document.getElementById('stars');
+  const W = window.innerWidth, H = window.innerHeight;
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  let html = '';
+  for(let i=0;i<100;i++){
+    const x = Math.random()*W, y = Math.random()*H*0.75;
+    const r = Math.random()*1.4 + 0.3;
+    const o = Math.random()*0.6 + 0.15;
+    html += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r.toFixed(2)}" fill="#d4af6a" opacity="${o.toFixed(2)}"/>`;
+  }
+  svg.innerHTML = html;
+})();
+
+/* ================= TAROT DATA ================= */
+const MAJOR = [
+ {name:"The Fool", vn:"Kẻ Khờ", emblem:"🃏", up:"Khởi đầu mới, tự do, dấn thân không sợ hãi vào điều chưa biết.", rev:"Liều lĩnh thiếu suy nghĩ, sợ hãi trước điều mới mẻ."},
+ {name:"The Magician", vn:"Pháp Sư", emblem:"🪄", up:"Sức mạnh sáng tạo, biến ý tưởng thành hiện thực, đủ công cụ để hành động.", rev:"Lừa dối, thao túng, tiềm năng bị lãng phí."},
+ {name:"The High Priestess", vn:"Nữ Tư Tế", emblem:"🌙", up:"Trực giác, bí ẩn, tri thức nội tâm sâu sắc.", rev:"Bí mật bị che giấu, mất kết nối với trực giác."},
+ {name:"The Empress", vn:"Nữ Hoàng", emblem:"🌿", up:"Sáng tạo, sinh sôi, phong phú, nuôi dưỡng yêu thương.", rev:"Trì trệ sáng tạo, phụ thuộc quá mức, mất cân bằng."},
+ {name:"The Emperor", vn:"Hoàng Đế", emblem:"👑", up:"Quyền lực, cấu trúc, kỷ luật, sự ổn định vững chắc.", rev:"Độc đoán, cứng nhắc, lạm quyền."},
+ {name:"The Hierophant", vn:"Giáo Chủ", emblem:"⛪", up:"Truyền thống, giáo huấn, niềm tin, học hỏi theo khuôn mẫu đã định.", rev:"Nổi loạn chống lại quy tắc, tư duy độc lập, phá vỡ truyền thống."},
+ {name:"The Lovers", vn:"Tình Nhân", emblem:"💞", up:"Tình yêu, lựa chọn quan trọng, sự hòa hợp và kết nối sâu sắc.", rev:"Mất cân bằng trong quan hệ, lựa chọn sai lầm."},
+ {name:"The Chariot", vn:"Cỗ Xe", emblem:"🏇", up:"Ý chí, quyết tâm, chiến thắng nhờ kiểm soát bản thân.", rev:"Mất phương hướng, thiếu kiểm soát, trì trệ."},
+ {name:"Strength", vn:"Sức Mạnh", emblem:"🦁", up:"Can đảm nội tâm, chế ngự bằng sự dịu dàng hơn là vũ lực.", rev:"Nghi ngờ bản thân, yếu đuối, mất kiên nhẫn."},
+ {name:"The Hermit", vn:"Ẩn Sĩ", emblem:"🏮", up:"Nội tâm, tìm kiếm sự thật một mình, cần thời gian suy ngẫm.", rev:"Cô lập quá mức, cô đơn, từ chối giúp đỡ."},
+ {name:"Wheel of Fortune", vn:"Bánh Xe Số Mệnh", emblem:"🎡", up:"Vận mệnh xoay chuyển, chu kỳ thay đổi, cơ hội bất ngờ.", rev:"Vận rủi, trì trệ, cảm giác mất kiểm soát số phận."},
+ {name:"Justice", vn:"Công Lý", emblem:"⚖️", up:"Công bằng, sự thật, hệ quả tất yếu của hành động.", rev:"Bất công, thiên vị, trốn tránh trách nhiệm."},
+ {name:"The Hanged Man", vn:"Người Treo Ngược", emblem:"🌀", up:"Buông bỏ, nhìn nhận vấn đề từ góc độ khác, hy sinh tạm thời để giác ngộ.", rev:"Trì hoãn không cần thiết, chống lại sự thay đổi cần thiết."},
+ {name:"Death", vn:"Tử Thần", emblem:"🦋", up:"Kết thúc để mở ra khởi đầu mới, chuyển hóa sâu sắc — không phải cái chết vật lý.", rev:"Sợ thay đổi, bám víu vào điều đã lỗi thời."},
+ {name:"Temperance", vn:"Điều Độ", emblem:"⚗️", up:"Cân bằng, điều độ, hòa hợp các yếu tố đối lập.", rev:"Mất cân bằng, thái quá, thiếu kiên nhẫn."},
+ {name:"The Devil", vn:"Ác Quỷ", emblem:"⛓️", up:"Ràng buộc, cám dỗ, phụ thuộc vào vật chất hoặc thói quen xấu.", rev:"Giải thoát khỏi ràng buộc, nhận ra và vượt qua cám dỗ."},
+ {name:"The Tower", vn:"Tháp Sập", emblem:"🗼", up:"Biến cố bất ngờ, sụp đổ cấu trúc cũ để xây nền tảng chân thật hơn.", rev:"Né tránh thay đổi cần thiết, sợ hãi thảm họa sắp đến."},
+ {name:"The Star", vn:"Ngôi Sao", emblem:"⭐", up:"Hy vọng, chữa lành, niềm tin vào tương lai tươi sáng.", rev:"Mất niềm tin, tuyệt vọng, thiếu phương hướng."},
+ {name:"The Moon", vn:"Mặt Trăng", emblem:"🌕", up:"Ảo giác, tiềm thức, nỗi sợ mơ hồ chưa rõ ràng.", rev:"Sự thật dần sáng tỏ, thoát khỏi nhầm lẫn và lo âu."},
+ {name:"The Sun", vn:"Mặt Trời", emblem:"☀️", up:"Niềm vui, thành công, sức sống tràn đầy và sự rõ ràng.", rev:"Lạc quan thái quá, thành công bị trì hoãn tạm thời."},
+ {name:"Judgement", vn:"Phán Xét", emblem:"📯", up:"Thức tỉnh, đánh giá lại bản thân, cơ hội chuộc lỗi và tái sinh.", rev:"Tự phán xét quá khắt khe, từ chối đối mặt sự thật."},
+ {name:"The World", vn:"Thế Giới", emblem:"🌍", up:"Hoàn thành, viên mãn, đạt được mục tiêu sau một chặng đường dài.", rev:"Chưa hoàn thành trọn vẹn, thiếu bước cuối cùng để khép lại."}
+];
+
+const SUITS = {
+  wands:{ vn:"Gậy", theme:"lửa · đam mê · sự nghiệp", emblem:"🔥" },
+  cups:{ vn:"Cốc", theme:"nước · cảm xúc · tình yêu", emblem:"💧" },
+  swords:{ vn:"Kiếm", theme:"khí · trí tuệ · xung đột", emblem:"🗡️" },
+  pentacles:{ vn:"Tiền", theme:"đất · vật chất · công việc", emblem:"🪙" }
+};
+
+const RANKS = ["Át","2","3","4","5","6","7","8","9","10","Thị Đồng","Kỵ Sĩ","Hoàng Hậu","Vua"];
+
+const MINOR_MEANINGS = {
+  wands:[
+    ["Khởi đầu đầy cảm hứng, ý tưởng mới, năng lượng sáng tạo tuôn trào.","Trì hoãn, thiếu động lực, ý tưởng chưa thành hình."],
+    ["Lập kế hoạch, cân nhắc bước đi tiếp theo, đứng giữa ngã ba tương lai.","Sợ hãi thay đổi, thiếu quyết đoán, kế hoạch trì trệ."],
+    ["Mở rộng tầm nhìn, chờ đợi kết quả từ những gì đã gieo trồng.","Chậm trễ, trở ngại bất ngờ trong kế hoạch mở rộng."],
+    ["Ăn mừng, ổn định, nền tảng vững chắc, hòa hợp.","Bất ổn tạm thời, mâu thuẫn nội bộ nhỏ."],
+    ["Cạnh tranh, xung đột ý kiến, thử thách cần vượt qua.","Xung đột được giải quyết, tránh được tranh cãi không cần thiết."],
+    ["Chiến thắng, được công nhận, thành công sau nỗ lực.","Thành công bị trì hoãn, thiếu sự công nhận xứng đáng."],
+    ["Kiên định bảo vệ lập trường trước thử thách, giữ vững vị thế.","Kiệt sức vì phòng thủ liên tục, cảm giác bị áp đảo."],
+    ["Hành động nhanh chóng, tin tức đến bất ngờ, mọi việc tiến triển tốc độ.","Trì hoãn, mọi việc chậm lại, thiếu kiên nhẫn."],
+    ["Kiên cường dù đã mệt mỏi, sẵn sàng cho thử thách cuối cùng.","Kiệt sức, hoài nghi, phòng thủ quá mức."],
+    ["Gánh nặng trách nhiệm, áp lực chồng chất cần san sẻ.","Buông bớt gánh nặng, học cách từ chối và ủy quyền."],
+    ["Người trẻ nhiệt huyết, khám phá điều mới, tin tức tốt lành sắp đến.","Thiếu kiên nhẫn, kế hoạch vội vàng thiếu chín chắn."],
+    ["Hành động táo bạo, phiêu lưu, nhiệt huyết tràn đầy nhưng dễ hấp tấp.","Bốc đồng, hành động thiếu suy nghĩ, dễ nản chí."],
+    ["Tự tin, quyến rũ, độc lập, truyền cảm hứng bằng nhiệt huyết.","Ghen tuông, thiếu tự tin, dùng quyền lực sai cách."],
+    ["Lãnh đạo tài ba, tầm nhìn xa, dám nghĩ dám làm.","Độc đoán, nóng nảy, kỳ vọng phi thực tế."]
+  ],
+  cups:[
+    ["Khởi đầu cảm xúc mới, tình yêu, niềm vui tràn đầy.","Cảm xúc bị kìm nén, thất vọng trong tình cảm."],
+    ["Kết nối, hợp tác hài hòa, tình cảm đôi bên.","Mất cân bằng trong mối quan hệ, hiểu lầm."],
+    ["Sum họp bạn bè, ăn mừng cùng cộng đồng, niềm vui chung.","Xa cách bạn bè, vui chơi quá đà, tin đồn."],
+    ["Chán nản, thờ ơ, bỏ lỡ cơ hội vì mải suy nghĩ.","Bắt đầu nhận ra cơ hội mới, thoát khỏi trì trệ."],
+    ["Tiếc nuối, mất mát, tập trung vào điều đã mất.","Chấp nhận quá khứ, học cách tha thứ và bước tiếp."],
+    ["Hoài niệm, ký ức tuổi thơ, sự ngây thơ trong sáng.","Sống mãi trong quá khứ, cần hướng đến hiện tại."],
+    ["Nhiều lựa chọn, ảo tưởng, cần tỉnh táo phân biệt thực-ảo.","Sáng suốt lựa chọn, thoát khỏi ảo tưởng."],
+    ["Rời bỏ điều không còn ý nghĩa để tìm điều sâu sắc hơn.","Sợ thay đổi, ở lại dù không còn hạnh phúc."],
+    ["Hài lòng, mãn nguyện, ước nguyện thành hiện thực.","Thỏa mãn hời hợt, tham lam quá mức."],
+    ["Hạnh phúc trọn vẹn, gia đình hòa thuận, viên mãn cảm xúc.","Bất hòa gia đình, giá trị lệch lạc."],
+    ["Tin tức tình cảm, tâm hồn nhạy cảm, khởi đầu sáng tạo.","Cảm xúc bất ổn, hành xử trẻ con."],
+    ["Lãng mạn, theo đuổi con tim, lời mời hấp dẫn.","Ảo tưởng, hứa hẹn suông, tâm trạng thất thường."],
+    ["Trực giác mạnh, thấu cảm, chăm sóc người khác bằng trái tim.","Cảm xúc bất ổn, phụ thuộc cảm xúc."],
+    ["Điềm tĩnh, khôn ngoan trong cảm xúc, cân bằng lý trí và trái tim.","Lạnh lùng, thao túng cảm xúc người khác."]
+  ],
+  swords:[
+    ["Ý tưởng đột phá, sự thật sáng tỏ, khởi đầu bằng trí tuệ.","Nhầm lẫn, thông tin sai lệch, quyết định vội vàng."],
+    ["Bế tắc trong quyết định, cân bằng căng thẳng giữa hai lựa chọn.","Do dự kéo dài, thông tin bị che giấu."],
+    ["Đau khổ, tổn thương, chia ly gây tổn thương sâu sắc.","Bắt đầu chữa lành, tha thứ sau tổn thương."],
+    ["Nghỉ ngơi, phục hồi, tạm lùi lại để lấy lại sức.","Kiệt sức vì không chịu nghỉ ngơi, trì trệ kéo dài."],
+    ["Xung đột, chiến thắng bằng mọi giá, mâu thuẫn gây rạn nứt.","Hòa giải sau xung đột, buông bỏ hận thù."],
+    ["Rời xa khó khăn, chuyển tiếp sang giai đoạn yên bình hơn.","Khó rời bỏ quá khứ, chuyển tiếp gặp trở ngại."],
+    ["Mưu mẹo, hành động lén lút, cần cẩn trọng với sự trung thực.","Sự thật bị phơi bày, lương tâm cắn rứt."],
+    ["Cảm giác bị mắc kẹt, tự giới hạn bản thân bởi nỗi sợ.","Giải thoát bản thân khỏi nỗi sợ tự tạo."],
+    ["Lo âu, mất ngủ vì suy nghĩ tiêu cực, sợ hãi trong tâm trí.","Nỗi sợ được giải tỏa, tìm lại bình yên."],
+    ["Kết thúc đau đớn nhưng dứt khoát, chạm đáy để bắt đầu lại.","Hồi phục chậm sau tổn thất, chống lại điều không thể tránh."],
+    ["Tò mò, ham học hỏi, cảnh giác trước thông tin mới.","Do thám, lời nói thiếu suy nghĩ, tin đồn thất thiệt."],
+    ["Hành động quyết liệt, tốc độ, đôi khi thiếu kiên nhẫn.","Hấp tấp, hành động thiếu kiểm soát."],
+    ["Sắc sảo, độc lập, nhìn nhận sự thật rõ ràng không cảm tính.","Lạnh lùng quá mức, chỉ trích cay nghiệt."],
+    ["Trí tuệ sắc bén, công minh, ra quyết định dựa trên lý trí.","Độc đoán, lạm dụng quyền lực trí tuệ."]
+  ],
+  pentacles:[
+    ["Cơ hội tài chính mới, khởi đầu thịnh vượng.","Cơ hội bị bỏ lỡ, kế hoạch tài chính thiếu chắc chắn."],
+    ["Cân bằng nhiều việc cùng lúc, linh hoạt thích nghi với thay đổi.","Mất cân bằng, quá tải công việc và tài chính."],
+    ["Hợp tác, làm việc nhóm hiệu quả, công nhận tay nghề.","Thiếu phối hợp, chất lượng công việc giảm sút."],
+    ["Tích trữ, bảo toàn tài sản, đôi khi quá keo kiệt.","Buông bỏ sự bám víu vật chất, chi tiêu thiếu kiểm soát."],
+    ["Khó khăn tài chính, cảm giác bị bỏ rơi, cần tìm sự giúp đỡ.","Vượt qua khó khăn, tìm được sự hỗ trợ cần thiết."],
+    ["Chia sẻ, cho và nhận công bằng, hào phóng đúng lúc.","Mất cân bằng cho-nhận, món nợ hoặc điều kiện đi kèm."],
+    ["Kiên nhẫn chờ đợi thành quả, đánh giá lại nỗ lực đã bỏ ra.","Thiếu kiên nhẫn, đầu tư không hiệu quả."],
+    ["Chăm chỉ rèn luyện tay nghề, tận tâm với công việc.","Làm việc hời hợt, thiếu tập trung học hỏi."],
+    ["Độc lập tài chính, tận hưởng thành quả lao động của mình.","Phụ thuộc tài chính, thành quả chưa trọn vẹn."],
+    ["Thịnh vượng lâu dài, di sản gia đình, ổn định bền vững.","Bất ổn tài chính gia đình, mâu thuẫn về thừa kế."],
+    ["Cơ hội học hỏi mới, khởi đầu dự án thực tế.","Thiếu kế hoạch, trì hoãn cơ hội học tập."],
+    ["Chăm chỉ, kiên trì, cẩn trọng nhưng đôi khi trì trệ.","Trì trệ, cứng nhắc, ngại thay đổi."],
+    ["Thực tế, chăm sóc chu đáo, cân bằng vật chất và tình cảm.","Xao nhãng bản thân vì quá lo cho người khác."],
+    ["Thành đạt, đáng tin cậy, quản lý tài chính vững vàng.","Tham lam, coi trọng vật chất quá mức."]
+  ]
+};
+
+function buildDeck(){
+  const deck = [];
+  MAJOR.forEach((c,i) => deck.push({
+    key:"major-"+i, type:"major", name:c.vn, engName:c.name, emblem:c.emblem,
+    suitLine:"Ẩn Chính (Major Arcana)", up:c.up, rev:c.rev
+  }));
+  Object.keys(SUITS).forEach(suitKey => {
+    const suit = SUITS[suitKey];
+    RANKS.forEach((rankName, i) => {
+      const m = MINOR_MEANINGS[suitKey][i];
+      deck.push({
+        key: suitKey+"-"+i, type:"minor",
+        name: rankName + " " + suit.vn, engName: rankName + " of " + suitKey,
+        emblem: suit.emblem,
+        suitLine: "Ẩn Phụ · Bộ " + suit.vn + " (" + suit.theme + ")",
+        up: m[0], rev: m[1]
+      });
+    });
+  });
+  return deck;
+}
+const DECK = buildDeck(); // 78 cards
+
+function shuffledSample(n){
+  const pool = DECK.slice();
+  for(let i = pool.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i+1));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
+  }
+  return pool.slice(0, n).map(c => ({ card:c, reversed: Math.random() < 0.5 }));
+}
+
+/* ================= UI LOGIC ================= */
+const picker = document.getElementById('picker');
+const stage = document.getElementById('stage');
+const deckEl = document.getElementById('deck');
+const deckLabel = document.getElementById('deckLabel');
+const deckHint = document.getElementById('deckHint');
+const drawStatus = document.getElementById('drawStatus');
+const readingEl = document.getElementById('reading');
+const interpPanel = document.getElementById('interpPanel');
+const againBtn = document.getElementById('againBtn');
+
+let spreadCount = 1;
+let state = 'pick'; // pick | ready | drawing | done
+
+document.querySelectorAll('.spread-card').forEach(el => {
+  const choose = () => {
+    spreadCount = parseInt(el.dataset.spread, 10);
+    picker.classList.add('hidden');
+    stage.classList.add('active');
+    state = 'ready';
+    deckHint.textContent = spreadCount === 1
+      ? 'Chạm để rút 1 lá bài'
+      : 'Chạm để rút 3 lá bài liên tiếp';
+  };
+  el.addEventListener('click', choose);
+  el.addEventListener('keydown', e => { if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); choose(); } });
+});
+
+deckEl.addEventListener('click', () => { if(state === 'ready') drawCards(); });
+againBtn.addEventListener('click', resetAll);
+
+function sleep(ms){ return new Promise(r => setTimeout(r, ms)); }
+
+function resetAll(){
+  state = 'pick';
+  picker.classList.remove('hidden');
+  stage.classList.remove('active');
+  readingEl.innerHTML = '';
+  interpPanel.classList.remove('show');
+  interpPanel.innerHTML = '';
+  againBtn.style.display = 'none';
+  deckEl.style.display = '';
+  deckLabel.textContent = 'Chạm vào cỗ bài để rút quẻ';
+  drawStatus.textContent = '';
+}
+
+async function drawCards(){
+  state = 'drawing';
+  deckEl.classList.add('shuffling');
+  deckLabel.textContent = 'Đang xáo bài…';
+  drawStatus.textContent = 'Hãy tĩnh tâm và tập trung vào câu hỏi của bạn.';
+  await sleep(1400);
+  deckEl.classList.remove('shuffling');
+
+  const positions = spreadCount === 3 ? ['Quá Khứ','Hiện Tại','Tương Lai'] : ['Thông Điệp'];
+  const drawn = shuffledSample(spreadCount);
+
+  deckLabel.textContent = 'Đang rút bài…';
+  deckEl.style.display = 'none';
+  readingEl.innerHTML = '';
+
+  drawn.forEach((d, idx) => {
+    const slot = document.createElement('div');
+    slot.className = 'card-slot';
+    slot.innerHTML = `
+      <div class="position-label">${positions[idx]}</div>
+      <div class="tarot-card" id="card-${idx}">
+        <div class="tarot-card-inner">
+          <div class="tarot-face back"><span class="glyph">✦</span></div>
+          <div class="tarot-face front ${d.reversed ? 'reversed' : ''}" style="${d.reversed ? 'transform:rotateY(180deg) rotate(180deg);' : 'transform:rotateY(180deg);'}">
+            <div class="card-emblem">${d.card.emblem}</div>
+            <div class="card-name">${d.card.name}</div>
+            <div class="card-orient ${d.reversed ? '' : 'up'}">${d.reversed ? 'NGƯỢC' : 'XUÔI'}</div>
+            <div class="card-suitline">${d.card.suitLine}</div>
+          </div>
+        </div>
+      </div>
+    `;
+    readingEl.appendChild(slot);
+  });
+
+  drawStatus.textContent = '';
+
+  for(let i=0;i<drawn.length;i++){
+    const slot = readingEl.children[i];
+    slot.classList.add('show');
+    await sleep(150);
+    const cardDiv = document.getElementById('card-'+i);
+    await sleep(250);
+    cardDiv.classList.add('flipped');
+    await sleep(650);
+  }
+
+  renderInterpretation(positions, drawn);
+  deckLabel.textContent = 'Đã rút xong';
+  state = 'done';
+  againBtn.style.display = '';
+}
+
+function renderInterpretation(positions, drawn){
+  let html = '';
+  drawn.forEach((d, idx) => {
+    const meaning = d.reversed ? d.card.rev : d.card.up;
+    html += `
+      <div class="block">
+        <h3>${positions[idx]} — ${d.card.name} <span class="orient-tag ${d.reversed ? 'rev' : 'up'}">(${d.reversed ? 'Ngược' : 'Xuôi'})</span></h3>
+        <p>${meaning}</p>
+      </div>`;
+  });
+  interpPanel.innerHTML = html;
+  interpPanel.classList.add('show');
+}
+</script>
+</body>
+</html>
